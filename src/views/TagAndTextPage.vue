@@ -151,7 +151,7 @@ export default {
     },
 
     editSaveClick() {
-      const tags = this.editPanel.article.tags.split(' ').filter(tag => tag.length > 0)
+      const tags = (this.editPanel.article.tags || '').split(' ').filter(tag => tag.length > 0)
       const article = {
         ...this.editPanel.article,
         ...{tags},
