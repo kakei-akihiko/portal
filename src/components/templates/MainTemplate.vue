@@ -4,7 +4,7 @@
     <b-row no-gutters class="h-100">
       <div :class="sideBarClass">
         <div class="h-100 d-flex flex-column">
-          <b-container>
+          <b-container fluid>
             <h1>{{ title }}</h1>
           </b-container>
           <div class="flex-grow-1 h-0">
@@ -17,7 +17,7 @@
       </div>
       <div :class="mainPanelClass">
         <FullHeight>
-          <b-container slot="header" class="p-0">
+          <b-container slot="header" class="p-0" fluid>
             <div class="d-flex">
               <b-button variant="link" @click="sideBarExpanded = !sideBarExpanded" class="d-none d-md-block">
                 <i class="fas fa-bars"></i>
@@ -30,7 +30,7 @@
           </b-container>
 
           <div class="h-100">
-            <b-container class="p-0 h-100">
+            <b-container class="p-0 h-100" fluid>
               <slot name="main" />
             </b-container>
           </div>
