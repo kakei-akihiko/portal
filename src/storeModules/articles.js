@@ -68,7 +68,7 @@ export const articles = {
       let {id, title, text, tags, compact} = article
 
       const lines = (text || '').split('\n').filter(line => line.length > 0)
-      const url = (lines.length > 0 && lines[0].match('^https?://')) ? lines[0] : null
+      const url = (lines.length > 0 && lines[0].match('^(https?://|file:///)')) ? lines[0] : null
       const leadIndex = url == null ? 0 : 1
       const lead = leadIndex < lines.length ? lines[leadIndex] : url
 
