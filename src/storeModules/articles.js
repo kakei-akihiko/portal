@@ -9,7 +9,9 @@ const getTagsFormArticles = (articles) => {
     tags.forEach(tag => builder[tag] = true)
     return builder
   }, {})
-  return Object.keys(tagsHash)
+  const keys = Object.keys(tagsHash)
+  keys.sort()
+  return keys
 }
 
 export const articles = {
