@@ -38,6 +38,7 @@
         </FullHeight>
       </div>
     </b-row>
+    <slot name="float-elements" />
   </b-container>
 </template>
 
