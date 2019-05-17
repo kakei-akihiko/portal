@@ -69,7 +69,7 @@
             <b-col class="h-100 scroll">
               <b-textarea :value="editPanel.article.text" @input="articleTextInput" placeholder="本文" class="h-100" />
             </b-col>
-            <b-col>
+            <b-col class="h-100 scroll">
               <div v-html="editPanel.html" class="p-2"></div>
             </b-col>
           </b-row>
@@ -78,10 +78,10 @@
         <b-form-group label-sr-only slot="footer">
           <div class="d-flex pt-3">
             <b-input v-model="editPanel.article.tags" class="flex-glow-1" placeholder="タグ1 タグ2 ..." />
-            <b-button @click="editSaveClick" variant="primary">
+            <b-button @click="editSaveClick" variant="primary" style="white-space: nowrap">
               保存
             </b-button>
-            <b-button @click="editCancelClick" variant="default">
+            <b-button @click="editCancelClick" variant="default" style="white-space: nowrap">
               キャンセル
             </b-button>
           </div>
@@ -90,10 +90,10 @@
     </section>
 
     <div slot="float-elements">
-      <b-modal ref="articleModal" size="lg" no-fade ok-only ok-variant="default" ok-title="閉じる">
-          <template slot="modal-title" v-if="articleModal.article != null">
-            {{ articleModal.article.title }}
-          </template>
+      <b-modal ref="articleModal" size="lg" no-fade ok-only ok-variant="default" ok-title="閉じる" scrollable>
+        <template slot="modal-title" v-if="articleModal.article != null">
+          {{ articleModal.article.title }}
+        </template>
         <div v-if="articleModal.article != null" v-html="articleModal.article.attributes.bodyHtml"></div>
       </b-modal>
     </div>
