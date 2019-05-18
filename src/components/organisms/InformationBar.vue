@@ -12,7 +12,10 @@
         <hr/>
         <section>
           <h4><i class="far fa-check-square"></i> TODO</h4>
-          <b-alert show variant="warning" v-for="item in todoItems" :key="item.name" @click="closeTodo({name: item.name})">
+          <b-alert show variant="warning" dismissible
+              v-for="item in todoItems"
+              :key="item.name"
+              @dismissed="closeTodo({name: item.name})">
             {{ item.message }}
           </b-alert>
         </section>
@@ -59,7 +62,7 @@ export default {
     },
 
     ...mapMutations('todo', {
-      setCloseDate: 'closeTodo',
+      closeTodo: 'setCloseDate',
       refreshTodo: 'refresh',
     })
   },

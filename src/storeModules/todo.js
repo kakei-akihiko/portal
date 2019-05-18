@@ -1,52 +1,55 @@
 import dayjs from 'dayjs'
 
+const storageKey = 'TagAndText.Todo'
+
+const getInitialState = () => {
+  const today = {
+    date: dayjs().date(),
+    day: dayjs().day(),
+    dayString: dayjs().format('YYYY/MM/DD'),
+  }
+
+  const initialDefinition = {
+    doutor: {lastCloseDate: null, visible: false},
+    newton: {lastCloseDate: null, visible: false},
+    itoyokado: {lastCloseDate: null, visible: false},
+  }
+
+  const json = localStorage.getItem(storageKey)
+  const definitions = json == null ? initialDefinition : JSON.parse(json).definitions
+  return {today, definitions}
+}
+
 export const todo = {
   namespaced: true,
 
-  state: {
-    definitions: {
-      doutor: {lastCloseDate: null, visible: false},
-      newton: {lastCloseDate: null, visible: false},
-      itoyokado: {lastCloseDate: null, visible: false},
-    },
-  },
+  state: getInitialState(),
 
   mutations: {
     setCloseDate(state, {name} = {}) {
-      state.definitions[name].lastCloseDate = dayjs().format('YYYY/MM/DD')
-      state.definitions[name].visible = false
+      const {definitions} = state
+      definitions[name].lastCloseDate = dayjs().format('YYYY/MM/DD')
+      definitions[name].visible = false
+      localStorage.setItem(storageKey, JSON.stringify({definitions}))
     },
 
     refresh(state) {
-      const date = dayjs().date()
-      const day = dayjs().day()
-      const dayString = dayjs().format('YYYY/MM/DD')
-
-      state.today = {date, day, dayString}
+      const {day, date, dayString} = state.today
 
       // ドトールチャージの日…1日
-      state.definitions.doutor.visible = (
-        date == 1
-      ) && (
-        data.doutor.lastCloseDate == null
-        || data.doutor.lastCloseDate < dayString
-      )
+      const doutor = state.definitions.doutor
+      doutor.visible = (date == 1) &&
+        (doutor.lastCloseDate == null || doutor.lastCloseDate < dayString)
 
       // Newton発売日前日…25日（土以外）・24日（金）
-      state.definitions.newton.visible = (
-        date == 25 && day != 6 || date == 24 && day == 5
-      ) && (
-        data.newton.lastCloseDate == null
-        || data.newton.lastCloseDate < dayString
-      )
+      const newton = state.definitions.newton
+      newton.visible = (date == 25 && day != 6 || date == 24 && day == 5) &&
+        (newton.lastCloseDate == null || newton.lastCloseDate < dayString)
 
       // イトーヨーカドーハッピーデー
-      state.definitions.itoyokado.visible = (
-        date == 8 || date == 18 || date == 28
-      ) && (
-        data.itoyokado.lastCloseDate == null
-        || data.itoyokado.lastCloseDate < dayString
-      )
+      const itoyokado = state.definitions.itoyokado
+      itoyokado.visible = (date == 8 || date == 18 || date == 28) &&
+        (itoyokado.lastCloseDate == null || itoyokado.lastCloseDate < dayString)
     },
   },
 
@@ -71,7 +74,7 @@ export const todo = {
       if (state.definitions.itoyokado.visible) {
         items.push({
           name: 'itoyokado',
-          message: 'ハッピーデー',
+          message: '今日はヨーカドーハッピーデー',
         })
       }
 
