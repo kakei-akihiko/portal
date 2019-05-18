@@ -29,19 +29,25 @@
         <b-row no-gutters>
           <b-col v-for="article in articles" :key="article.id" cols="12" xl="6">
             <b-card>
+
               <b-card-title class="d-flex">
                 <div class="flex-grow-1">
                   <span v-if="article.url == null">{{ article.title }}</span>
                   <a v-else :href="article.url">{{ article.title }}</a>
                 </div>
                 <b-button variant="link" size="sm" @click="articleEditClick(article)">
-                  <i class="fas fa-pencil-alt"></i>
+                  <i class="fas fa-pencil-alt fa-lg"></i>
+                </b-button>
+                <b-button variant="link" size="sm" @click="articleShowModalClick(article)">
+                  <i class="far fa-window-maximize fa-lg"></i>
                 </b-button>
               </b-card-title>
+
               <div class="text-truncate" v-if="article.attributes.leadHtml == null">
                 {{ article.url }}
               </div>
               <div class="text-truncate" v-else v-html="article.attributes.leadHtml"></div>
+
             </b-card>
           </b-col>
         </b-row>
@@ -63,7 +69,7 @@
             <b-col class="h-100 scroll">
               <b-textarea :value="editPanel.article.text" @input="articleTextInput" placeholder="本文" class="h-100" />
             </b-col>
-            <b-col>
+            <b-col class="h-100 scroll">
               <div v-html="editPanel.html" class="p-2"></div>
             </b-col>
           </b-row>
@@ -72,10 +78,10 @@
         <b-form-group label-sr-only slot="footer">
           <div class="d-flex pt-3">
             <b-input v-model="editPanel.article.tags" class="flex-glow-1" placeholder="タグ1 タグ2 ..." />
-            <b-button @click="editSaveClick" variant="primary">
+            <b-button @click="editSaveClick" variant="primary" style="white-space: nowrap">
               保存
             </b-button>
-            <b-button @click="editCancelClick" variant="default">
+            <b-button @click="editCancelClick" variant="default" style="white-space: nowrap">
               キャンセル
             </b-button>
           </div>
@@ -83,6 +89,14 @@
       </FullHeight>
     </section>
 
+    <div slot="float-elements">
+      <b-modal ref="articleModal" size="lg" no-fade ok-only ok-variant="default" ok-title="閉じる" scrollable>
+        <template slot="modal-title" v-if="articleModal.article != null">
+          {{ articleModal.article.title }}
+        </template>
+        <div v-if="articleModal.article != null" v-html="articleModal.article.attributes.bodyHtml"></div>
+      </b-modal>
+    </div>
   </MainTemplate>
 </template>
 
@@ -145,6 +159,12 @@ export default {
       this.editPanel.html = marked(text || '')
     },
 
+    articleShowModalClick(article) {
+      this.articleModal.article = article
+      console.log('$ref', Object.keys(this.$refs))
+      this.$refs.articleModal.show()
+    },
+
     articleTextInput(text) {
       this.editPanel.article.text = text
       this.editPanel.html = marked(text)
@@ -184,6 +204,9 @@ export default {
         visible: false,
         article: null,
         html: null,
+      },
+      articleModal: {
+        article: null,
       },
     }
   },

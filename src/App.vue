@@ -38,4 +38,17 @@ html, body, #app {
 .v-interval > *:nth-child(n+2) {
   margin-left: 0.5rem
 }
+
+h1, .h1 {
+  font-size: 2.0rem !important;
+}
+h2, .h2 {
+  font-size: 1.8rem !important;
+}
+h3, .h3 {
+  font-size: 1.5rem !important;
+}
+h4, .h4 {
+  font-size: 1.4rem !important;
+}
 </style>
