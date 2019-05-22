@@ -113,6 +113,10 @@ export const articles = {
         state.selectedTags = state.selectedTags.filter(_tag => _tag != tag)
       }
     },
+
+    setSelectedTags(state, {tags}) {
+      state.selectedTags = tags
+    },
   },
 
   getters: {
@@ -164,6 +168,19 @@ export const articles = {
           commit('setArticle', {article})
         })
       }
+    },
+
+    writeArticle({commit, getters, state}, {article}) {
+      commit('setArticle', {article})
+
+      const allTags = getters.tags
+
+      const tags = state.selectedTags.filter(selectedTag => {
+        return allTags.some(tag => tag == selectedTag)
+      })
+
+      commit('setSelectedTags', {tags})
+
     }
   }
 }
