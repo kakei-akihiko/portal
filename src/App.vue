@@ -5,6 +5,13 @@
 </template>
 
 <style>
+:root {
+  --font-family-sans-serif: "Meiryo UI" !important;
+}
+p {
+  font-family: sans-serif !important;
+}
+
 html, body, #app {
   height: 100%
 }

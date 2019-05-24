@@ -176,7 +176,7 @@ export default {
         ...this.editPanel.article,
         ...{tags},
       }
-      this.setArticle({article})
+      this.writeArticle({article})
       this.editPanel.visible = false
       this.editPanel.article = null
     },
@@ -193,8 +193,8 @@ export default {
       })
     },
 
-    ...mapActions('articles', ['loadArticles']),
-    ...mapMutations('articles', ['selectTag', 'setArticle']),
+    ...mapActions('articles', ['loadArticles', 'writeArticle']),
+    ...mapMutations('articles', ['selectTag']),
   },
   
   data() {
