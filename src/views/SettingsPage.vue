@@ -43,10 +43,22 @@
             <b-textarea v-if="model.backup.text != null" :value="model.backup.text"/>
           </b-form-group>
 
-          <b-form-group label="リストア" label-cols="3" inline>
+          <b-form-group label="リストア" label-cols="3" :invalidFeedback="model.restore.error">
+            <b-file v-model="model.restore.file" accept="application.json" />
+          </b-form-group>
+
+          <b-form-group label-cols="3" inline>
             <div class="v-interval">
-              <b-button variant="primary" @click="overrideRestoreButtonClick">上書き</b-button>
-              <b-button variant="primary" @click="appendRestoreButtonClick">追加</b-button>
+              <b-button variant="primary"
+                @click="overrideRestoreButtonClick"
+                :disabled="model.restore.file == null">
+                上書き
+              </b-button>
+              <b-button variant="primary"
+                @click="appendRestoreButtonClick"
+                :disabled="model.restore.file == null">
+                追加
+              </b-button>
             </div>
           </b-form-group>
 
@@ -86,12 +98,19 @@ export default {
         this.model.backup.text = null;
         this.model.backup.error = 'バックアップ対象のデータがありません。';
       } else {
-        this.model.backup.text = JSON.stringify(articles, null, 2);
+        this.model.backup.text = JSON.stringify({articles}, null, 2);
         this.model.backup.error = null;
       }
     },
 
-    overrideRestoreButtonClick() {
+    async overrideRestoreButtonClick() {
+      const json = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = _ => resolve(reader.result);
+        reader.readAsText(this.model.restore.file);
+      });
+
+      console.log(JSON.parse(json));
     },
 
     appendRestoreButtonClick() {
@@ -113,6 +132,8 @@ export default {
           error: null,
         },
         restore: {
+          file: null,
+          error: null,
         },
       },
       options: {
