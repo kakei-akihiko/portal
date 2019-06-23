@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapMutations} from 'vuex'
 
 import MainTemplate from '@/components/templates/MainTemplate.vue'
 
@@ -110,13 +110,14 @@ export default {
         reader.readAsText(this.model.restore.file);
       });
 
-      console.log(JSON.parse(json));
+      this.setArticles(JSON.parse(json).articles);
     },
 
     appendRestoreButtonClick() {
     },
 
-    ...mapActions('settings', ['setBackground', 'loadBackground'])
+    ...mapActions('settings', ['setBackground', 'loadBackground']),
+    ...mapMutations('articles', ['setArticles']),
   },
 
   data() {
