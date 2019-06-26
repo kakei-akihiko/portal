@@ -98,6 +98,11 @@ export const articles = {
       Storage.setArticles({articles: state.articles})
     },
 
+    setArticles(state, articles) {
+      state.articles = articles
+      Storage.setArticles({articles: state.articles})
+    },
+
     selectTag(state, {tag, selected} = {}) {
       if (tag == null || selected == null) {
         log.error('selectedTag tag', tag, 'selected:', selected)
