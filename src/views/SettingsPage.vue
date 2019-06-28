@@ -111,13 +111,27 @@ export default {
       });
 
       this.setArticles(JSON.parse(json).articles);
+
+      this.model.restore.file = null;
     },
 
-    appendRestoreButtonClick() {
+    async appendRestoreButtonClick() {
+      const json = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = _ => resolve(reader.result);
+        reader.readAsText(this.model.restore.file);
+      });
+
+      JSON.parse(json).articles.forEach(article => {
+        delete article.id;
+        this.setArticle({article});
+      });
+
+      this.model.restore.file = null;
     },
 
     ...mapActions('settings', ['setBackground', 'loadBackground']),
-    ...mapMutations('articles', ['setArticles']),
+    ...mapMutations('articles', ['setArticle', 'setArticles']),
   },
 
   data() {
