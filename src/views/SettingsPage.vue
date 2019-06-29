@@ -43,20 +43,21 @@
             <b-textarea v-if="model.backup.text != null" :value="model.backup.text"/>
           </b-form-group>
 
-          <b-form-group label="リストア" label-cols="3" :invalidFeedback="model.restore.error">
-            <b-file v-model="model.restore.file" accept="application.json" />
+          <b-form-group label="リストア" label-cols="3"
+              :invalid-feedback="model.restore.error" :state="restoreState">
+            <b-file v-model="restoreFile" accept="application.json" :state="restoreState" />
           </b-form-group>
 
           <b-form-group label-cols="3" inline>
             <div class="v-interval">
               <b-button variant="primary"
                 @click="overrideRestoreButtonClick"
-                :disabled="model.restore.file == null">
+                :disabled="restoreFile == null">
                 上書き
               </b-button>
               <b-button variant="primary"
                 @click="appendRestoreButtonClick"
-                :disabled="model.restore.file == null">
+                :disabled="restoreFile == null">
                 追加
               </b-button>
             </div>
@@ -84,6 +85,20 @@ export default {
   },
 
   computed: {
+    restoreFile: {
+      get() {
+        return this.model.restore.file;
+      },
+      set(value) {
+        this.model.restore.file = value;
+        this.model.restore.error = null;
+      },
+    },
+
+    restoreState() {
+      return this.model.restore.error == null ? null : false;
+    },
+
     ...mapState('settings', ['background'])
   },
 
@@ -103,31 +118,41 @@ export default {
       }
     },
 
-    async overrideRestoreButtonClick() {
-      const json = await new Promise(resolve => {
+    async readFileAsText(file) {
+      return await new Promise(resolve => {
         const reader = new FileReader();
         reader.onload = _ => resolve(reader.result);
-        reader.readAsText(this.model.restore.file);
+        reader.readAsText(file);
       });
+    },
 
-      this.setArticles(JSON.parse(json).articles);
-
-      this.model.restore.file = null;
+    async overrideRestoreButtonClick() {
+      try {
+        const json = await readFileAsText(this.model.restore.file);
+        this.setArticles(JSON.parse(json).articles);
+        this.model.restore.file = null;
+        this.model.restore.error = null;
+      } catch(ex) {
+        const message = 'ファイルの読み込みに失敗しました。';
+        console.log(message, ex);
+        this.model.restore.error = message;
+      }
     },
 
     async appendRestoreButtonClick() {
-      const json = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = _ => resolve(reader.result);
-        reader.readAsText(this.model.restore.file);
-      });
-
-      JSON.parse(json).articles.forEach(article => {
-        delete article.id;
-        this.setArticle({article});
-      });
-
-      this.model.restore.file = null;
+      try {
+        const json = await readFileAsText(this.model.restore.file);
+        JSON.parse(json).articles.forEach(article => {
+          delete article.id;
+          this.setArticle({article});
+        });
+        this.model.restore.file = null;
+        this.model.restore.error = null;
+      } catch(ex) {
+        const message = 'ファイルの読み込みに失敗しました。';
+        console.log(message, ex);
+        this.model.restore.error = message;
+      }
     },
 
     ...mapActions('settings', ['setBackground', 'loadBackground']),
