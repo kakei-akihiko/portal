@@ -1,10 +1,5 @@
 <template>
   <MainTemplate title="Home">
-    <div slot="sidebar">
-      <b-card title="設定">
-      </b-card>
-    </div>
-
     <section class="h-100" slot="main">
       <div class="h-100 scroll">
         <b-card title="背景">
