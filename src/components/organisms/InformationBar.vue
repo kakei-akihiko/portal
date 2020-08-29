@@ -26,12 +26,6 @@
         <h4><i class="far fa-calendar-alt"></i> 日時</h4>
         {{ datetimeString }}
       </section>
-
-      <hr/>
-      <section>
-        <h4><i class="fas fa-sun"></i> 天気</h4>
-        <Weather class="text-center"/>
-      </section>
     </div>
   </b-card>
 </template>
@@ -42,12 +36,10 @@ import {mapActions, mapGetters, mapMutations} from 'vuex'
 import dayjs from 'dayjs'
 
 import ExpandingIcon from '@/components/inlines/ExpandingIcon'
-import Weather from '@/components/blocks/Weather'
 
 export default {
   components: {
     ExpandingIcon,
-    Weather,
   },
 
   computed: {
