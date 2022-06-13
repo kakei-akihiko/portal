@@ -1,40 +1,36 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
-
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store, { dependances } from './store'
 
 import BootstrapVue from 'bootstrap-vue'
-import './assets/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import FullHeight from '@/components/templates/FullHeight.vue'
+import NotFoundAlert from '@/components/alerts/NotFoundAlert.vue'
+import FullHeight from '@/components/layouts/FullHeight.vue'
+import TheMainLayout from '@/components/layouts/TheMainLayout.vue'
+import TheSidebar from '@/components/sidebar/TheSidebar.vue'
 
-// ▼BootStrap Vueバグ対策
+import SettingRepository from '@/infrastructure/SettingRepository.js'
+import SettingService from '@/usecases/SettingService.js'
 
-let originalVueComponent = Vue.component
-Vue.component = function (name, definition) {
-  if (name === 'bFormCheckboxGroup' || name === 'bCheckboxGroup' ||
-      name === 'bCheckGroup' || name === 'bFormRadioGroup') {
-    definition.components = {bFormCheckbox: definition.components[0]}
-  }
-  originalVueComponent.apply(this, [name, definition])
-}
-Vue.use(BootstrapVue)
-Vue.component = originalVueComponent
-
-// ▲BootStrap Vueバグ対策
-
+Vue.component('NotFoundAlert', NotFoundAlert)
 Vue.component('FullHeight', FullHeight)
-
+Vue.component('TheMainLayout', TheMainLayout)
+Vue.component('TheSidebar', TheSidebar)
 
 Vue.config.productionTip = false
 
-Vue.use(Vuex);
+Vue.use(BootstrapVue)
+
+const settingRepository = new SettingRepository(dependances.articlesDatabase)
+const settingService = new SettingService(settingRepository)
+
+dependances.settingService = settingService
 
 new Vue({
   router,
-  store: new Vuex.Store(store),
+  store,
   render: h => h(App)
 }).$mount('#app')
