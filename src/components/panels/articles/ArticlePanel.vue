@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import marked from 'marked'
+import { marked } from 'marked'
 
 export default {
 
@@ -88,7 +88,7 @@ export default {
 
   computed: {
     bodyHtml () {
-      return marked(this.article.text)
+      return marked.parse(this.article.text)
     },
     expandButtonVisible () {
       return this.article.text != null && this.article.text.length > 0

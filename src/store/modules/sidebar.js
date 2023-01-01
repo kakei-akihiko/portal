@@ -1,4 +1,4 @@
-import marked from 'marked'
+import { marked } from 'marked'
 
 export default {
   namespaced: true,
@@ -11,7 +11,7 @@ export default {
   mutations: {
     setArticle (state, article) {
       const html = article == null || article.text == null ? null
-        : marked(article.text)
+        : marked.parse(article.text)
       state.article = { html, ...article }
     },
     setArticleId (state, id) {

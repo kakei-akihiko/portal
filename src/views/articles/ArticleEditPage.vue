@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import marked from 'marked'
+import { marked } from 'marked'
 
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
@@ -105,7 +105,7 @@ export default {
       },
       set (value) {
         this.form.text = value
-        this.form.preview = this.form.text == null ? '' : marked(this.form.text)
+        this.form.preview = this.form.text == null ? '' : marked.parse(this.form.text)
       }
     }
   },
