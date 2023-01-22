@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { marked } from 'marked'
+import { marked } from '../../infrastructure/markdown.js'
 
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'

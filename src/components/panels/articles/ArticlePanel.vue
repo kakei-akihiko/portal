@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { marked } from 'marked'
+import { marked } from '../../../infrastructure/markdown.js'
 
 export default {
 
