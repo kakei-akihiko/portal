@@ -58,6 +58,12 @@
         </b-button>
         <b-button
           variant="link"
+          :to="{name: 'ArticleReadPage', params: {id: article.id}}"
+        >
+          <i class="far fa-newspaper"></i>
+        </b-button>
+        <b-button
+          variant="link"
           :to="{name: 'ArticleEditPage', params: {id: article.id}}"
         >
           <i class="fas fa-edit"></i>
