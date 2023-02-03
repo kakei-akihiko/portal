@@ -1,5 +1,5 @@
 <template>
-  <TheMainLayout main-panel-scroll>
+  <TheMainLayout>
     <TheSidebar slot="sidebar">
       <NavCategories class="mt-3"/>
       <FormGroupTagButtons class="mt-3"/>
@@ -12,37 +12,25 @@
         label="Spinning"
       />
       <NotFoundAlert v-else-if="article == null"/>
-      <FullHeight v-else>
-        <b-form-group
-          slot="header"
-          label-sr-only
-        >
-          <h2>{{ form.title }}</h2>
-        </b-form-group>
-
-        <div v-html="form.preview"/>
-
-        <b-form-group
-          slot="footer"
-          label-sr-only
-        >
-          <div class="d-flex h-interval">
-            <b-input
-              name="tags"
-              placeholder="タグ1 タグ2 ..."
-              readonly
-              v-model="form.tagsString"
-            />
-            <b-button
-              variant="secondary"
-              class="button-cancel"
-              :to="{name: 'ArticlesListPage'}"
-            >
-              閉じる
-            </b-button>
-          </div>
-        </b-form-group>
-      </FullHeight>
+      <section v-else class="h-100 main">
+        <h2>{{ form.title }}</h2>
+        <div v-html="form.preview" class="preview"/>
+        <div class="d-flex h-interval">
+          <b-input
+            name="tags"
+            placeholder="タグ1 タグ2 ..."
+            readonly
+            v-model="form.tagsString"
+          />
+          <b-button
+            variant="secondary"
+            class="button-cancel"
+            :to="{name: 'ArticlesListPage'}"
+          >
+            閉じる
+          </b-button>
+        </div>
+      </section>
     </div>
   </TheMainLayout>
 </template>
@@ -131,5 +119,13 @@ export default {
 <style scoped>
 .button-cancel {
   white-space: nowrap
+}
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.preview {
+  overflow-y: auto;
+  margin-bottom: 1rem;
 }
 </style>
