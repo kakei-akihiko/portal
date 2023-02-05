@@ -1,8 +1,6 @@
 <template>
   <TheMainLayout>
     <TheSidebar slot="sidebar">
-      <NavCategories class="mt-3"/>
-      <FormGroupTagButtons class="mt-3"/>
     </TheSidebar>
 
     <div slot="panel-main" class="h-100">
@@ -13,22 +11,33 @@
       />
       <NotFoundAlert v-else-if="article == null"/>
       <section v-else class="h-100 main">
-        <h2>{{ form.title }}</h2>
+        <div class="title-div">
+          <h2>{{ form.title }}</h2>
+          <div>
+            <b-button
+              variant="link"
+              :to="{name: 'ArticleEditPage', params: {id: article.id}}"
+            >
+              <i class="fas fa-edit"></i>
+            </b-button>
+            <b-button
+              variant="link"
+              class="button-cancel"
+              :to="{name: 'ArticlesListPage'}"
+            >
+              <i class="fas fa-times"></i>
+            </b-button>
+          </div>
+        </div>
         <div v-html="form.preview" class="preview"/>
-        <div class="d-flex h-interval">
-          <b-input
-            name="tags"
-            placeholder="タグ1 タグ2 ..."
-            readonly
-            v-model="form.tagsString"
-          />
-          <b-button
-            variant="secondary"
-            class="button-cancel"
-            :to="{name: 'ArticlesListPage'}"
+        <div class="h-interval">
+          <b-badge
+            v-for="tag in form.tags"
+            :key="tag"
+            variant="info"
           >
-            閉じる
-          </b-button>
+            {{ tag }}
+          </b-badge>
         </div>
       </section>
     </div>
@@ -42,8 +51,6 @@ import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-import NavCategories from '@/components/navs/NavCategories.vue'
-import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -52,8 +59,6 @@ const articleService = new ArticleService(articleRepository, categoryRepository)
 
 export default {
   name: 'ArticleReadPage',
-
-  components: { FormGroupTagButtons, NavCategories },
 
   data () {
     const articleId = parseInt(this.$route.params.id)
@@ -66,7 +71,7 @@ export default {
         title: '',
         text: '',
         preview: '',
-        tagsString: ''
+        tags: []
       }
     }
   },
@@ -108,7 +113,7 @@ export default {
         this.article = articles[0]
         this.form.title = this.article.title
         this.text = this.article.text
-        this.form.tagsString = this.article.tags?.join(' ') ?? ''
+        this.form.tags = this.article.tags
       }
       this.loading = false
     }
@@ -127,5 +132,9 @@ export default {
 .preview {
   overflow-y: auto;
   margin-bottom: 1rem;
+}
+.title-div {
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 </style>
