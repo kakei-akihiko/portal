@@ -150,7 +150,10 @@ export default {
 
       await articleService.set({ id, categoryId, title, text, tags })
 
-      this.$router.push({ name: 'ArticlesListPage' })
+      this.$router.push({
+        name: 'ArticleReadPage',
+        parems: { id }
+      })
     }
   }
 }
