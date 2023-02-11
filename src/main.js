@@ -29,8 +29,6 @@ const settingService = new SettingService(settingRepository)
 
 dependances.settingService = settingService
 
-new Vue({
-  router,
-  store,
+Vue.createApp({
   render: h => h(App)
-}).$mount('#app')
+}).use(router).use(store).mount('#app')
