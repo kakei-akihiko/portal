@@ -40,22 +40,11 @@
           </b-badge>
         </div>
 
-        <b-button
-          v-if="expanded && expandButtonVisible"
-          variant="link"
-          class="p-0"
+        <ButtonExpand
+          v-if="expandButtonVisible"
+          :expanded="expanded"
           @click="expandButtonClick"
-        >
-          <i class="fas fa-arrow-circle-down"></i>
-        </b-button>
-        <b-button
-          v-if="!expanded && expandButtonVisible"
-          variant="link"
-          class="p-0"
-          @click="expandButtonClick"
-        >
-          <i class="fas fa-arrow-circle-up"></i>
-        </b-button>
+        />
         <b-button
           variant="link"
           :to="{name: 'ArticleReadPage', params: {id: article.id}}"
@@ -76,10 +65,13 @@
 
 <script>
 import { marked } from '../../../infrastructure/markdown.js'
+import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
 export default {
 
   name: 'ArticlePanel',
+
+  components: { ButtonExpand },
 
   props: {
     article: {
