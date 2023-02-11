@@ -70,7 +70,7 @@
         </b-button>
       </div>
     </div>
-    <div v-show="expanded" v-html="bodyHtml"/>
+    <div v-show="expanded" v-html="bodyHtml" class="article-body-view"/>
   </b-card>
 </template>
 
