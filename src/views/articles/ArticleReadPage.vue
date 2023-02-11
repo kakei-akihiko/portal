@@ -29,7 +29,7 @@
             </b-button>
           </div>
         </div>
-        <div v-html="form.preview" class="preview"/>
+        <div v-html="form.preview" class="preview article-body-view"/>
         <div class="h-interval">
           <b-badge
             v-for="tag in form.tags"

@@ -30,7 +30,7 @@
             />
           </b-col>
           <b-col cols="6" class="overflow-auto h-100">
-            <div v-html="form.preview"/>
+            <div v-html="form.preview" class="article-body-view"/>
           </b-col>
         </b-row>
 

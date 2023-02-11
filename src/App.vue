@@ -32,4 +32,8 @@ html, body, #app {
 .nav-category .active {
   font-weight: bold
 }
+
+.article-body-view {
+  line-height: 1.8rem;
+}
 </style>
