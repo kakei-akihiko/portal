@@ -1,16 +1,20 @@
 <template>
   <TheMainLayout main-panel-scroll>
-    <TheSidebar slot="sidebar">
-      <NavCategories class="mt-3"/>
-      <FormGroupTagButtons class="mt-3"/>
-    </TheSidebar>
+    <template v-slot:sidebar>
+      <TheSidebar>
+        <NavCategories class="mt-3"/>
+        <FormGroupTagButtons class="mt-3"/>
+      </TheSidebar>
+    </template>
 
-    <div slot="panel-main" class="h-100">
-      <ArticleListPageMainPanel
-        v-if="selectedCategory != null"
-        :category="selectedCategory"
-      />
-    </div>
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <ArticleListPageMainPanel
+          v-if="selectedCategory != null"
+          :category="selectedCategory"
+        />
+      </div>
+    </template>
   </TheMainLayout>
 </template>
 

@@ -1,36 +1,42 @@
 <template>
   <TheMainLayout main-panel-scroll>
-    <TheSidebar slot="sidebar"/>
-    <div
-      slot="panel-main"
-      class="h-100"
-    >
-      <NotFoundAlert v-if="category == null"/>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
       <div
-        v-else
+        slot="panel-main"
         class="h-100"
       >
-        <h2>{{ category.title }}の設定</h2>
+        <NotFoundAlert v-if="category == null"/>
+        <div
+          v-else
+          class="h-100"
+        >
+          <h2>{{ category.title }}の設定</h2>
 
-        <b-form>
-          <b-form-group label="タグの選択" label-cols="4">
-            <b-radio-group
-              name="tagsSelection"
-              :options="tagSelection.options"
-              v-model="tagSelectionSelected"
-            />
-          </b-form-group>
+          <b-form>
+            <b-form-group label="タグの選択" label-cols="4">
+              <b-radio-group
+                name="tagsSelection"
+                :options="tagSelection.options"
+                v-model="tagSelectionSelected"
+              />
+            </b-form-group>
 
-          <b-form-group label="タグの表示位置" label-cols="4">
-            <b-radio-group
-              name="tagsPosition"
-              :options="tagsPosition.options"
-              v-model="tagPositionSelected"
-            />
-          </b-form-group>
-        </b-form>
+            <b-form-group label="タグの表示位置" label-cols="4">
+              <b-radio-group
+                name="tagsPosition"
+                :options="tagsPosition.options"
+                v-model="tagPositionSelected"
+              />
+            </b-form-group>
+          </b-form>
+        </div>
       </div>
-    </div>
+    </template>
+
   </TheMainLayout>
 </template>
 

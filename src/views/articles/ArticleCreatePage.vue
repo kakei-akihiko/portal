@@ -1,58 +1,61 @@
 <template>
   <TheMainLayout no-sidebar>
-    <div slot="panel-main" class="h-100">
-      <FullHeight>
-        <b-form-group slot="header" label-sr-only>
-          <b-input
-            name="title"
-            placeholder="タイトル"
-            v-model="form.title"
-          />
-        </b-form-group>
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <FullHeight>
+          <template v-slot:header>
+            <b-form-group label-sr-only>
+              <b-input
+                name="title"
+                placeholder="タイトル"
+                v-model="form.title"
+              />
+            </b-form-group>
+          </template>
 
-        <b-row class="h-100 pb-3">
-          <b-col cols="6" class="h-100">
-            <b-textarea
-              name="text"
-              placeholder="本文"
-              no-resize
-              class="h-100"
-              v-model="text"
-            />
-          </b-col>
-          <b-col cols="6" class="overflow-auto h-100">
-            <div v-html="form.preview"/>
-          </b-col>
-        </b-row>
+          <b-row class="h-100 pb-3">
+            <b-col cols="6" class="h-100">
+              <b-textarea
+                name="text"
+                placeholder="本文"
+                no-resize
+                class="h-100"
+                v-model="text"
+              />
+            </b-col>
+            <b-col cols="6" class="overflow-auto h-100">
+              <div v-html="form.preview"/>
+            </b-col>
+          </b-row>
 
-        <b-form-group
-          slot="footer"
-          label-sr-only
-        >
-          <div class="d-flex h-interval">
-            <b-input
-              name="tags"
-              placeholder="タグ1 タグ2 ..."
-              v-model="form.tagsString"
-            />
-            <b-button
-              variant="primary"
-              class="button-save"
-              @click="saveButtonClick"
-            >
-              保存
-            </b-button>
-            <b-button
-              variant="secondary"
-              class="button-cancel"
-              :to="{name: 'ArticlesListPage'}"
-            >
-              キャンセル
-            </b-button>
-          </div>
-        </b-form-group>
-      </FullHeight>
-    </div>
+          <template v-slot:footer>
+            <b-form-group label-sr-only>
+              <div class="d-flex h-interval">
+                <b-input
+                  name="tags"
+                  placeholder="タグ1 タグ2 ..."
+                  v-model="form.tagsString"
+                />
+                <b-button
+                  variant="primary"
+                  class="button-save"
+                  @click="saveButtonClick"
+                >
+                  保存
+                </b-button>
+                <b-button
+                  variant="secondary"
+                  class="button-cancel"
+                  :to="{name: 'ArticlesListPage'}"
+                >
+                  キャンセル
+                </b-button>
+              </div>
+            </b-form-group>
+          </template>
+        </FullHeight>
+      </div>
+    </template>
 
   </TheMainLayout>
 </template>

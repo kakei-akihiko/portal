@@ -1,56 +1,58 @@
 <template>
   <TheMainLayout main-panel-scroll>
-    <TheSidebar slot="sidebar"/>
-    <div
-      slot="panel-main"
-      class="h-100"
-    >
-      <NotFoundAlert v-if="category == null"/>
-      <div
-        v-else
-        class="h-100"
-      >
-        <h2>記事を{{ category.title }}にインポート</h2>
-        <b-form-group>
-          <b-form-file
-            v-model="file"
-            :value="file"
-            @input="fileSelect"
-            accept="application/json"
-            placeholder="Choose a file or drop it here..."
-            drop-placeholder="Drop file here..."
-          />
-        </b-form-group>
-        <div class="d-flex">
-          <b-form-group class="ml-auto">
-            <b-button
-              :disabled="importButton.disabled"
-              v-show="importButton.visible"
-              variant="primary"
-              @click="importButtonClick"
-            >
-              選択をインポート
-            </b-button>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <NotFoundAlert v-if="category == null"/>
+        <div
+          v-else
+          class="h-100"
+        >
+          <h2>記事を{{ category.title }}にインポート</h2>
+          <b-form-group>
+            <b-form-file
+              v-model="file"
+              :value="file"
+              @input="fileSelect"
+              accept="application/json"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+            />
           </b-form-group>
-        </div>
-        <b-list-group>
-          <b-list-group-item
-            v-for="article in articles"
-            :key="article.id"
-            class="d-flex"
-          >
-            <div>{{ article.title }}</div>
-            <b-badge
-              v-if="article.completed"
-              variant="info"
-              class="ml-auto"
+          <div class="d-flex">
+            <b-form-group class="ml-auto">
+              <b-button
+                :disabled="importButton.disabled"
+                v-show="importButton.visible"
+                variant="primary"
+                @click="importButtonClick"
+              >
+                選択をインポート
+              </b-button>
+            </b-form-group>
+          </div>
+          <b-list-group>
+            <b-list-group-item
+              v-for="article in articles"
+              :key="article.id"
+              class="d-flex"
             >
-              済
-            </b-badge>
-          </b-list-group-item>
-        </b-list-group>
+              <div>{{ article.title }}</div>
+              <b-badge
+                v-if="article.completed"
+                variant="info"
+                class="ml-auto"
+              >
+                済
+              </b-badge>
+            </b-list-group-item>
+          </b-list-group>
+        </div>
       </div>
-    </div>
+    </template>
   </TheMainLayout>
 </template>
 
