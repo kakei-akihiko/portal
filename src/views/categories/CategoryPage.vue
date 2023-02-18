@@ -1,54 +1,58 @@
 <template>
   <TheMainLayout main-panel-scroll>
-    <TheSidebar slot="sidebar"/>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
 
-    <div slot="panel-main" class="h-100">
-      <h2>カテゴリー</h2>
-      <section class="section-new-card">
-        <h3>新規作成</h3>
-        <b-card class="card-new-category">
-          <b-form-group label="名称">
-            <b-input v-model="cardNewCategoryName" />
-          </b-form-group>
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <h2>カテゴリー</h2>
+        <section class="section-new-card">
+          <h3>新規作成</h3>
+          <b-card class="card-new-category">
+            <b-form-group label="名称">
+              <b-input v-model="cardNewCategoryName" />
+            </b-form-group>
 
-          <b-form-group label-sr-only class="mb-0">
-            <b-button
-              :disabled="cardNewCategoryCreateButtonDisabled"
-              variant="primary"
-              @click="createCategoryButtonClick"
-            >
-              作成
-            </b-button>
-          </b-form-group>
-        </b-card>
-      </section>
-      <section class="section-list">
-        <h3>一覧</h3>
-        <b-card
-          v-for="category in $store.state.categories"
-          :key="category.id"
-          body-class="d-flex"
-        >
-          <div>
-            {{ category.title }}
-          </div>
-          <div class="ml-auto h-interval">
-            <router-link
-              :to="{name: 'CategoryImportPage', params: {id: category.id}}"
-            >
-              インポート
-            </router-link>
-            <b-button
-              variant="info"
-              @click="exportButtonClick(category)"
-            >
-              <i class="fas fa-download"/>
-              エクスポート
-            </b-button>
-          </div>
-        </b-card>
-      </section>
-    </div>
+            <b-form-group label-sr-only class="mb-0">
+              <b-button
+                :disabled="cardNewCategoryCreateButtonDisabled"
+                variant="primary"
+                @click="createCategoryButtonClick"
+              >
+                作成
+              </b-button>
+            </b-form-group>
+          </b-card>
+        </section>
+        <section class="section-list">
+          <h3>一覧</h3>
+          <b-card
+            v-for="category in $store.state.categories"
+            :key="category.id"
+            body-class="d-flex"
+          >
+            <div>
+              {{ category.title }}
+            </div>
+            <div class="ml-auto h-interval">
+              <router-link
+                :to="{name: 'CategoryImportPage', params: {id: category.id}}"
+              >
+                インポート
+              </router-link>
+              <b-button
+                variant="info"
+                @click="exportButtonClick(category)"
+              >
+                <i class="fas fa-download"/>
+                エクスポート
+              </b-button>
+            </div>
+          </b-card>
+        </section>
+      </div>
+    </template>
   </TheMainLayout>
 </template>
 

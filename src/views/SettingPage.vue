@@ -1,7 +1,10 @@
 <template>
   <TheMainLayout main-panel-scroll>
-    <TheSidebar slot="sidebar"/>
-    <div slot="panel-main">
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
       <h2>設定</h2>
 
       <b-card header="サイドバーの記事">
@@ -32,8 +35,7 @@
           </b-button>
         </b-form-group>
       </b-card>
-
-    </div>
+    </template>
   </TheMainLayout>
 </template>
 

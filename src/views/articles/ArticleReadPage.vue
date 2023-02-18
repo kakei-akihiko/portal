@@ -1,46 +1,49 @@
 <template>
   <TheMainLayout>
-    <TheSidebar slot="sidebar">
-    </TheSidebar>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
 
-    <div slot="panel-main" class="h-100">
-      <b-spinner
-        v-if="loading"
-        variant="primary"
-        label="Spinning"
-      />
-      <NotFoundAlert v-else-if="article == null"/>
-      <section v-else class="h-100 main">
-        <div class="title-div">
-          <h2>{{ form.title }}</h2>
-          <div>
-            <b-button
-              variant="link"
-              :to="{name: 'ArticleEditPage', params: {id: article.id}}"
-            >
-              <i class="fas fa-edit"></i>
-            </b-button>
-            <b-button
-              variant="link"
-              class="button-cancel"
-              :to="{name: 'ArticlesListPage'}"
-            >
-              <i class="fas fa-times"></i>
-            </b-button>
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <b-spinner
+          v-if="loading"
+          variant="primary"
+          label="Spinning"
+        />
+        <NotFoundAlert v-else-if="article == null"/>
+        <section v-else class="h-100 main">
+          <div class="title-div">
+            <h2>{{ form.title }}</h2>
+            <div>
+              <b-button
+                variant="link"
+                :to="{name: 'ArticleEditPage', params: {id: article.id}}"
+              >
+                <i class="fas fa-edit"></i>
+              </b-button>
+              <b-button
+                variant="link"
+                class="button-cancel"
+                :to="{name: 'ArticlesListPage'}"
+              >
+                <i class="fas fa-times"></i>
+              </b-button>
+            </div>
           </div>
-        </div>
-        <div v-html="form.preview" class="preview article-body-view"/>
-        <div class="h-interval">
-          <b-badge
-            v-for="tag in form.tags"
-            :key="tag"
-            variant="info"
-          >
-            {{ tag }}
-          </b-badge>
-        </div>
-      </section>
-    </div>
+          <div v-html="form.preview" class="preview article-body-view"/>
+          <div class="h-interval">
+            <b-badge
+              v-for="tag in form.tags"
+              :key="tag"
+              variant="info"
+            >
+              {{ tag }}
+            </b-badge>
+          </div>
+        </section>
+      </div>
+    </template>
   </TheMainLayout>
 </template>
 
