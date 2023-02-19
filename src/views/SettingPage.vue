@@ -15,11 +15,13 @@
           />
         </b-form-group>
         <b-form-group label-sr-only class="mb-0">
-          <b-button
+          <button
+            class="btn btn-primary"
+            type="button"
             @click="sidebarArticleButtonClick"
           >
             反映
-          </b-button>
+          </button>
         </b-form-group>
       </b-card>
 
@@ -30,9 +32,13 @@
         header-text-variant="danger"
       >
         <b-form-group>
-          <b-button @click="deleteDatabaseButtonClick">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="deleteDatabaseButtonClick"
+          >
             データベース削除
-          </b-button>
+          </button>
         </b-form-group>
       </b-card>
     </template>

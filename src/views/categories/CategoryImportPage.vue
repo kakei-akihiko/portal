@@ -24,14 +24,14 @@
           </b-form-group>
           <div class="d-flex">
             <b-form-group class="ml-auto">
-              <b-button
+              <button
                 :disabled="importButton.disabled"
                 v-show="importButton.visible"
-                variant="primary"
+                class="btn btn-primary"
                 @click="importButtonClick"
               >
                 選択をインポート
-              </b-button>
+              </button>
             </b-form-group>
           </div>
           <b-list-group>

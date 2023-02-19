@@ -15,13 +15,13 @@
             </b-form-group>
 
             <b-form-group label-sr-only class="mb-0">
-              <b-button
+              <button
                 :disabled="cardNewCategoryCreateButtonDisabled"
-                variant="primary"
+                class="btn btn-primary"
                 @click="createCategoryButtonClick"
               >
                 作成
-              </b-button>
+              </button>
             </b-form-group>
           </b-card>
         </section>
@@ -41,13 +41,13 @@
               >
                 インポート
               </router-link>
-              <b-button
-                variant="info"
+              <button
+                class="btn btn-info"
                 @click="exportButtonClick(category)"
               >
                 <i class="fas fa-download"/>
                 エクスポート
-              </b-button>
+              </button>
             </div>
           </b-card>
         </section>

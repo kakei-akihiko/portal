@@ -45,18 +45,18 @@
           :expanded="expanded"
           @click="expandButtonClick"
         />
-        <b-button
-          variant="link"
-          :to="{name: 'ArticleReadPage', params: {id: article.id}}"
+        <button
+          class="btn btn-link"
+          @click="articleReadButtonClick"
         >
           <i class="far fa-newspaper"></i>
-        </b-button>
-        <b-button
-          variant="link"
-          :to="{name: 'ArticleEditPage', params: {id: article.id}}"
+        </button>
+        <button
+          class="btn btn-link"
+          @click="articleEditButtonClick"
         >
           <i class="fas fa-edit"></i>
-        </b-button>
+        </button>
       </div>
     </div>
     <div v-show="expanded" v-html="bodyHtml" class="article-body-view"/>
@@ -100,6 +100,18 @@ export default {
   },
 
   methods: {
+    articleEditButtonClick () {
+      this.$router.push({
+        name: 'ArticleEditPage',
+        params: {id: this.article.id}
+      })
+    },
+    articleReadButtonClick () {
+      this.$router.push({
+        name: 'ArticleReadPage',
+        params: {id: this.article.id}
+      })
+    },
     expandButtonClick () {
       this.$emit('expand', !this.expanded)
     }

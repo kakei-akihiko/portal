@@ -36,20 +36,18 @@
                   placeholder="タグ1 タグ2 ..."
                   v-model="form.tagsString"
                 />
-                <b-button
-                  variant="primary"
-                  class="button-save"
+                <button
+                  class="btn btn-primary button-save"
                   @click="saveButtonClick"
                 >
                   保存
-                </b-button>
-                <b-button
-                  variant="secondary"
-                  class="button-cancel"
-                  :to="{name: 'ArticlesListPage'}"
+                </button>
+                <button
+                  class="btn btn-secondary button-cancel"
+                  @click="cancelButtonClick"
                 >
                   キャンセル
-                </b-button>
+                </button>
               </div>
             </b-form-group>
           </template>
@@ -115,6 +113,9 @@ export default {
   },
 
   methods: {
+    cancelButtonClick () {
+      this.$router.push({name: 'ArticlesListPage'})
+    },
     async confirmCategoryExistence () {
       const category = await categoryRepository.get(this.categoryId)
       this.categoryFound = category != null

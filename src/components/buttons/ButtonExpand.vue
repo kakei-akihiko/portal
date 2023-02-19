@@ -1,12 +1,11 @@
 <template>
-  <b-button
-    variant="link"
-    class="p-0"
+  <button
+    class="btn btn-link p-0"
     @click="buttonClick"
   >
     <i v-if="expanded" class="fas fa-arrow-circle-down"></i>
     <i v-else class="fas fa-arrow-circle-up"></i>
-  </b-button>
+  </button>
 </template>
 
 <script>

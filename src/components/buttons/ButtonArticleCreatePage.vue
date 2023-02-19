@@ -1,10 +1,10 @@
 <template>
-  <b-button
-    variant="link"
-    :to="{ name: 'ArticleCreatePage', params: { categoryId } }"
+  <button
+    class="btn btn-link"
+    @click="buttonClick"
   >
     <i class="fas fa-plus"></i>
-  </b-button>
+  </button>
 </template>
 
 <script>
@@ -13,6 +13,16 @@ export default {
 
   props: {
     categoryId: Number
+  },
+
+  methods: {
+    buttonClick () {
+      const { categoryId } = this
+      this.$router.push({
+        name: 'ArticleCreatePage',
+        params: { categoryId }
+      })
+    }
   }
 }
 </script>
