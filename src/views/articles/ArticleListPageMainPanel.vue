@@ -3,10 +3,10 @@
     <div class="d-flex">
       <h2>{{ category.title }}</h2>
       <div class="ml-auto">
-        <b-form-group>
+        <fieldset class="form-group">
           <ButtonCategorySettingPage :category-id="category.id"/>
           <ButtonArticleCreatePage :category-id="category.id"/>
-        </b-form-group>
+        </fieldset>
       </div>
     </div>
     <div class="command-bar d-flex justify-content-end">

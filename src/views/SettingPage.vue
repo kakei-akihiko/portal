@@ -8,13 +8,13 @@
       <h2>設定</h2>
 
       <b-card header="サイドバーの記事">
-        <b-form-group label="記事ID">
+        <fieldset class="form-group" label="記事ID">
           <b-input
             name="sidebar-article-id"
             v-model="sidebarArticle.id"
           />
-        </b-form-group>
-        <b-form-group label-sr-only class="mb-0">
+        </fieldset>
+        <fieldset class="form-group mb-0" label-sr-only>
           <button
             class="btn btn-primary"
             type="button"
@@ -22,7 +22,7 @@
           >
             反映
           </button>
-        </b-form-group>
+        </fieldset>
       </b-card>
 
       <b-card
@@ -31,7 +31,7 @@
         header-border-variant="danger"
         header-text-variant="danger"
       >
-        <b-form-group>
+        <fieldset class="form-group">
           <button
             type="button"
             class="btn btn-secondary"
@@ -39,7 +39,7 @@
           >
             データベース削除
           </button>
-        </b-form-group>
+        </fieldset>
       </b-card>
     </template>
   </TheMainLayout>

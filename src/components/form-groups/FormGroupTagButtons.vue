@@ -1,5 +1,5 @@
 <template>
-  <b-form-group>
+  <fieldset class="form-group">
     <button
       v-for="tagButton in tagButtons"
       :key="tagButton.text"
@@ -8,7 +8,7 @@
     >
       {{ tagButton.text }}
     </button>
-  </b-form-group>
+  </fieldset>
 </template>
 
 <script>

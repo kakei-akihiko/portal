@@ -10,11 +10,14 @@
         <section class="section-new-card">
           <h3>新規作成</h3>
           <b-card class="card-new-category">
-            <b-form-group label="名称">
+            <fieldset class="form-group" label="名称">
+              <legend tabindex="-1" class="col-form-label pt-0">
+                名称
+              </legend>
               <b-input v-model="cardNewCategoryName" />
-            </b-form-group>
+            </fieldset>
 
-            <b-form-group label-sr-only class="mb-0">
+            <fieldset class="form-group mb-0">
               <button
                 :disabled="cardNewCategoryCreateButtonDisabled"
                 class="btn btn-primary"
@@ -22,7 +25,7 @@
               >
                 作成
               </button>
-            </b-form-group>
+            </fieldset>
           </b-card>
         </section>
         <section class="section-list">

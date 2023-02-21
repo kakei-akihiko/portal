@@ -17,21 +17,35 @@
           <h2>{{ category.title }}の設定</h2>
 
           <b-form>
-            <b-form-group label="タグの選択" label-cols="4">
-              <b-radio-group
-                name="tagsSelection"
-                :options="tagSelection.options"
-                v-model="tagSelectionSelected"
-              />
-            </b-form-group>
+            <fieldset class="form-group">
+              <div class="form-row">
+                <legend tabindex="-1" class="col-4 col-form-label pt-0">
+                  タグの選択
+                </legend>
+                <div class="col">
+                  <b-radio-group
+                    name="tagsSelection"
+                    :options="tagSelection.options"
+                    v-model="tagSelectionSelected"
+                  />
+                </div>
+              </div>
+            </fieldset>
 
-            <b-form-group label="タグの表示位置" label-cols="4">
-              <b-radio-group
-                name="tagsPosition"
-                :options="tagsPosition.options"
-                v-model="tagPositionSelected"
-              />
-            </b-form-group>
+            <fieldset class="form-group">
+              <div class="form-row">
+                <legend tabindex="-1" class="col-4 col-form-label pt-0">
+                  タグの表示位置
+                </legend>
+                <div class="col">
+                  <b-radio-group
+                    name="tagsPosition"
+                    :options="tagsPosition.options"
+                    v-model="tagPositionSelected"
+                  />
+                </div>
+              </div>
+            </fieldset>
           </b-form>
         </div>
       </div>

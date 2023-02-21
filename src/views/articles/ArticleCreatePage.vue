@@ -4,13 +4,13 @@
       <div class="h-100">
         <FullHeight>
           <template v-slot:header>
-            <b-form-group label-sr-only>
+            <fieldset class="form-group">
               <b-input
                 name="title"
                 placeholder="タイトル"
                 v-model="form.title"
               />
-            </b-form-group>
+            </fieldset>
           </template>
 
           <b-row class="h-100 pb-3">
@@ -29,7 +29,7 @@
           </b-row>
 
           <template v-slot:footer>
-            <b-form-group label-sr-only>
+            <fieldset class="form-group">
               <div class="d-flex h-interval">
                 <b-input
                   name="tags"
@@ -49,7 +49,7 @@
                   キャンセル
                 </button>
               </div>
-            </b-form-group>
+            </fieldset>
           </template>
         </FullHeight>
       </div>

@@ -12,7 +12,7 @@
           class="h-100"
         >
           <h2>記事を{{ category.title }}にインポート</h2>
-          <b-form-group>
+          <fieldset class="form-group">
             <b-form-file
               v-model="file"
               :value="file"
@@ -21,9 +21,9 @@
               placeholder="Choose a file or drop it here..."
               drop-placeholder="Drop file here..."
             />
-          </b-form-group>
+          </fieldset>
           <div class="d-flex">
-            <b-form-group class="ml-auto">
+            <fieldset class="form-group ml-auto">
               <button
                 :disabled="importButton.disabled"
                 v-show="importButton.visible"
@@ -32,7 +32,7 @@
               >
                 選択をインポート
               </button>
-            </b-form-group>
+            </fieldset>
           </div>
           <b-list-group>
             <b-list-group-item
