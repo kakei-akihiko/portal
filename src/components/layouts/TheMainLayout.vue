@@ -1,34 +1,24 @@
 <template>
-  <b-container
-    fluid
-    class="h-100 container-main"
-  >
-    <b-row
-      class="h-100"
-    >
-      <b-col
+  <div class="container-fluid h-100 container-main">
+    <div class="row h-100">
+      <div
         v-if="!noSidebar"
-        cols="12"
-        sm="4"
-        md="3"
-        class="h-100-sm sidebar pr-0"
+        class="col-sm-4 col-md-3 col-12 h-100-sm sidebar pr-0"
       >
         <!-- .pr-3はスクロールバーの位置調整用 -->
         <div class="h-100 pr-3">
           <slot name="sidebar"/>
         </div>
-      </b-col>
+      </div>
 
-      <b-col
+      <div
         cols="12"
-        :sm="mainPanelSmCols"
-        :md="mainPanelMdCols"
         :class="mainPanelClass"
       >
         <slot name="panel-main"/>
-      </b-col>
-    </b-row>
-  </b-container>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -41,16 +31,14 @@ export default {
   computed: {
     mainPanelClass () {
       return {
+        'col-sm-8': !this.noSidebar,
+        'col-sm-12': this.noSidebar,
+        'col-md-9': !this.noSidebar,
+        'col-md-12': this.noSidebar,
         'h-100-sm': true,
         'panel-main': true,
         'overflow-auto': this.mainPanelScroll
       }
-    },
-    mainPanelSmCols () {
-      return this.noSidebar ? 12 : 8
-    },
-    mainPanelMdCols () {
-      return this.noSidebar ? 12 : 9
     }
   }
 }

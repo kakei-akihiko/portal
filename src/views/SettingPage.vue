@@ -7,40 +7,41 @@
     <template v-slot:panel-main>
       <h2>設定</h2>
 
-      <b-card header="サイドバーの記事">
-        <fieldset class="form-group" label="記事ID">
-          <b-input
-            name="sidebar-article-id"
-            v-model="sidebarArticle.id"
-          />
-        </fieldset>
-        <fieldset class="form-group mb-0" label-sr-only>
-          <button
-            class="btn btn-primary"
-            type="button"
-            @click="sidebarArticleButtonClick"
-          >
-            反映
-          </button>
-        </fieldset>
-      </b-card>
+      <div class="card">
+        <div class="card-header">サイドバーの記事</div>
+        <div class="card-body">
+          <fieldset class="form-group" label="記事ID">
+            <b-input
+              name="sidebar-article-id"
+              v-model="sidebarArticle.id"
+            />
+          </fieldset>
+          <fieldset class="form-group mb-0" label-sr-only>
+            <button
+              class="btn btn-primary"
+              type="button"
+              @click="sidebarArticleButtonClick"
+            >
+              反映
+            </button>
+          </fieldset>
+        </div>
+      </div>
 
-      <b-card
-        border-variant="danger"
-        header="危険な設定"
-        header-border-variant="danger"
-        header-text-variant="danger"
-      >
-        <fieldset class="form-group">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            @click="deleteDatabaseButtonClick"
-          >
-            データベース削除
-          </button>
-        </fieldset>
-      </b-card>
+      <div class="card border-danger">
+        <div class="card-header border-danger text-danger">危険な設定</div>
+        <div class="card-body">
+          <fieldset class="form-group">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="deleteDatabaseButtonClick"
+            >
+              データベース削除
+            </button>
+          </fieldset>
+        </div>
+      </div>
     </template>
   </TheMainLayout>
 </template>

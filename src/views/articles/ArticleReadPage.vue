@@ -6,11 +6,9 @@
 
     <template v-slot:panel-main>
       <div class="h-100">
-        <b-spinner
-          v-if="loading"
-          variant="primary"
-          label="Spinning"
-        />
+        <div class="spinner-border text-primary" role="status" v-if="loading">
+          <span class="sr-only">Loading...</span>
+        </div>
         <NotFoundAlert v-else-if="article == null"/>
         <section v-else class="h-100 main">
           <div class="title-div">
@@ -32,13 +30,12 @@
           </div>
           <div v-html="form.preview" class="preview article-body-view"/>
           <div class="h-interval">
-            <b-badge
+            <span class="badge badge-info"
               v-for="tag in form.tags"
               :key="tag"
-              variant="info"
             >
               {{ tag }}
-            </b-badge>
+            </span>
           </div>
         </section>
       </div>

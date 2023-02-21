@@ -41,13 +41,12 @@
               class="d-flex"
             >
               <div>{{ article.title }}</div>
-              <b-badge
+              <span
                 v-if="article.completed"
-                variant="info"
-                class="ml-auto"
+                class="badge bdge-info ml-auto"
               >
                 済
-              </b-badge>
+              </span>
             </b-list-group-item>
           </b-list-group>
         </div>

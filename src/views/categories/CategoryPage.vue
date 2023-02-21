@@ -9,50 +9,53 @@
         <h2>カテゴリー</h2>
         <section class="section-new-card">
           <h3>新規作成</h3>
-          <b-card class="card-new-category">
-            <fieldset class="form-group" label="名称">
-              <legend tabindex="-1" class="col-form-label pt-0">
-                名称
-              </legend>
-              <b-input v-model="cardNewCategoryName" />
-            </fieldset>
+          <div class="card card-new-category">
+            <div class="card-body">
+              <fieldset class="form-group" label="名称">
+                <legend tabindex="-1" class="col-form-label pt-0">
+                  名称
+                </legend>
+                <b-input v-model="cardNewCategoryName" />
+              </fieldset>
 
-            <fieldset class="form-group mb-0">
-              <button
-                :disabled="cardNewCategoryCreateButtonDisabled"
-                class="btn btn-primary"
-                @click="createCategoryButtonClick"
-              >
-                作成
-              </button>
-            </fieldset>
-          </b-card>
+              <fieldset class="form-group mb-0">
+                <button
+                  :disabled="cardNewCategoryCreateButtonDisabled"
+                  class="btn btn-primary"
+                  @click="createCategoryButtonClick"
+                >
+                  作成
+                </button>
+              </fieldset>
+            </div>
+          </div>
         </section>
         <section class="section-list">
           <h3>一覧</h3>
-          <b-card
+          <div class="card"
             v-for="category in $store.state.categories"
             :key="category.id"
-            body-class="d-flex"
           >
-            <div>
-              {{ category.title }}
+            <div class="card-body d-flex">
+              <div>
+                {{ category.title }}
+              </div>
+              <div class="ml-auto h-interval">
+                <router-link
+                  :to="{name: 'CategoryImportPage', params: {id: category.id}}"
+                >
+                  インポート
+                </router-link>
+                <button
+                  class="btn btn-info"
+                  @click="exportButtonClick(category)"
+                >
+                  <i class="fas fa-download"/>
+                  エクスポート
+                </button>
+              </div>
             </div>
-            <div class="ml-auto h-interval">
-              <router-link
-                :to="{name: 'CategoryImportPage', params: {id: category.id}}"
-              >
-                インポート
-              </router-link>
-              <button
-                class="btn btn-info"
-                @click="exportButtonClick(category)"
-              >
-                <i class="fas fa-download"/>
-                エクスポート
-              </button>
-            </div>
-          </b-card>
+          </div>
         </section>
       </div>
     </template>
