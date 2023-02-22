@@ -16,18 +16,40 @@
         >
           <h2>{{ category.title }}の設定</h2>
 
-          <b-form>
+          <form>
             <fieldset class="form-group">
               <div class="form-row">
                 <legend tabindex="-1" class="col-4 col-form-label pt-0">
                   タグの選択
                 </legend>
                 <div class="col">
-                  <b-radio-group
-                    name="tagsSelection"
-                    :options="tagSelection.options"
-                    v-model="tagSelectionSelected"
-                  />
+                  <div class="custom-control custom-control-inline custom-radio">
+                    <input
+                      class="custom-control-input"
+                      type="radio"
+                      name="tagsSelection"
+                      value="single"
+                      v-model="tagSelectionSelected"
+                      id="tagsSelection-single"
+                    />
+                    <label class="custom-control-label" for="tagsSelection-single">
+                      <span>最大1個</span>
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-control-inline custom-radio">
+                    <input
+                      class="custom-control-input"
+                      type="radio"
+                      name="tagsSelection"
+                      value="multiple"
+                      v-model="tagSelectionSelected"
+                      id="tagsSelection-multiple"
+                    />
+                    <label class="custom-control-label" for="tagsSelection-multiple">
+                      <span>複数</span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </fieldset>
@@ -38,15 +60,37 @@
                   タグの表示位置
                 </legend>
                 <div class="col">
-                  <b-radio-group
-                    name="tagsPosition"
-                    :options="tagsPosition.options"
-                    v-model="tagPositionSelected"
-                  />
+                  <div class="custom-control custom-control-inline custom-radio">
+                    <input
+                      class="custom-control-input"
+                      type="radio"
+                      name="tagsPosition"
+                      value="right"
+                      v-model="tagPositionSelected"
+                      id="tagsPosition-right"
+                    />
+                    <label class="custom-control-label" for="tagsPosition-right">
+                      <span>タイトルの右</span>
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-control-inline custom-radio">
+                    <input
+                      class="custom-control-input"
+                      type="radio"
+                      name="tagsPosition"
+                      value="bottom"
+                      v-model="tagPositionSelected"
+                      id="tagsPosition-bottom"
+                    />
+                    <label class="custom-control-label" for="tagsPosition-bottom">
+                      <span>タイトルの下</span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </fieldset>
-          </b-form>
+          </form>
         </div>
       </div>
     </template>
@@ -67,19 +111,7 @@ export default {
   data () {
     return {
       category: null,
-      categoryId: null,
-      tagsPosition: {
-        options: [
-          { text: 'タイトルの右', value: 'right' },
-          { text: 'タイトルの下', value: 'bottom' }
-        ]
-      },
-      tagSelection: {
-        options: [
-          { text: '最大1個', value: 'single' },
-          { text: '複数', value: 'multiple' }
-        ]
-      }
+      categoryId: null
     }
   },
 
@@ -99,6 +131,7 @@ export default {
         return this.category?.tagSelectionMode ?? 'single'
       },
       async set (tagSelectionMode) {
+        console.log('tagSelectionSelected set', tagSelectionMode)
         const { categoryId } = this
         await this.$store.dispatch('setCategorySettings', { categoryId, tagSelectionMode })
         await this.loadCategory()

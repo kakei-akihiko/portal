@@ -34,8 +34,9 @@
           <template v-slot:footer>
             <fieldset class="form-group">
               <div class="d-flex h-interval">
-                <b-input
+                <input
                   name="tags"
+                  class="form-control"
                   placeholder="タグ1 タグ2 ..."
                   v-model="form.tagsString"
                 />

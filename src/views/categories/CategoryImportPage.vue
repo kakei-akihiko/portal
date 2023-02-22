@@ -12,15 +12,14 @@
           class="h-100"
         >
           <h2>記事を{{ category.title }}にインポート</h2>
+
           <fieldset class="form-group">
-            <b-form-file
-              v-model="file"
-              :value="file"
-              @input="fileSelect"
-              accept="application/json"
-              placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..."
-            />
+            <div class="custom-file b-form-file">
+              <input 
+                type="file" accept="application/json"
+                @change="fileSelect"
+              >
+            </div>
           </fieldset>
           <div class="d-flex">
             <fieldset class="form-group ml-auto">
@@ -34,11 +33,10 @@
               </button>
             </fieldset>
           </div>
-          <b-list-group>
-            <b-list-group-item
+          <div class="list-group">
+            <div class="list-group-item d-flex"
               v-for="article in articles"
               :key="article.id"
-              class="d-flex"
             >
               <div>{{ article.title }}</div>
               <span
@@ -47,8 +45,8 @@
               >
                 済
               </span>
-            </b-list-group-item>
-          </b-list-group>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -109,8 +107,13 @@ export default {
   },
 
   methods: {
-    async fileSelect (file) {
+    async fileSelect (event) {
+      console.log(event.target.files[0])
+      const file = event.target.files[0]
       this.file = file
+      if (file == null) {
+        return
+      }
       const { succeeded, articles } = await articleJsonParser.parse(file)
       if (succeeded) {
         this.articles = articles.map(article => {

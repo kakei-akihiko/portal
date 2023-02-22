@@ -11,8 +11,9 @@
         <div class="card-header">サイドバーの記事</div>
         <div class="card-body">
           <fieldset class="form-group" label="記事ID">
-            <b-input
+            <input
               name="sidebar-article-id"
+              class="form-control"
               v-model="sidebarArticle.id"
             />
           </fieldset>
