@@ -3,9 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store, { dependances } from './store'
 
-import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import NotFoundAlert from '@/components/alerts/NotFoundAlert.vue'
 import FullHeight from '@/components/layouts/FullHeight.vue'
@@ -21,8 +19,6 @@ Vue.component('TheMainLayout', TheMainLayout)
 Vue.component('TheSidebar', TheSidebar)
 
 Vue.config.productionTip = false
-
-Vue.use(BootstrapVue)
 
 const settingRepository = new SettingRepository(dependances.articlesDatabase)
 const settingService = new SettingService(settingRepository)
