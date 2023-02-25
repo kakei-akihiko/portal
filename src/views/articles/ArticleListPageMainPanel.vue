@@ -3,10 +3,10 @@
     <div class="d-flex">
       <h2>{{ category.title }}</h2>
       <div class="ml-auto">
-        <b-form-group>
+        <fieldset class="form-group">
           <ButtonCategorySettingPage :category-id="category.id"/>
           <ButtonArticleCreatePage :category-id="category.id"/>
-        </b-form-group>
+        </fieldset>
       </div>
     </div>
     <div class="command-bar d-flex justify-content-end">
@@ -17,24 +17,24 @@
     </div>
 
     <div class="alerts pt-3">
-      <b-alert
-        :show="alertCompactOnlyVisible"
-        variant="warning"
+      <div
+        v-if="alertCompactOnlyVisible"
+        class="alert alert-warning"
       >
         詳細モードで可能な記事がありません。コンパクトモードであれば表示できます。
-      </b-alert>
-      <b-alert
-        :show="alertDetailOnlyVisible"
-        variant="warning"
+      </div>
+      <div
+        v-if="alertDetailOnlyVisible"
+        class="alert alert-warning"
       >
         コンパクトモードで可能な記事がありません。詳細モードであれば表示できます。
-      </b-alert>
-      <b-alert
-        :show="alertNoArticle"
-        variant="warning"
+      </div>
+      <div
+        v-if="alertNoArticle"
+        class="alert alert-warning"
       >
         検索条件に合致する記事がありません。
-      </b-alert>
+      </div>
     </div>
 
     <div

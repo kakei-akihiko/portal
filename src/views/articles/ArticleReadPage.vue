@@ -6,40 +6,36 @@
 
     <template v-slot:panel-main>
       <div class="h-100">
-        <b-spinner
-          v-if="loading"
-          variant="primary"
-          label="Spinning"
-        />
+        <div class="spinner-border text-primary" role="status" v-if="loading">
+          <span class="sr-only">Loading...</span>
+        </div>
         <NotFoundAlert v-else-if="article == null"/>
         <section v-else class="h-100 main">
           <div class="title-div">
             <h2>{{ form.title }}</h2>
             <div>
-              <b-button
-                variant="link"
-                :to="{name: 'ArticleEditPage', params: {id: article.id}}"
+              <button
+                class="btn btn-link"
+                @click="articleEditButtonClick"
               >
                 <i class="fas fa-edit"></i>
-              </b-button>
-              <b-button
-                variant="link"
-                class="button-cancel"
-                :to="{name: 'ArticlesListPage'}"
+              </button>
+              <button
+                class="btn btn-link button-cancel"
+                @click="articleListButtonClick"
               >
                 <i class="fas fa-times"></i>
-              </b-button>
+              </button>
             </div>
           </div>
           <div v-html="form.preview" class="preview article-body-view"/>
           <div class="h-interval">
-            <b-badge
+            <span class="badge badge-info"
               v-for="tag in form.tags"
               :key="tag"
-              variant="info"
             >
               {{ tag }}
-            </b-badge>
+            </span>
           </div>
         </section>
       </div>
@@ -104,6 +100,13 @@ export default {
   },
 
   methods: {
+    articleEditButtonClick () {
+      const { articleId } = this
+      this.$router.push({name: 'ArticleEditPage', params: {id: articleId}})
+    },
+    articleListButtonClick () {
+      this.$router.push({name: 'ArticlesListPage'})
+    },
     async loadArticle () {
       this.loading = true
       this.article = null

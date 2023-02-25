@@ -1,14 +1,15 @@
 <template>
-  <b-nav vertical class="nav-category">
-    <b-nav-item
+  <ul class="nav flex-column nav-category mt-3">
+    <li class="nav-item"
       v-for="category in categories"
       :key="category.id"
-      :active="category.active"
       @click="categorySelect(category)"
     >
-      {{ category.title }}
-    </b-nav-item>
-  </b-nav>
+      <a :class="category.anchorClass" href="#" target="_self">
+        {{ category.title }}
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -20,7 +21,11 @@ export default {
       return this.$store.state.categories.map(category => {
         const { id, title } = category
         const active = id === this.$store.state.categoryId
-        return { active, id, title }
+        const anchorClass = {
+          active,
+          'nav-link': true
+        }
+        return { anchorClass, id, title }
       })
     }
   },

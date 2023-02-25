@@ -12,44 +12,41 @@
           class="h-100"
         >
           <h2>記事を{{ category.title }}にインポート</h2>
-          <b-form-group>
-            <b-form-file
-              v-model="file"
-              :value="file"
-              @input="fileSelect"
-              accept="application/json"
-              placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..."
-            />
-          </b-form-group>
+
+          <fieldset class="form-group">
+            <div class="custom-file b-form-file">
+              <input 
+                type="file" accept="application/json"
+                @change="fileSelect"
+              >
+            </div>
+          </fieldset>
           <div class="d-flex">
-            <b-form-group class="ml-auto">
-              <b-button
+            <fieldset class="form-group ml-auto">
+              <button
                 :disabled="importButton.disabled"
                 v-show="importButton.visible"
-                variant="primary"
+                class="btn btn-primary"
                 @click="importButtonClick"
               >
                 選択をインポート
-              </b-button>
-            </b-form-group>
+              </button>
+            </fieldset>
           </div>
-          <b-list-group>
-            <b-list-group-item
+          <div class="list-group">
+            <div class="list-group-item d-flex"
               v-for="article in articles"
               :key="article.id"
-              class="d-flex"
             >
               <div>{{ article.title }}</div>
-              <b-badge
+              <span
                 v-if="article.completed"
-                variant="info"
-                class="ml-auto"
+                class="badge bdge-info ml-auto"
               >
                 済
-              </b-badge>
-            </b-list-group-item>
-          </b-list-group>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -110,8 +107,13 @@ export default {
   },
 
   methods: {
-    async fileSelect (file) {
+    async fileSelect (event) {
+      console.log(event.target.files[0])
+      const file = event.target.files[0]
       this.file = file
+      if (file == null) {
+        return
+      }
       const { succeeded, articles } = await articleJsonParser.parse(file)
       if (succeeded) {
         this.articles = articles.map(article => {

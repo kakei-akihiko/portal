@@ -1,21 +1,26 @@
 <template>
-  <b-nav
-    pills
-    small
-  >
-    <b-nav-item
-      :active="modeCompactActive"
-      @click="modeCompactNavClick"
-    >
-      コンパクト
-    </b-nav-item>
-    <b-nav-item
-      :active="modeDetailActive"
-      @click="modeDetailNavClick"
-    >
-      詳細
-    </b-nav-item>
-  </b-nav>
+  <ul class="nav nav-pills small">
+    <li class="nav-item">
+      <a
+        :class="compactNavLinkClass"
+        href="#"
+        target="_self"
+        @click="modeCompactNavClick"
+      >
+        コンパクト
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        :class="detailNavLinkClass"
+        href="#"
+        target="_self"
+        @click="modeDetailNavClick"
+      >
+        詳細
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -28,11 +33,17 @@ export default {
   },
 
   computed: {
-    modeCompactActive () {
-      return this.mode === 'compact'
+    compactNavLinkClass () {
+      return {
+        active: this.mode === 'compact',
+        'nav-link': true
+      }
     },
-    modeDetailActive () {
-      return this.mode === 'detail'
+    detailNavLinkClass () {
+      return {
+        active: this.mode === 'detail',
+        'nav-link': true
+      }
     }
   },
 

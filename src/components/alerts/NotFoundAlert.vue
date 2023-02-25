@@ -1,10 +1,7 @@
 <template>
-  <b-alert
-    variant="warning"
-    show
-  >
+  <div class="alert alert-warning">
     データがありません。
-  </b-alert>
+  </div>
 </template>
 
 <script>

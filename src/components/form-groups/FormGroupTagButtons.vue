@@ -1,15 +1,14 @@
 <template>
-  <b-form-group>
-    <b-button
+  <fieldset class="form-group">
+    <button
       v-for="tagButton in tagButtons"
       :key="tagButton.text"
-      :variant="tagButton.variant"
-      size="sm"
+      :class="tagButton.className"
       @click="tagButtonClick(tagButton)"
     >
       {{ tagButton.text }}
-    </b-button>
-  </b-form-group>
+    </button>
+  </fieldset>
 </template>
 
 <script>
@@ -22,8 +21,8 @@ export default {
     tagButtons () {
       return this.allTags.map(tag => {
         const { selected, text } = tag
-        const variant = selected ? 'info' : 'outline-info'
-        return { selected, text, variant }
+        const className = selected ? 'btn btn-sm btn-info' : 'btn btn-sm btn-outline-info'
+        return { selected, text, className }
       })
     },
     ...mapGetters(['allTags'])

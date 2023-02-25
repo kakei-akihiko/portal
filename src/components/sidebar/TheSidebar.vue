@@ -9,33 +9,33 @@
     <div v-if="sidebarArticle != null">
       <div v-html="sidebarArticle.html" />
     </div>
-    <b-form-group v-if="$route.name != 'ArticlesListPage'">
-      <b-button
-        variant="link"
-        :to="{name: 'ArticlesListPage'}"
+    <fieldset class="form-group" v-if="$route.name != 'ArticlesListPage'">
+      <button
+        class="btn btn-link"
+        @click="articleListButtonClick"
       >
         <i class="far fa-newspaper"></i>
         <span class="ml-2">記事</span>
-      </b-button>
-    </b-form-group>
-    <b-form-group v-if="$route.name != 'CategoryPage'">
-      <b-button
-        variant="link"
-        :to="{name: 'CategoryPage'}"
+      </button>
+    </fieldset>
+    <fieldset class="form-group" v-if="$route.name != 'CategoryPage'">
+      <button
+        class="btn btn-link"
+        @click="categoryButtonClick"
       >
         <i class="far fa-folder-open"></i>
         <span class="ml-2">カテゴリー</span>
-      </b-button>
-    </b-form-group>
-    <b-form-group v-if="$route.name != 'SettingPage'">
-      <b-button
-        variant="link"
-        :to="{name: 'SettingPage'}"
+      </button>
+    </fieldset>
+    <fieldset class="form-group" v-if="$route.name != 'SettingPage'">
+      <button
+        class="btn btn-link"
+        @click="settingButtonClick"
       >
         <i class="fas fa-cog"></i>
         <span class="ml-2">設定</span>
-      </b-button>
-    </b-form-group>
+      </button>
+    </fieldset>
   </div>
 </template>
 
@@ -52,6 +52,18 @@ export default {
   async mounted () {
     if (this.$store.state.sidebar.articleId == null) {
       await this.$store.dispatch('sidebar/loadSetting')
+    }
+  },
+
+  methods: {
+    articleListButtonClick () {
+      this.$router.push({name: 'ArticlesListPage'})
+    },
+    categoryButtonClick () {
+      this.$router.push({name: 'CategoryPage'})
+    },
+    settingButtonClick () {
+      this.$router.push({name: 'SettingPage'})
     }
   }
 }

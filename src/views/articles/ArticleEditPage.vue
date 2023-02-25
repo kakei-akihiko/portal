@@ -2,62 +2,62 @@
   <TheMainLayout no-sidebar>
     <template v-slot:panel-main>
       <div class="h-100">
-        <b-spinner
-          v-if="loading"
-          variant="primary"
-          label="Spinning"
-        />
+        <div class="spinner-border text-primary" role="status" v-if="loading">
+          <span class="sr-only">Loading...</span>
+        </div>
         <NotFoundAlert v-else-if="article == null"/>
         <FullHeight v-else>
           <template v-slot:header>
-            <b-form-group label-sr-only>
-              <b-input
+            <fieldset class="form-group">
+              <input
+                class="form-control"
+                type="text"
                 name="title"
                 placeholder="タイトル"
                 v-model="form.title"
               />
-            </b-form-group>
+            </fieldset>
           </template>
 
-          <b-row class="h-100 pb-3">
-            <b-col cols="6" class="h-100">
-              <b-textarea
+          <div class="row h-100 pb-3">
+            <div cols="6" class="col-6 h-100">
+              <textarea
                 name="text"
                 placeholder="本文"
-                no-resize
-                class="h-100"
+                class="form-control h-100 text-body"
                 v-model="text"
-              />
-            </b-col>
-            <b-col cols="6" class="overflow-auto h-100">
+                wrap="soft"
+                rows="2"
+              ></textarea>
+            </div>
+            <div cols="6" class="col-6 overflow-auto h-100">
               <div v-html="form.preview" class="article-body-view"/>
-            </b-col>
-          </b-row>
+            </div>
+          </div>
 
           <template v-slot:footer>
-            <b-form-group label-sr-only>
+            <fieldset class="form-group">
               <div class="d-flex h-interval">
-                <b-input
+                <input
                   name="tags"
+                  class="form-control"
                   placeholder="タグ1 タグ2 ..."
                   v-model="form.tagsString"
                 />
-                <b-button
-                  variant="primary"
-                  class="button-save"
+                <button
+                  class="btn btn-primary button-save"
                   @click="saveButtonClick"
                 >
                   保存
-                </b-button>
-                <b-button
-                  variant="secondary"
-                  class="button-cancel"
-                  :to="{name: 'ArticlesListPage'}"
+                </button>
+                <button
+                  class="btn btn-secondary button-cancel"
+                  @click="cancelButtonClick"
                 >
                   キャンセル
-                </b-button>
+                </button>
               </div>
-            </b-form-group>
+            </fieldset>
           </template>
         </FullHeight>
       </div>
@@ -123,6 +123,9 @@ export default {
   },
 
   methods: {
+    cancelButtonClick () {
+      this.$router.push({name: 'ArticlesListPage'})
+    },
     async loadArticle () {
       this.loading = true
       this.article = null
