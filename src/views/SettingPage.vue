@@ -1,3 +1,32 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import store from '../../store/index'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+
+const articlesDatabase = new ArticlesDatabase()
+
+const sidebarArticleId = ref(null)
+
+const deleteDatabaseButtonClick = () => {
+  articlesDatabase.delete()
+  console.log('データベースを削除しました。')
+}
+
+const reload = async () => {
+  await store.dispatch('sidebar/loadSetting')
+  sidebarArticleId.value = store.state.sidebar.articleId
+}
+
+const sidebarArticleButtonClick = async () => {
+  const idIsEmpty = sidebarArticleId.value === '' || sidebarArticleId.value == null
+  const id = idIsEmpty ? null : Number(sidebarArticleId.value)
+  await store.dispatch('sidebar/setArticleId', id)
+  await reload()
+}
+
+onMounted(() => reload())
+</script>
+
 <template>
   <TheMainLayout main-panel-scroll>
     <template v-slot:sidebar>
@@ -14,7 +43,7 @@
             <input
               name="sidebar-article-id"
               class="form-control"
-              v-model="sidebarArticle.id"
+              v-model="sidebarArticleId"
             />
           </fieldset>
           <fieldset class="form-group mb-0" label-sr-only>
@@ -46,42 +75,3 @@
     </template>
   </TheMainLayout>
 </template>
-
-<script>
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-
-const articlesDatabase = new ArticlesDatabase()
-
-export default {
-  name: 'SettingPage',
-
-  data () {
-    return {
-      sidebarArticle: {
-        id: ''
-      }
-    }
-  },
-
-  mounted () {
-    this.reload()
-  },
-
-  methods: {
-    deleteDatabaseButtonClick () {
-      articlesDatabase.delete()
-      console.log('データベースを削除しました。')
-    },
-    async reload () {
-      await this.$store.dispatch('sidebar/loadSetting')
-      this.sidebarArticle.id = this.$store.state.sidebar.articleId
-    },
-    async sidebarArticleButtonClick () {
-      const idIsEmpty = this.sidebarArticle.id === '' || this.sidebarArticle.id == null
-      const id = idIsEmpty ? null : Number(this.sidebarArticle.id)
-      await this.$store.dispatch('sidebar/setArticleId', id)
-      await this.reload()
-    }
-  }
-}
-</script>
