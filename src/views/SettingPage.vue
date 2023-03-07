@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import store from '../../store/index'
+import store from '../store/index'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 
 const articlesDatabase = new ArticlesDatabase()
