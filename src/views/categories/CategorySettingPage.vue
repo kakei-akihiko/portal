@@ -1,3 +1,65 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+import store from '../../store/index'
+
+const articlesDatabase = new ArticlesDatabase()
+const categoryRepository = new CategoryRepository(articlesDatabase)
+
+const category = ref(null)
+const categoryId = ref(null)
+const route = useRoute()
+
+const loadCategory = async () => {
+  category.value = await categoryRepository.get(categoryId.value)
+}
+
+const tagPositionSelected = computed({
+  get () {
+    return category.value?.tagPosition ?? 'right'
+  },
+  async set (tagPosition) {
+    await store.dispatch(
+      'setCategorySettings',
+      {
+        categoryId: categoryId.value,
+        tagPosition
+      }
+    )
+    await loadCategory()
+  }
+})
+
+const tagSelectionSelected = computed({
+  get () {
+    return category.value?.tagSelectionMode ?? 'single'
+  },
+  async set (tagSelectionMode) {
+    console.log('tagSelectionSelected set', tagSelectionMode)
+    await store.dispatch(
+      'setCategorySettings',
+      {
+        categoryId: categoryId.value,
+        tagSelectionMode
+      }
+    )
+    await loadCategory()
+  }
+})
+
+watch(() => route.params.categoryId, async newId => {
+  categoryId.value = parseInt(newId)
+  loadCategory()
+})
+
+onMounted(() => {
+  categoryId.value = parseInt(route.params.categoryId)
+  loadCategory()
+})
+</script>
+
 <template>
   <TheMainLayout main-panel-scroll>
     <template v-slot:sidebar>
@@ -97,64 +159,3 @@
 
   </TheMainLayout>
 </template>
-
-<script>
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const categoryRepository = new CategoryRepository(articlesDatabase)
-
-export default {
-  name: 'CategorySettingPage',
-
-  data () {
-    return {
-      category: null,
-      categoryId: null
-    }
-  },
-
-  computed: {
-    tagPositionSelected: {
-      get () {
-        return this.category?.tagPosition ?? 'right'
-      },
-      async set (tagPosition) {
-        const { categoryId } = this
-        await this.$store.dispatch('setCategorySettings', { categoryId, tagPosition })
-        await this.loadCategory()
-      }
-    },
-    tagSelectionSelected: {
-      get () {
-        return this.category?.tagSelectionMode ?? 'single'
-      },
-      async set (tagSelectionMode) {
-        console.log('tagSelectionSelected set', tagSelectionMode)
-        const { categoryId } = this
-        await this.$store.dispatch('setCategorySettings', { categoryId, tagSelectionMode })
-        await this.loadCategory()
-      }
-    }
-  },
-
-  watch: {
-    $route (to) {
-      this.categoryId = parseInt(to.params.categoryId)
-      this.loadCategory()
-    }
-  },
-
-  mounted () {
-    this.categoryId = parseInt(this.$route.params.categoryId)
-    this.loadCategory()
-  },
-
-  methods: {
-    async loadCategory () {
-      this.category = await categoryRepository.get(this.categoryId)
-    }
-  }
-}
-</script>
