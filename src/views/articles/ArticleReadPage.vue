@@ -1,3 +1,75 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { marked } from '../../infrastructure/markdown.js'
+import router from '../../router/index'
+
+import ArticleRepository from '@/infrastructure/ArticleRepository.js'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+import ArticleService from '@/usecases/ArticleService.js'
+import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+
+const articlesDatabase = new ArticlesDatabase()
+const articleRepository = new ArticleRepository(articlesDatabase)
+const categoryRepository = new CategoryRepository(articlesDatabase)
+const articleService = new ArticleService(articleRepository, categoryRepository)
+
+const article = ref(null)
+const articleId = ref(null)
+const route = useRoute()
+const loading = ref(true)
+const form = ref({
+  title: '',
+  text: '',
+  preview: '',
+  tags: []
+})
+
+const text = computed({
+  get () {
+    return form.value.text
+  },
+  set (value) {
+    form.value.text = value
+    form.value.preview = value == null ? '' : marked.parse(value)
+  }
+})
+
+const loadArticle = async () => {
+  loading.value = true
+  article.value = null
+
+  const articles = await articleService.get({ articleId: articleId.value })
+
+  if (articles.length > 0) {
+    article.value = articles[0]
+    form.value.title = article.value.title
+    form.value.tags = article.value.tags
+    text.value = article.value.text
+  }
+  loading.value = false
+}
+
+const articleEditButtonClick = () => {
+  const id = articleId.value
+  router.push({name: 'ArticleEditPage', params: {id}})
+}
+
+const articleListButtonClick = () => {
+  router.push({name: 'ArticlesListPage'})
+}
+
+onMounted(() => {
+  articleId.value = parseInt(route.params.id)
+  loadArticle()
+})
+
+watch(() => route.params.id, async newId => {
+  articleId.value = parseInt(newId)
+  loadArticle()
+})
+</script>
+
 <template>
   <TheMainLayout>
     <template v-slot:sidebar>
@@ -42,90 +114,6 @@
     </template>
   </TheMainLayout>
 </template>
-
-<script>
-import { marked } from '../../infrastructure/markdown.js'
-
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const articleRepository = new ArticleRepository(articlesDatabase)
-const categoryRepository = new CategoryRepository(articlesDatabase)
-const articleService = new ArticleService(articleRepository, categoryRepository)
-
-export default {
-  name: 'ArticleReadPage',
-
-  data () {
-    const articleId = parseInt(this.$route.params.id)
-
-    return {
-      article: null,
-      articleId,
-      loading: true,
-      form: {
-        title: '',
-        text: '',
-        preview: '',
-        tags: []
-      }
-    }
-  },
-
-  computed: {
-    text: {
-      get () {
-        return this.form.text
-      },
-      set (value) {
-        this.form.text = value
-        this.form.preview = this.form.text == null ? '' : marked.parse(this.form.text)
-      }
-    }
-  },
-
-  watch: {
-    $route (to) {
-      this.articleId = parseInt(to.params.id)
-      this.loadArticle()
-    }
-  },
-
-  mounted () {
-    this.articleId = parseInt(this.$route.params.id)
-    this.loadArticle()
-  },
-
-  methods: {
-    articleEditButtonClick () {
-      const { articleId } = this
-      this.$router.push({name: 'ArticleEditPage', params: {id: articleId}})
-    },
-    articleListButtonClick () {
-      this.$router.push({name: 'ArticlesListPage'})
-    },
-    async loadArticle () {
-      this.loading = true
-      this.article = null
-
-      const { articleId } = this
-
-      const articles = await articleService.get({ articleId })
-
-      if (articles.length > 0) {
-        this.article = articles[0]
-        this.form.title = this.article.title
-        this.text = this.article.text
-        this.form.tags = this.article.tags
-      }
-      this.loading = false
-    }
-  }
-}
-</script>
 
 <style scoped>
 .button-cancel {
