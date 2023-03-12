@@ -1,9 +1,87 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { marked } from '../../infrastructure/markdown.js'
+import router from '../../router/index'
+import NotFoundAlert from '../../components/alerts/NotFoundAlert.vue'
+import ArticleRepository from '@/infrastructure/ArticleRepository.js'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+import ArticleService from '@/usecases/ArticleService.js'
+import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+
+const articlesDatabase = new ArticlesDatabase()
+const articleRepository = new ArticleRepository(articlesDatabase)
+const categoryRepository = new CategoryRepository(articlesDatabase)
+const articleService = new ArticleService(articleRepository, categoryRepository)
+
+const route = useRoute()
+
+const categoryFound = ref(null)
+const categoryId = ref(null)
+
+const form = ref({
+  title: '',
+  text: '',
+  preview: '',
+  tagsString: ''
+})
+
+const formDisabled = computed(() => {
+  return categoryFound.value !== true
+})
+
+const text = computed({
+  get () {
+    return form.value.text
+  },
+  set (value) {
+    form.value.text = value
+    form.value.preview = value == null ? '' : marked.parse(value)
+  }
+})
+
+const confirmCategoryExistence = async () => {
+  console.log('categoryId.value', categoryId.value)
+  const category = await categoryRepository.get(categoryId.value)
+  categoryFound.value = category != null
+}
+
+onMounted(() => {
+  categoryId.value = parseInt(route.params.categoryId)
+  categoryFound.value = null
+  confirmCategoryExistence()
+})
+
+watch(() => route.params.categoryId, async newId => {
+  categoryId.value = parseInt(newId)
+  categoryFound.value = null
+  confirmCategoryExistence()
+})
+
+const saveButtonClick = async () => {
+  const { title, text, tagsString } = form.value
+
+  const tags = Array.from(
+    new Set(tagsString.split(' ').filter(tag => tag.length > 0)).values()
+  )
+
+  await articleService.set({ categoryId: categoryId.value, title, text, tags })
+
+  router.push({ name: 'ArticlesListPage' })
+}
+
+const cancelButtonClick = () => {
+  router.push({name: 'ArticlesListPage'})
+}
+</script>
+
 <template>
   <TheMainLayout no-sidebar>
     <template v-slot:panel-main>
       <div class="h-100">
         <FullHeight>
           <template v-slot:header>
+            <NotFoundAlert v-if="!categoryFound"/>
             <fieldset class="form-group">
               <input
                 class="form-control"
@@ -42,6 +120,8 @@
                 />
                 <button
                   class="btn btn-primary button-save"
+                  type="button"
+                  :disabled="formDisabled"
                   @click="saveButtonClick"
                 >
                   保存
@@ -61,104 +141,6 @@
 
   </TheMainLayout>
 </template>
-
-<script>
-import { marked } from '../../infrastructure/markdown.js'
-
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const articleRepository = new ArticleRepository(articlesDatabase)
-const categoryRepository = new CategoryRepository(articlesDatabase)
-const articleService = new ArticleService(articleRepository, categoryRepository)
-
-export default {
-
-  name: 'ArticleCreatePage',
-
-  data () {
-    return {
-      categoryFound: null,
-      categoryId: parseInt(this.$route.params.categoryId),
-      form: {
-        title: '',
-        text: '',
-        preview: '',
-        tagsString: ''
-      }
-    }
-  },
-
-  computed: {
-    text: {
-      get () {
-        return this.form.text
-      },
-      set (value) {
-        this.form.text = value
-        this.form.preview = this.form.text == null ? '' : marked.parse(this.form.text)
-      }
-    }
-  },
-
-  watch: {
-    $route (to) {
-      this.categoryId = parseInt(to.params.categoryId)
-      this.categoryFound = null
-      this.confirmCategoryExistence()
-    }
-  },
-
-  mounted () {
-    this.confirmCategoryExistence()
-  },
-
-  methods: {
-    cancelButtonClick () {
-      this.$router.push({name: 'ArticlesListPage'})
-    },
-    async confirmCategoryExistence () {
-      const category = await categoryRepository.get(this.categoryId)
-      this.categoryFound = category != null
-      if (this.categoryFound === false) {
-        this.showCatgoryNotFoundToast()
-      }
-    },
-
-    async saveButtonClick () {
-      const { categoryId } = this
-      const { title, text, tagsString } = this.form
-
-      if (this.categoryFound == null) {
-        await this.confirmCategoryExistence()
-      }
-
-      if (this.categoryFound !== true) {
-        this.showCatgoryNotFoundToast()
-        return
-      }
-
-      const tags = Array.from(
-        new Set(tagsString.split(' ').filter(tag => tag.length > 0)).values()
-      )
-
-      await articleService.set({ categoryId, title, text, tags })
-
-      this.$router.push({ name: 'ArticlesListPage' })
-    },
-
-    showCatgoryNotFoundToast () {
-      this.$bvToast.toast('カテゴリが見つかりません。', {
-        autoHideDelay: 5000,
-        appendToast: true
-      })
-    }
-  }
-}
-</script>
 
 <style scoped>
 .button-save {
