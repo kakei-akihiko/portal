@@ -3,9 +3,3 @@
     データがありません。
   </div>
 </template>
-
-<script>
-export default {
-  name: 'NotFoundAlert'
-}
-</script>
