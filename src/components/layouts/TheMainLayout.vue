@@ -1,3 +1,24 @@
+<script setup>
+import { computed, defineProps } from 'vue'
+
+const props = defineProps({
+  noSidebar: Boolean,
+  mainPanelScroll: Boolean
+})
+
+const mainPanelClass = computed(() => {
+  return {
+    'col-sm-8': !props.noSidebar,
+    'col-sm-12': props.noSidebar,
+    'col-md-9': !props.noSidebar,
+    'col-md-12': props.noSidebar,
+    'h-100-sm': true,
+    'panel-main': true,
+    'overflow-auto': props.mainPanelScroll
+  }
+})
+</script>
+
 <template>
   <div class="container-fluid h-100 container-main">
     <div class="row h-100">
@@ -20,29 +41,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    noSidebar: Boolean,
-    mainPanelScroll: Boolean
-  },
-
-  computed: {
-    mainPanelClass () {
-      return {
-        'col-sm-8': !this.noSidebar,
-        'col-sm-12': this.noSidebar,
-        'col-md-9': !this.noSidebar,
-        'col-md-12': this.noSidebar,
-        'h-100-sm': true,
-        'panel-main': true,
-        'overflow-auto': this.mainPanelScroll
-      }
-    }
-  }
-}
-</script>
 
 <style>
 .sidebar {
