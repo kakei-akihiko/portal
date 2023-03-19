@@ -1,3 +1,20 @@
+<script setup>
+import { defineProps } from 'vue'
+import router from '../../router/index'
+
+const props = defineProps({
+  categoryId: Number
+})
+
+const buttonClick = () => {
+  const { categoryId } = props
+  router.push({
+    name: 'CategorySettingPage',
+    params: { categoryId }
+  })
+}
+</script>
+
 <template>
   <button
     class="btn btn-link"
@@ -6,23 +23,3 @@
     <i class="fas fa-cog"></i>
   </button>
 </template>
-
-<script>
-export default {
-  name: 'ButtonCategorySettingPage',
-
-  props: {
-    categoryId: Number
-  },
-
-  methods: {
-    buttonClick () {
-      const { categoryId } = this
-      this.$router.push({
-        name: 'CategorySettingPage',
-        params: { categoryId }
-      })
-    }
-  }
-}
-</script>
