@@ -1,7 +1,15 @@
+<script setup>
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  table: Array
+})
+</script>
+
 <template>
   <div>
     <div
-      v-for="tagArticles in table"
+      v-for="tagArticles in props.table"
       :key="tagArticles.text"
       class="h-interval"
     >
@@ -18,13 +26,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'CampactLinksPanel',
-
-  props: {
-    table: Array
-  }
-}
-</script>
