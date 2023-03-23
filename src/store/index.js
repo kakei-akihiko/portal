@@ -129,7 +129,6 @@ export default new Vuex.Store({
       articleService.setExpanding(id, expanded)
     },
     async setArticlesViewModeToCategory (context, { categoryId, articlesViewMode }) {
-      console.log('store...', { categoryId, articlesViewMode })
       context.commit('setCategorySettings', { categoryId, articlesViewMode })
       await categoryService.setSettings(categoryId, { articlesViewMode })
     },

@@ -1,3 +1,92 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { marked } from '../../infrastructure/markdown.js'
+import router from '../../router/index'
+import NotFoundAlert from '../../components/alerts/NotFoundAlert.vue'
+import ArticleRepository from '@/infrastructure/ArticleRepository.js'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+import ArticleService from '@/usecases/ArticleService.js'
+import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+
+const articlesDatabase = new ArticlesDatabase()
+const articleRepository = new ArticleRepository(articlesDatabase)
+const categoryRepository = new CategoryRepository(articlesDatabase)
+const articleService = new ArticleService(articleRepository, categoryRepository)
+
+const route = useRoute()
+
+const article = ref(null)
+const articleId = ref(null)
+const loading = ref(null)
+
+const form = ref({
+  title: '',
+  text: '',
+  preview: '',
+  tagsString: ''
+})
+
+const text = computed({
+  get () {
+    return form.value.text
+  },
+  set (value) {
+    form.value.text = value
+    form.value.preview = value == null ? '' : marked.parse(value)
+  }
+})
+
+const formDisabled = computed(() => {
+  return article.value == null
+})
+
+const loadArticle = async () => {
+  loading.value = true
+  article.value = null
+
+  const articles = await articleService.get({ articleId: articleId.value })
+
+  if (articles.length > 0) {
+    article.value = articles[0]
+    form.value.title = article.value.title
+    text.value = article.value.text
+    form.value.tagsString = article.value.tags?.join(' ') ?? ''
+  }
+  loading.value = false
+}
+
+const saveButtonClick = async function () {
+  const { id, categoryId } = article.value
+  const { title, text, tagsString } = form.value
+
+  const tags = Array.from(
+    new Set(tagsString.split(' ').filter(tag => tag.length > 0)).values()
+  )
+
+  await articleService.set({ id, categoryId, title, text, tags })
+
+  router.push({
+    name: 'ArticleReadPage',
+    parems: { id }
+  })
+}
+
+const cancelButtonClick = () => {
+  router.push({name: 'ArticlesListPage'})
+}
+
+onMounted(() => {
+  articleId.value = parseInt(route.params.id)
+  loadArticle()
+})
+
+watch(() => route.params.categoryId, async newId => {
+  articleId.value = parseInt(newId)
+  loadArticle()
+})
+</script>
+
 <template>
   <TheMainLayout no-sidebar>
     <template v-slot:panel-main>
@@ -64,104 +153,6 @@
     </template>
   </TheMainLayout>
 </template>
-
-<script>
-import { marked } from '../../infrastructure/markdown.js'
-
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const articleRepository = new ArticleRepository(articlesDatabase)
-const categoryRepository = new CategoryRepository(articlesDatabase)
-const articleService = new ArticleService(articleRepository, categoryRepository)
-
-export default {
-
-  name: 'ArticleEditPage',
-
-  data () {
-    const articleId = parseInt(this.$route.params.id)
-
-    return {
-      article: null,
-      articleId,
-      loading: true,
-      form: {
-        title: '',
-        text: '',
-        preview: '',
-        tagsString: ''
-      }
-    }
-  },
-
-  computed: {
-    text: {
-      get () {
-        return this.form.text
-      },
-      set (value) {
-        this.form.text = value
-        this.form.preview = this.form.text == null ? '' : marked.parse(this.form.text)
-      }
-    }
-  },
-
-  watch: {
-    $route (to) {
-      this.articleId = parseInt(to.params.id)
-      this.loadArticle()
-    }
-  },
-
-  mounted () {
-    this.articleId = parseInt(this.$route.params.id)
-    this.loadArticle()
-  },
-
-  methods: {
-    cancelButtonClick () {
-      this.$router.push({name: 'ArticlesListPage'})
-    },
-    async loadArticle () {
-      this.loading = true
-      this.article = null
-
-      const { articleId } = this
-
-      const articles = await articleService.get({ articleId })
-
-      if (articles.length > 0) {
-        this.article = articles[0]
-        this.form.title = this.article.title
-        this.text = this.article.text
-        this.form.tagsString = this.article.tags?.join(' ') ?? ''
-      }
-      this.loading = false
-    },
-
-    async saveButtonClick () {
-      const { id, categoryId } = this.article
-      const { title, text, tagsString } = this.form
-
-      const tags = Array.from(
-        new Set(tagsString.split(' ').filter(tag => tag.length > 0)).values()
-      )
-
-      await articleService.set({ id, categoryId, title, text, tags })
-
-      this.$router.push({
-        name: 'ArticleReadPage',
-        parems: { id }
-      })
-    }
-  }
-}
-</script>
-
 <style scoped>
 .button-save {
   white-space: nowrap

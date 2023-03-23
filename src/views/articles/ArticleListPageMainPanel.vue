@@ -1,3 +1,73 @@
+<script setup>
+import { computed, defineProps } from 'vue'
+import store from '../../store/index'
+import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
+import ButtonArticleCreatePage from '@/components/buttons/ButtonArticleCreatePage.vue'
+import ButtonCategorySettingPage from '@/components/buttons/ButtonCategorySettingPage.vue'
+import CampactLinksPanel from '@/components/panels/CampactLinksPanel.vue'
+import NavArticleViewMode from '@/components/navs/NavArticleViewMode.vue'
+import CompactTableFactory from '@/infrastructure/CompactTableFactory.js'
+
+const compactTableFactory = new CompactTableFactory()
+
+const props = defineProps({
+  category: {
+    type: Object,
+    required: true
+  }
+})
+
+const mode = computed(() => {
+  return props.category.articlesViewMode === 'detail' ? 'detail' : 'compact'
+})
+
+const modeCompactActive = computed(() => {
+  return mode.value === 'compact'
+})
+
+const modeDetailActive = computed(() => {
+  return mode.value === 'detail'
+})
+
+const articles = computed(() => {
+  const { articles, selectedTagTexts } = store.state
+  return articles
+    .filter(article => {
+      return compactTableFactory.isTargetArticle(article, selectedTagTexts)
+    })
+})
+
+const table = computed(() => {
+  const { articles, selectedTagTexts } = store.state
+  return compactTableFactory.create(articles, selectedTagTexts)
+})
+
+const alertCompactOnlyVisible = computed(() => {
+  return modeDetailActive.value && articles.value.length <= 0 && table.value.length > 0
+})
+
+const alertDetailOnlyVisible = computed(() => {
+  return modeCompactActive.value && articles.value.length > 0 && table.value.length <= 0
+})
+
+const alertNoArticle = computed(() => {
+  return articles.value.length <= 0 && table.value.length <= 0
+})
+
+const articleExpand = (article, expanded) => {
+  const { id } = article
+  store.dispatch('setArticleExpanded', { id, expanded })
+}
+
+const navViewModeChange = (articlesViewMode) => {
+  const categoryId = props.category.id
+  store.dispatch('setArticlesViewModeToCategory', {
+    categoryId,
+    articlesViewMode
+  })
+}
+</script>
+
 <template>
   <div class="h-100">
     <div class="d-flex">
@@ -58,80 +128,3 @@
 
   </div>
 </template>
-
-<script>
-import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
-import ButtonArticleCreatePage from '@/components/buttons/ButtonArticleCreatePage.vue'
-import ButtonCategorySettingPage from '@/components/buttons/ButtonCategorySettingPage.vue'
-import CampactLinksPanel from '@/components/panels/CampactLinksPanel.vue'
-import NavArticleViewMode from '@/components/navs/NavArticleViewMode.vue'
-import CompactTableFactory from '@/infrastructure/CompactTableFactory.js'
-
-const compactTableFactory = new CompactTableFactory()
-
-export default {
-
-  name: 'ArticleListPageMainPanel',
-
-  components: {
-    ArticlePanel,
-    ButtonArticleCreatePage,
-    ButtonCategorySettingPage,
-    CampactLinksPanel,
-    NavArticleViewMode
-  },
-
-  props: {
-    category: {
-      type: Object,
-      required: true
-    }
-  },
-
-  computed: {
-    alertCompactOnlyVisible () {
-      return this.modeDetailActive && this.articles.length <= 0 && this.table.length > 0
-    },
-    alertDetailOnlyVisible () {
-      return this.modeCompactActive && this.articles.length > 0 && this.table.length <= 0
-    },
-    alertNoArticle () {
-      return this.articles.length <= 0 && this.table.length <= 0
-    },
-    articles () {
-      const { articles, selectedTagTexts } = this.$store.state
-      return articles
-        .filter(article => {
-          return compactTableFactory.isTargetArticle(article, selectedTagTexts)
-        })
-    },
-    mode () {
-      return this.category.articlesViewMode === 'detail' ? 'detail' : 'compact'
-    },
-    modeCompactActive () {
-      return this.mode === 'compact'
-    },
-    modeDetailActive () {
-      return this.mode === 'detail'
-    },
-    table () {
-      const { articles, selectedTagTexts } = this.$store.state
-      return compactTableFactory.create(articles, selectedTagTexts)
-    }
-  },
-
-  methods: {
-    articleExpand (article, expanded) {
-      const { id } = article
-      this.$store.dispatch('setArticleExpanded', { id, expanded })
-    },
-    navViewModeChange (articlesViewMode) {
-      const categoryId = this.category.id
-      this.$store.dispatch('setArticlesViewModeToCategory', {
-        categoryId,
-        articlesViewMode
-      })
-    }
-  }
-}
-</script>

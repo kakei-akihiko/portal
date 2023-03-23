@@ -1,3 +1,27 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import store from '../../store/index'
+
+import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
+import NavCategories from '@/components/navs/NavCategories.vue'
+import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vue'
+
+const selectedCategory = computed(() => {
+  return store.state.categories
+        .filter(category => category.id === store.state.categoryId)[0]
+})
+
+onMounted(() => {
+  store.dispatch('loadCategories')
+})
+</script>
+
+<style>
+.command-bar {
+  text-align: right;
+}
+</style>
+
 <template>
   <TheMainLayout main-panel-scroll>
     <template v-slot:sidebar>
@@ -17,36 +41,3 @@
     </template>
   </TheMainLayout>
 </template>
-
-<script>
-import { mapState } from 'vuex'
-
-import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
-import NavCategories from '@/components/navs/NavCategories.vue'
-import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vue'
-
-export default {
-  name: 'ArticlesListPage',
-
-  components: { ArticleListPageMainPanel, FormGroupTagButtons, NavCategories },
-
-  computed: {
-    ...mapState(['categories', 'categoryId']),
-
-    selectedCategory () {
-      return this.categories
-        .filter(category => category.id === this.categoryId)[0]
-    }
-  },
-
-  async mounted () {
-    this.$store.dispatch('loadCategories')
-  }
-}
-</script>
-
-<style>
-.command-bar {
-  text-align: right;
-}
-</style>

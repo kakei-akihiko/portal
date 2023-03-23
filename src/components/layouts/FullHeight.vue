@@ -10,11 +10,6 @@
   </div>
 </template>
 
-<script>
-export default {
-}
-</script>
-
 <style scoped>
 .h-0 {
   height: 0;

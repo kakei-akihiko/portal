@@ -1,3 +1,29 @@
+<script setup>
+import { computed, onMounted } from 'vue'
+import store from '../../store/index'
+import router from '../../router/index'
+
+const sidebarArticle = computed(() => store.state.sidebar.article)
+
+onMounted(async () => {
+  if (store.state.sidebar.articleId == null) {
+    await store.dispatch('sidebar/loadSetting')
+  }
+})
+
+const articleListButtonClick = () => {
+  router.push({name: 'ArticlesListPage'})
+}
+
+const categoryButtonClick = () => {
+  router.push({name: 'CategoryPage'})
+}
+
+const settingButtonClick = () => {
+  router.push({name: 'SettingPage'})
+}
+</script>
+
 <template>
   <div class="d-flex flex-column h-100">
     <h1 class="h2">
@@ -38,36 +64,6 @@
     </fieldset>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'TheSidebar',
-
-  computed: {
-    sidebarArticle () {
-      return this.$store.state.sidebar.article
-    }
-  },
-
-  async mounted () {
-    if (this.$store.state.sidebar.articleId == null) {
-      await this.$store.dispatch('sidebar/loadSetting')
-    }
-  },
-
-  methods: {
-    articleListButtonClick () {
-      this.$router.push({name: 'ArticlesListPage'})
-    },
-    categoryButtonClick () {
-      this.$router.push({name: 'CategoryPage'})
-    },
-    settingButtonClick () {
-      this.$router.push({name: 'SettingPage'})
-    }
-  }
-}
-</script>
 
 <style scoped>
 .site-title-animals {

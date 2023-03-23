@@ -1,3 +1,74 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import router from '../../router/index'
+import ArticleJsonParser from '@/infrastructure/ArticleJsonParser.js'
+import ArticleRepository from '@/infrastructure/ArticleRepository.js'
+import ArticleService from '@/usecases/ArticleService.js'
+import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
+import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+
+const articlesDatabase = new ArticlesDatabase()
+const categoryRepository = new CategoryRepository(articlesDatabase)
+const articleJsonParser = new ArticleJsonParser()
+const articleRepository = new ArticleRepository(articlesDatabase)
+const articleService = new ArticleService(articleRepository, categoryRepository)
+
+const route = useRoute()
+
+const articles = ref([])
+const category = ref(null)
+const categoryId = ref(null)
+const file = ref(null)
+
+const importButton = computed(() => {
+  const count = articles.value?.length ?? 0
+
+  const nonCompletedCount = articles.value?.filter(article => !article.completed).length ?? 0
+
+  const disabled = nonCompletedCount <= 0 || file.value == null
+  const visible = count > 0 && file.value != null
+  return { disabled, visible }
+})
+
+const loadCategory = async () => {
+  category.value = await categoryRepository.get(categoryId.value)
+}
+
+const fileSelect = async event => {
+  console.log(event.target.files[0])
+  file.value = event.target.files[0]
+  if (file.value == null) {
+    return
+  }
+  const result = await articleJsonParser.parse(file.value)
+  if (result.succeeded) {
+    articles.value = result.articles.map(article => {
+      return { ...article, completed: false }
+    })
+  }
+}
+
+const importButtonClick = () => {
+  articles.value.filter(article => !article.computed)
+    .forEach(async article => {
+      const { title, text, tags } = article
+      await articleService.set({ categoryId: categoryId.value, title, text, tags })
+      article.completed = true
+    })
+}
+
+onMounted(() => {
+  categoryId.value = parseInt(route.params.id)
+  loadCategory()
+})
+
+watch(() => route.params.id, async newId => {
+  categoryId.value = parseInt(newId)
+  loadArticle()
+})
+</script>
+
 <template>
   <TheMainLayout main-panel-scroll>
     <template v-slot:sidebar>
@@ -52,87 +123,3 @@
     </template>
   </TheMainLayout>
 </template>
-
-<script>
-import ArticleJsonParser from '@/infrastructure/ArticleJsonParser.js'
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const categoryRepository = new CategoryRepository(articlesDatabase)
-const articleJsonParser = new ArticleJsonParser()
-const articleRepository = new ArticleRepository(articlesDatabase)
-const articleService = new ArticleService(articleRepository, categoryRepository)
-
-export default {
-  name: 'CategoryImportPage',
-
-  data () {
-    return {
-      articles: [],
-      category: null,
-      categoryId: null,
-      file: null
-    }
-  },
-
-  computed: {
-    importButton () {
-      const count = this.articles == null
-        ? 0
-        : this.articles.length
-
-      const nonCompletedCount = this.articles == null
-        ? 0
-        : this.articles.filter(article => !article.completed).length
-
-      const disabled = nonCompletedCount <= 0 || this.file == null
-      const visible = count > 0 && this.file != null
-      return { disabled, visible }
-    }
-  },
-
-  watch: {
-    $route (to) {
-      this.categoryId = parseInt(to.params.id)
-      this.loadCategory()
-    }
-  },
-
-  mounted () {
-    this.categoryId = parseInt(this.$route.params.id)
-    this.loadCategory()
-  },
-
-  methods: {
-    async fileSelect (event) {
-      console.log(event.target.files[0])
-      const file = event.target.files[0]
-      this.file = file
-      if (file == null) {
-        return
-      }
-      const { succeeded, articles } = await articleJsonParser.parse(file)
-      if (succeeded) {
-        this.articles = articles.map(article => {
-          return { ...article, completed: false }
-        })
-      }
-    },
-    async importButtonClick () {
-      this.articles.filter(article => !article.computed)
-        .forEach(async article => {
-          const { title, text, tags } = article
-          const categoryId = this.categoryId
-          await articleService.set({ categoryId, title, text, tags })
-          article.completed = true
-        })
-    },
-    async loadCategory () {
-      this.category = await categoryRepository.get(this.categoryId)
-    }
-  }
-}
-</script>

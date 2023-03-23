@@ -1,3 +1,53 @@
+<script setup>
+import { computed, defineEmits, defineProps } from 'vue'
+import { useRoute } from 'vue-router'
+import router from '../../../router/index'
+import { marked } from '../../../infrastructure/markdown.js'
+import ButtonExpand from '../../buttons/ButtonExpand.vue'
+
+const route = useRoute()
+const emit = defineEmits(['expand'])
+
+const props = defineProps({
+  article: {
+    type: Object,
+    required: true
+  },
+  tagPosition: {
+    default: 'right',
+    type: String
+  }
+})
+
+const bodyHtml = computed(() => marked.parse(props.article.text))
+
+const expandButtonVisible = computed(() => {
+  return props.article.text != null && props.article.text.length > 0
+})
+
+const expanded = computed(() => props.article.expanded === true)
+
+const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
+
+const articleEditButtonClick = () => {
+  router.push({
+    name: 'ArticleEditPage',
+    params: {id: props.article.id}
+  })
+}
+
+const articleReadButtonClick = () => {
+  router.push({
+    name: 'ArticleReadPage',
+    params: {id: props.article.id}
+  })
+}
+
+const expandButtonClick = () => {
+  emit('expand', !expanded.value)
+}
+</script>
+
 <template>
   <div class="card" body-class="py-2">
     <div class="card-body py-2">
@@ -64,59 +114,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { marked } from '../../../infrastructure/markdown.js'
-import ButtonExpand from '../../buttons/ButtonExpand.vue'
-
-export default {
-
-  name: 'ArticlePanel',
-
-  components: { ButtonExpand },
-
-  props: {
-    article: {
-      type: Object,
-      required: true
-    },
-    tagPosition: {
-      default: 'right',
-      type: String
-    }
-  },
-
-  computed: {
-    bodyHtml () {
-      return marked.parse(this.article.text)
-    },
-    expandButtonVisible () {
-      return this.article.text != null && this.article.text.length > 0
-    },
-    expanded () {
-      return this.article.expanded === true
-    },
-    bottomTagsVisible () {
-      return this.tagPosition === 'bottom'
-    }
-  },
-
-  methods: {
-    articleEditButtonClick () {
-      this.$router.push({
-        name: 'ArticleEditPage',
-        params: {id: this.article.id}
-      })
-    },
-    articleReadButtonClick () {
-      this.$router.push({
-        name: 'ArticleReadPage',
-        params: {id: this.article.id}
-      })
-    },
-    expandButtonClick () {
-      this.$emit('expand', !this.expanded)
-    }
-  }
-}
-</script>

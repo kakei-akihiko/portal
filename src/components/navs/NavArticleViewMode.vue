@@ -1,3 +1,35 @@
+<script setup>
+import { computed, defineEmits, defineProps } from 'vue'
+
+const emit = defineEmits(['change'])
+
+const props = defineProps({
+  mode: String
+})
+
+const compactNavLinkClass = computed(() => {
+  return {
+    active: props.mode === 'compact',
+    'nav-link': true
+  }
+})
+
+const detailNavLinkClass = computed(() => {
+  return {
+    active: props.mode === 'detail',
+    'nav-link': true
+  }
+})
+
+const modeCompactNavClick = () => {
+  emit('change', 'compact')
+}
+
+const modeDetailNavClick = () => {
+  emit('change', 'detail')
+}
+</script>
+
 <template>
   <ul class="nav nav-pills small">
     <li class="nav-item">
@@ -22,38 +54,3 @@
     </li>
   </ul>
 </template>
-
-<script>
-export default {
-
-  name: 'NavArticleViewMode',
-
-  props: {
-    mode: String
-  },
-
-  computed: {
-    compactNavLinkClass () {
-      return {
-        active: this.mode === 'compact',
-        'nav-link': true
-      }
-    },
-    detailNavLinkClass () {
-      return {
-        active: this.mode === 'detail',
-        'nav-link': true
-      }
-    }
-  },
-
-  methods: {
-    modeCompactNavClick () {
-      this.$emit('change', 'compact')
-    },
-    modeDetailNavClick () {
-      this.$emit('change', 'detail')
-    }
-  }
-}
-</script>
