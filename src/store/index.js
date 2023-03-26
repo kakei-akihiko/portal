@@ -45,9 +45,6 @@ export default new Vuex.Store({
         const selected = state.selectedTagTexts.includes(tagText)
         return { selected, text: tagText, value: tagText }
       })
-    },
-    getDependances () {
-      return () => ({ ...dependances })
     }
   },
   mutations: {

@@ -1,4 +1,5 @@
 import { marked } from '../../infrastructure/markdown.js'
+import { dependances } from '../index.js'
 
 export default {
   namespaced: true,
@@ -19,8 +20,8 @@ export default {
     }
   },
   actions: {
-    async loadSetting ({ commit, rootGetters }) {
-      const { articleService, settingService } = rootGetters.getDependances()
+    async loadSetting ({ commit }) {
+      const { articleService, settingService } = dependances
 
       const { articleId } = await settingService.getSidebarSetting()
       if (articleId == null) {
@@ -33,8 +34,8 @@ export default {
       commit('setArticleId', articleId)
       commit('setArticle', article)
     },
-    async setArticleId ({ commit, rootGetters }, articleId) {
-      const { settingService } = rootGetters.getDependances()
+    async setArticleId ({ commit }, articleId) {
+      const { settingService } = dependances
       await settingService.setSidebarArticleId(articleId)
       commit('setArticleId', articleId)
     }
