@@ -89,10 +89,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async exportArticles (context, { categoryId }) {
-      const articles = await articleService.get({ categoryId })
-      articleRepository.export(articles)
-    },
     async loadArticles (context, categoryId) {
       const articles = await articleService.get({ categoryId })
       const articleCards = articleCardFactory.fromArticles(articles)

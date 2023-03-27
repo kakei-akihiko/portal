@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import store from '../../store/index'
+import { exportArticles } from '../../store/ref.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 
@@ -40,9 +41,8 @@ const createCategoryButtonClick = async () => {
   cardNewCategory.value.name = ''
 }
 
-const exportButtonClick = async (category) => {
-  const categoryId = category.id
-  store.dispatch('exportArticles', { categoryId })
+const exportButtonClick = category => {
+  exportArticles(category.id)
 }
 </script>
 

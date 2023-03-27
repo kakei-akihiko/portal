@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import store from './index.js'
+import store, { dependances } from './index.js'
 
 export const allTagsRef = computed(() => {
   const tagTexts = store.state.articles
@@ -14,3 +14,8 @@ export const allTagsRef = computed(() => {
     return { selected, text: tagText, value: tagText }
   })
 })
+
+export const exportArticles = async categoryId => {
+  const articles = await dependances.articleService.get({ categoryId })
+  dependances.articleRepository.export(articles)
+}
