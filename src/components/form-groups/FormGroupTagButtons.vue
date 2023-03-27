@@ -1,11 +1,10 @@
 <script setup>
 import { computed } from 'vue'
 import store from '../../store/index'
-
-const allTags = computed(() => store.getters['allTags'])
+import { allTagsRef } from '../../store/ref';
 
 const tagButtons = computed(() => {
-  return allTags.value.map(tag => {
+  return allTagsRef.value.map(tag => {
     const { selected, text } = tag
     const className = selected ? 'btn btn-sm btn-info' : 'btn btn-sm btn-outline-info'
     return { selected, text, className }

@@ -32,21 +32,6 @@ export default new Vuex.Store({
     categories: [],
     selectedTagTexts: []
   },
-  getters: {
-    allTags (state) {
-      const tagTexts = state.articles
-        .map(article => article.tags ?? [])
-        .reduce((results, tags) => {
-          tags.filter(tag => results.includes(tag) === false)
-            .forEach(tag => results.push(tag))
-          return results
-        }, [])
-      return tagTexts.map(tagText => {
-        const selected = state.selectedTagTexts.includes(tagText)
-        return { selected, text: tagText, value: tagText }
-      })
-    }
-  },
   mutations: {
     selectTagText (state, { text, selected }) {
       const selectedCategories = state.categories
