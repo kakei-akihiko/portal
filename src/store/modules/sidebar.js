@@ -33,11 +33,6 @@ export default {
       const article = articles[0]
       commit('setArticleId', articleId)
       commit('setArticle', article)
-    },
-    async setArticleId ({ commit }, articleId) {
-      const { settingService } = dependances
-      await settingService.setSidebarArticleId(articleId)
-      commit('setArticleId', articleId)
     }
   }
 }

@@ -19,3 +19,9 @@ export const exportArticles = async categoryId => {
   const articles = await dependances.articleService.get({ categoryId })
   dependances.articleRepository.export(articles)
 }
+
+export const setSidebarArticleId = async articleId => {
+  const { settingService } = dependances
+  await settingService.setSidebarArticleId(articleId)
+  store.commit('sidebar/setArticleId', articleId)
+}

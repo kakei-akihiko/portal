@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import store from '../store/index'
+import { setSidebarArticleId } from '../store/ref'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 
 const articlesDatabase = new ArticlesDatabase()
@@ -20,7 +21,7 @@ const reload = async () => {
 const sidebarArticleButtonClick = async () => {
   const idIsEmpty = sidebarArticleId.value === '' || sidebarArticleId.value == null
   const id = idIsEmpty ? null : Number(sidebarArticleId.value)
-  await store.dispatch('sidebar/setArticleId', id)
+  await setSidebarArticleId(id)
   await reload()
 }
 
