@@ -1,5 +1,4 @@
 import { marked } from '../../infrastructure/markdown.js'
-import { dependances } from '../index.js'
 
 export default {
   namespaced: true,
@@ -17,22 +16,6 @@ export default {
     },
     setArticleId (state, id) {
       state.articleId = id
-    }
-  },
-  actions: {
-    async loadSetting ({ commit }) {
-      const { articleService, settingService } = dependances
-
-      const { articleId } = await settingService.getSidebarSetting()
-      if (articleId == null) {
-        commit('setArticleId', null)
-        commit('setArticle', null)
-        return
-      }
-      const articles = await articleService.get({ articleId })
-      const article = articles[0]
-      commit('setArticleId', articleId)
-      commit('setArticle', article)
     }
   }
 }

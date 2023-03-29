@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import store from '../store/index'
-import { setSidebarArticleId } from '../store/ref'
+import { loadSidebarSetting, setSidebarArticleId } from '../store/ref'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 
 const articlesDatabase = new ArticlesDatabase()
@@ -14,7 +14,7 @@ const deleteDatabaseButtonClick = () => {
 }
 
 const reload = async () => {
-  await store.dispatch('sidebar/loadSetting')
+  await loadSidebarSetting()
   sidebarArticleId.value = store.state.sidebar.articleId
 }
 

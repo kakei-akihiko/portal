@@ -1,13 +1,14 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import store from '../../store/index'
+import { loadSidebarSetting } from '../../store/ref'
 import router from '../../router/index'
 
 const sidebarArticle = computed(() => store.state.sidebar.article)
 
 onMounted(async () => {
   if (store.state.sidebar.articleId == null) {
-    await store.dispatch('sidebar/loadSetting')
+    await loadSidebarSetting()
   }
 })
 
