@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import store from '../store/index'
-import { loadSidebarSetting, setSidebarArticleId } from '../store/ref'
+import { loadSidebarSetting, setSidebarArticleId, sidebarArticleRef } from '../store/ref'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 
 const articlesDatabase = new ArticlesDatabase()
@@ -13,19 +13,16 @@ const deleteDatabaseButtonClick = () => {
   console.log('データベースを削除しました。')
 }
 
-const reload = async () => {
-  await loadSidebarSetting()
-  sidebarArticleId.value = store.state.sidebar.articleId
-}
-
 const sidebarArticleButtonClick = async () => {
   const idIsEmpty = sidebarArticleId.value === '' || sidebarArticleId.value == null
   const id = idIsEmpty ? null : Number(sidebarArticleId.value)
   await setSidebarArticleId(id)
-  await reload()
 }
 
-onMounted(() => reload())
+onMounted(async () => {
+  await loadSidebarSetting()
+  sidebarArticleId.value = sidebarArticleRef.value.id
+})
 </script>
 
 <template>

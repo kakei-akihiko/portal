@@ -7,7 +7,6 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import sidebar from './modules/sidebar.js'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -114,8 +113,5 @@ export default new Vuex.Store({
       context.commit('setCategorySettings', { categoryId, tagPosition, tagSelectionMode })
       await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
     }
-  },
-  modules: {
-    sidebar
   }
 })

@@ -1,5 +1,6 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import store, { dependances } from './index.js'
+import { marked } from '../infrastructure/markdown.js'
 
 export const allTagsRef = computed(() => {
   const tagTexts = store.state.articles
@@ -20,23 +21,24 @@ export const exportArticles = async categoryId => {
   dependances.articleRepository.export(articles)
 }
 
-export const setSidebarArticleId = async articleId => {
-  const { settingService } = dependances
-  await settingService.setSidebarArticleId(articleId)
-  store.commit('sidebar/setArticleId', articleId)
-}
+export const sidebarArticleRef = ref(null)
 
 export const loadSidebarSetting = async () => {
   const { articleService, settingService } = dependances
 
   const { articleId } = await settingService.getSidebarSetting()
   if (articleId == null) {
-    store.commit('sidebar/setArticleId', null)
-    store.commit('sidebar/setArticle', null)
+    sidebarArticleRef.value = null
     return
   }
   const articles = await articleService.get({ articleId })
   const article = articles[0]
-  store.commit('sidebar/setArticleId', articleId)
-  store.commit('sidebar/setArticle', article)
+  const html = article?.text == null ? null : marked.parse(article.text)
+  sidebarArticleRef.value = { html, ...article }
+}
+
+export const setSidebarArticleId = async articleId => {
+  const { settingService } = dependances
+  await settingService.setSidebarArticleId(articleId)
+  await loadSidebarSetting()
 }
