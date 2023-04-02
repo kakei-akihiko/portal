@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue'
+import { selectedTagTextsRef } from './refactor'
 import store, { dependances } from './index.js'
 import { marked } from '../infrastructure/markdown.js'
 
@@ -11,7 +12,7 @@ export const allTagsRef = computed(() => {
       return results
     }, [])
   return tagTexts.map(tagText => {
-    const selected = store.state.selectedTagTexts.includes(tagText)
+    const selected = selectedTagTextsRef.value.includes(tagText)
     return { selected, text: tagText, value: tagText }
   })
 })

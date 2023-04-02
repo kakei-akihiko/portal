@@ -7,6 +7,7 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
+import { selectedTagTextsRef } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -28,8 +29,7 @@ export default new Vuex.Store({
   state: {
     articles: [],
     categoryId: null,
-    categories: [],
-    selectedTagTexts: []
+    categories: []
   },
   mutations: {
     selectTagText (state, { text, selected }) {
@@ -37,24 +37,25 @@ export default new Vuex.Store({
         .filter(category => category.id === state.categoryId)
       const tagSelectionMode = selectedCategories[0]?.tagSelectionMode ?? 'single'
 
-      const alreadySelected = state.selectedTagTexts.includes(text)
+      const alreadySelected = selectedTagTextsRef.value.includes(text)
 
       if (tagSelectionMode === 'single') {
         if (alreadySelected) {
-          state.selectedTagTexts = []
+          selectedTagTextsRef.value = []
         } else {
-          state.selectedTagTexts = [text]
+          selectedTagTextsRef.value = [text]
         }
         return
       }
 
       if (alreadySelected) {
         if (selected === false) {
-          state.selectedTagTexts = state.selectedTagTexts
+          selectedTagTextsRef.value = selectedTagTextsRef.value
             .filter(_text => _text !== text)
+          console.log('1')
         }
       } else if (selected) {
-        state.selectedTagTexts.push(text)
+        selectedTagTextsRef.value.push(text)
       }
     },
     setArticleExpand (state, { id, expanded }) {
@@ -75,7 +76,7 @@ export default new Vuex.Store({
     },
     setCategoryId (state, categoryId) {
       state.categoryId = categoryId
-      state.selectedTagTexts = []
+      selectedTagTextsRef.value = []
     },
     setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
       state.categories
