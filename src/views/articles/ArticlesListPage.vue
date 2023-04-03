@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import store from '../../store/index'
+import { categoryIdRef } from '../../store/refactor'
 
 import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
 import NavCategories from '@/components/navs/NavCategories.vue'
@@ -8,7 +9,7 @@ import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vu
 
 const selectedCategory = computed(() => {
   return store.state.categories
-        .filter(category => category.id === store.state.categoryId)[0]
+        .filter(category => category.id === categoryIdRef.value)[0]
 })
 
 onMounted(() => {

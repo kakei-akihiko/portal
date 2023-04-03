@@ -1,11 +1,12 @@
 <script setup>
 import { computed } from 'vue'
 import store from '../../store/index'
+import { categoryIdRef, setCategoryId } from '../../store/refactor'
 
 const categories = computed(() => {
   return store.state.categories.map(category => {
     const { id, title } = category
-    const active = id === store.state.categoryId
+    const active = id === categoryIdRef.value
     const anchorClass = {
       active,
       'nav-link': true
@@ -16,7 +17,7 @@ const categories = computed(() => {
 
 const categorySelect = async category => {
   if (category != null) {
-    store.commit('setCategoryId', category.id)
+    setCategoryId(category.id)
     await store.dispatch('loadArticles', category.id)
   }
 }

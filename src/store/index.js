@@ -7,7 +7,7 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import { selectedTagTextsRef } from './refactor'
+import { categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -28,13 +28,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     articles: [],
-    categoryId: null,
     categories: []
   },
   mutations: {
     selectTagText (state, { text, selected }) {
       const selectedCategories = state.categories
-        .filter(category => category.id === state.categoryId)
+        .filter(category => category.id === categoryIdRef.value)
       const tagSelectionMode = selectedCategories[0]?.tagSelectionMode ?? 'single'
 
       const alreadySelected = selectedTagTextsRef.value.includes(text)
@@ -70,13 +69,9 @@ export default new Vuex.Store({
     },
     setCategories (state, { autoSelect, categories }) {
       state.categories = categories
-      if (categories.length > 0 && state.categoryId == null) {
-        state.categoryId = categories[0].id
+      if (categories.length > 0 && categoryIdRef.value == null) {
+        categoryIdRef.value = categories[0].id
       }
-    },
-    setCategoryId (state, categoryId) {
-      state.categoryId = categoryId
-      selectedTagTextsRef.value = []
     },
     setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
       state.categories
@@ -93,13 +88,13 @@ export default new Vuex.Store({
       const articles = await articleService.get({ categoryId })
       const articleCards = articleCardFactory.fromArticles(articles)
       context.commit('setArticles', articleCards)
-      context.commit('setCategoryId', categoryId)
+      setCategoryId(categoryId)
     },
     async loadCategories ({ commit, dispatch, state }) {
       const categories = await categoryRepository.getAll()
       commit('setCategories', { autoSelect: true, categories })
-      if (state.categoryId != null) {
-        await dispatch('loadArticles', state.categoryId)
+      if (categoryIdRef.value != null) {
+        await dispatch('loadArticles', categoryIdRef.value)
       }
     },
     setArticleExpanded (context, { id, expanded }) {
