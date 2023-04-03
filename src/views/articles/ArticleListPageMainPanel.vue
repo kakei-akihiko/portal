@@ -1,6 +1,7 @@
 <script setup>
 import { computed, defineProps } from 'vue'
 import store from '../../store/index'
+import { articlesRef } from '../../store/refactor'
 import { selectedTagTextsRef } from '../../store/refactor'
 import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
 import ButtonArticleCreatePage from '@/components/buttons/ButtonArticleCreatePage.vue'
@@ -31,15 +32,15 @@ const modeDetailActive = computed(() => {
 })
 
 const articles = computed(() => {
-  return store.state.articles
+  return articlesRef.value
     .filter(article => {
       return compactTableFactory.isTargetArticle(article, selectedTagTextsRef.value)
     })
 })
 
 const table = computed(() => {
-  const { articles } = store.state
-  return compactTableFactory.create(articles, selectedTagTextsRef.value)
+  const _articles = articlesRef.value
+  return compactTableFactory.create(_articles, selectedTagTextsRef.value)
 })
 
 const alertCompactOnlyVisible = computed(() => {

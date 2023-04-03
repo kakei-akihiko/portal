@@ -1,10 +1,10 @@
 import { computed, ref } from 'vue'
-import { selectedTagTextsRef } from './refactor'
+import { articlesRef, selectedTagTextsRef } from './refactor'
 import store, { dependances } from './index.js'
 import { marked } from '../infrastructure/markdown.js'
 
 export const allTagsRef = computed(() => {
-  const tagTexts = store.state.articles
+  const tagTexts = articlesRef.value
     .map(article => article.tags ?? [])
     .reduce((results, tags) => {
       tags.filter(tag => results.includes(tag) === false)

@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 
+export const articlesRef = ref([])
+
 export const categoryIdRef = ref(null)
 
 export const selectedTagTextsRef = ref([])

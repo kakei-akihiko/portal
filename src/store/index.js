@@ -7,7 +7,7 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import { categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
+import { articlesRef, categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -27,7 +27,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    articles: [],
     categories: []
   },
   mutations: {
@@ -58,14 +57,14 @@ export default new Vuex.Store({
       }
     },
     setArticleExpand (state, { id, expanded }) {
-      state.articles
+      articlesRef.value
         .filter(article => article.id === id)
         .forEach(article => {
           article.expanded = expanded
         })
     },
     setArticles (state, articles) {
-      state.articles = articles
+      articlesRef.value = articles
     },
     setCategories (state, { autoSelect, categories }) {
       state.categories = categories
