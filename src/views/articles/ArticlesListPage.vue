@@ -1,14 +1,14 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import store from '../../store/index'
-import { categoryIdRef } from '../../store/refactor'
+import { categoriesRef, categoryIdRef } from '../../store/refactor'
 
 import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
 import NavCategories from '@/components/navs/NavCategories.vue'
 import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vue'
 
 const selectedCategory = computed(() => {
-  return store.state.categories
+  return categoriesRef.value
         .filter(category => category.id === categoryIdRef.value)[0]
 })
 

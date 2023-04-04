@@ -6,6 +6,8 @@ export const categoryIdRef = ref(null)
 
 export const selectedTagTextsRef = ref([])
 
+export const categoriesRef = ref([])
+
 export const setCategoryId = categoryId => {
   categoryIdRef.value = categoryId
   selectedTagTextsRef.value = []

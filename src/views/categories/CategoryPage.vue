@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import store from '../../store/index'
 import { exportArticles } from '../../store/ref.js'
+import { categoriesRef } from '../../store/refactor.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 
@@ -81,7 +82,7 @@ const exportButtonClick = category => {
         <section class="section-list">
           <h3>一覧</h3>
           <div class="card"
-            v-for="category in store.state.categories"
+            v-for="category in categoriesRef"
             :key="category.id"
           >
             <div class="card-body d-flex">

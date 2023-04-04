@@ -7,7 +7,7 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import { articlesRef, categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
+import { articlesRef, categoriesRef, categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -27,11 +27,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    categories: []
   },
   mutations: {
     selectTagText (state, { text, selected }) {
-      const selectedCategories = state.categories
+      const selectedCategories = categoriesRef.value
         .filter(category => category.id === categoryIdRef.value)
       const tagSelectionMode = selectedCategories[0]?.tagSelectionMode ?? 'single'
 
@@ -67,13 +66,13 @@ export default new Vuex.Store({
       articlesRef.value = articles
     },
     setCategories (state, { autoSelect, categories }) {
-      state.categories = categories
+      categoriesRef.value = categories
       if (categories.length > 0 && categoryIdRef.value == null) {
         categoryIdRef.value = categories[0].id
       }
     },
     setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
-      state.categories
+      categoriesRef.value
         .filter(category => category.id === categoryId)
         .forEach(category => {
           category.articlesViewMode = articlesViewMode ?? category.articlesViewMode

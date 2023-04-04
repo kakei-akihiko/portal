@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from 'vue'
 import store from '../../store/index'
-import { categoryIdRef, setCategoryId } from '../../store/refactor'
+import { categoriesRef, categoryIdRef, setCategoryId } from '../../store/refactor'
 
 const categories = computed(() => {
-  return store.state.categories.map(category => {
+  return categoriesRef.value.map(category => {
     const { id, title } = category
     const active = id === categoryIdRef.value
     const anchorClass = {
