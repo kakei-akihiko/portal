@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import store from '../../store/index'
-import { allTagsRef } from '../../store/ref';
+import { allTagsRef } from '../../store/ref'
+import { selectTagText } from '../../store/refactor'
 
 const tagButtons = computed(() => {
   return allTagsRef.value.map(tag => {
@@ -13,7 +13,7 @@ const tagButtons = computed(() => {
 
 const tagButtonClick = tagButton => {
   const { text, selected } = tagButton
-  store.commit('selectTagText', {
+  selectTagText({
     text,
     selected: !selected
   })

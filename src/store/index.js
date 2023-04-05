@@ -7,7 +7,7 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import { articlesRef, categoriesRef, categoryIdRef, selectedTagTextsRef, setCategoryId } from './refactor'
+import { articlesRef, categoriesRef, categoryIdRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
@@ -26,35 +26,7 @@ export const dependances = {
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
   mutations: {
-    selectTagText (state, { text, selected }) {
-      const selectedCategories = categoriesRef.value
-        .filter(category => category.id === categoryIdRef.value)
-      const tagSelectionMode = selectedCategories[0]?.tagSelectionMode ?? 'single'
-
-      const alreadySelected = selectedTagTextsRef.value.includes(text)
-
-      if (tagSelectionMode === 'single') {
-        if (alreadySelected) {
-          selectedTagTextsRef.value = []
-        } else {
-          selectedTagTextsRef.value = [text]
-        }
-        return
-      }
-
-      if (alreadySelected) {
-        if (selected === false) {
-          selectedTagTextsRef.value = selectedTagTextsRef.value
-            .filter(_text => _text !== text)
-          console.log('1')
-        }
-      } else if (selected) {
-        selectedTagTextsRef.value.push(text)
-      }
-    },
     setArticleExpand (state, { id, expanded }) {
       articlesRef.value
         .filter(article => article.id === id)
