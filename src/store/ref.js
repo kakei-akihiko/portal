@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { articlesRef, selectedTagTextsRef } from './refactor'
-import store, { dependances } from './index.js'
+import { articleService, articleRepository, settingService } from './index.js'
 import { marked } from '../infrastructure/markdown.js'
 
 export const allTagsRef = computed(() => {
@@ -18,15 +18,13 @@ export const allTagsRef = computed(() => {
 })
 
 export const exportArticles = async categoryId => {
-  const articles = await dependances.articleService.get({ categoryId })
-  dependances.articleRepository.export(articles)
+  const articles = await articleService.get({ categoryId })
+  articleRepository.export(articles)
 }
 
 export const sidebarArticleRef = ref(null)
 
 export const loadSidebarSetting = async () => {
-  const { articleService, settingService } = dependances
-
   const { articleId } = await settingService.getSidebarSetting()
   if (articleId == null) {
     sidebarArticleRef.value = null
@@ -39,7 +37,6 @@ export const loadSidebarSetting = async () => {
 }
 
 export const setSidebarArticleId = async articleId => {
-  const { settingService } = dependances
   await settingService.setSidebarArticleId(articleId)
   await loadSidebarSetting()
 }

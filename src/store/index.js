@@ -7,21 +7,18 @@ import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
+import SettingRepository from '@/infrastructure/SettingRepository.js'
+import SettingService from '@/usecases/SettingService.js'
 import { articlesRef, categoriesRef, categoryIdRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
-const articleRepository = new ArticleRepository(articlesDatabase)
 const categoryRepository = new CategoryRepository(articlesDatabase)
 const categoryService = new CategoryService(categoryRepository)
-const articleService = new ArticleService(articleRepository, categoryRepository)
-
-export const dependances = {
-  articlesDatabase,
-  articleRepository,
-  articleService,
-  settingService: null
-}
+export const articleRepository = new ArticleRepository(articlesDatabase)
+export const articleService = new ArticleService(articleRepository, categoryRepository)
+const settingRepository = new SettingRepository(articlesDatabase)
+export const settingService = new SettingService(settingRepository)
 
 Vue.use(Vuex)
 
