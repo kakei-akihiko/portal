@@ -22,15 +22,16 @@ export const settingService = new SettingService(settingRepository)
 
 Vue.use(Vuex)
 
+const setArticleExpand = ({ id, expanded }) => {
+  articlesRef.value
+    .filter(article => article.id === id)
+    .forEach(article => {
+      article.expanded = expanded
+    })
+}
+
 export default new Vuex.Store({
   mutations: {
-    setArticleExpand (state, { id, expanded }) {
-      articlesRef.value
-        .filter(article => article.id === id)
-        .forEach(article => {
-          article.expanded = expanded
-        })
-    },
     setArticles (state, articles) {
       articlesRef.value = articles
     },
@@ -65,7 +66,7 @@ export default new Vuex.Store({
       }
     },
     setArticleExpanded (context, { id, expanded }) {
-      context.commit('setArticleExpand', { id, expanded })
+      setArticleExpand({ id, expanded })
       articleService.setExpanding(id, expanded)
     },
     async setArticlesViewModeToCategory (context, { categoryId, articlesViewMode }) {
