@@ -32,9 +32,6 @@ const setArticleExpand = ({ id, expanded }) => {
 
 export default new Vuex.Store({
   mutations: {
-    setArticles (state, articles) {
-      articlesRef.value = articles
-    },
     setCategories (state, { autoSelect, categories }) {
       categoriesRef.value = categories
       if (categories.length > 0 && categoryIdRef.value == null) {
@@ -54,8 +51,7 @@ export default new Vuex.Store({
   actions: {
     async loadArticles (context, categoryId) {
       const articles = await articleService.get({ categoryId })
-      const articleCards = articleCardFactory.fromArticles(articles)
-      context.commit('setArticles', articleCards)
+      articlesRef.value = articleCardFactory.fromArticles(articles)
       setCategoryId(categoryId)
     },
     async loadCategories ({ commit, dispatch, state }) {
