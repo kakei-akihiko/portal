@@ -30,14 +30,15 @@ const setArticleExpand = ({ id, expanded }) => {
     })
 }
 
+const setCategories = categories => {
+  categoriesRef.value = categories
+  if (categories.length > 0 && categoryIdRef.value == null) {
+    categoryIdRef.value = categories[0].id
+  }
+}
+
 export default new Vuex.Store({
   mutations: {
-    setCategories (state, { autoSelect, categories }) {
-      categoriesRef.value = categories
-      if (categories.length > 0 && categoryIdRef.value == null) {
-        categoryIdRef.value = categories[0].id
-      }
-    },
     setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
       categoriesRef.value
         .filter(category => category.id === categoryId)
@@ -56,7 +57,7 @@ export default new Vuex.Store({
     },
     async loadCategories ({ commit, dispatch, state }) {
       const categories = await categoryRepository.getAll()
-      commit('setCategories', { autoSelect: true, categories })
+      setCategories(categories)
       if (categoryIdRef.value != null) {
         await dispatch('loadArticles', categoryIdRef.value)
       }
