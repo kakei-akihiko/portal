@@ -37,18 +37,17 @@ const setCategories = categories => {
   }
 }
 
+const _setCategorySettings = ({ categoryId, articlesViewMode, tagPosition, tagSelectionMode }) => {
+  categoriesRef.value
+    .filter(category => category.id === categoryId)
+    .forEach(category => {
+      category.articlesViewMode = articlesViewMode ?? category.articlesViewMode
+      category.tagPosition = tagPosition ?? category.tagPosition
+      category.tagSelectionMode = tagSelectionMode ?? category.tagSelectionMode
+    })
+}
+
 export default new Vuex.Store({
-  mutations: {
-    setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
-      categoriesRef.value
-        .filter(category => category.id === categoryId)
-        .forEach(category => {
-          category.articlesViewMode = articlesViewMode ?? category.articlesViewMode
-          category.tagPosition = tagPosition ?? category.tagPosition
-          category.tagSelectionMode = tagSelectionMode ?? category.tagSelectionMode
-        })
-    }
-  },
   actions: {
     async loadArticles (context, categoryId) {
       const articles = await articleService.get({ categoryId })
@@ -67,11 +66,11 @@ export default new Vuex.Store({
       articleService.setExpanding(id, expanded)
     },
     async setArticlesViewModeToCategory (context, { categoryId, articlesViewMode }) {
-      context.commit('setCategorySettings', { categoryId, articlesViewMode })
+      _setCategorySettings({ categoryId, articlesViewMode })
       await categoryService.setSettings(categoryId, { articlesViewMode })
     },
     async setCategorySettings (context, { categoryId, tagPosition, tagSelectionMode }) {
-      context.commit('setCategorySettings', { categoryId, tagPosition, tagSelectionMode })
+      _setCategorySettings({ categoryId, tagPosition, tagSelectionMode })
       await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
     }
   }
