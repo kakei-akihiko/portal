@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import store from '../../store/index'
+import { loadCategories } from '../../store/index'
 import { exportArticles } from '../../store/ref.js'
 import { categoriesRef } from '../../store/refactor.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
@@ -29,8 +29,8 @@ const cardNewCategoryName = computed({
   }
 })
 
-onMounted(async () => {
-  store.dispatch('loadCategories')
+onMounted(() => {
+  loadCategories()
 })
 
 const createCategoryButtonClick = async () => {
@@ -38,7 +38,7 @@ const createCategoryButtonClick = async () => {
   const title = cardNewCategory.value.name
   const tagSelectionMode = 'single'
   await categoryRepository.put({ title, tagSelectionMode })
-  store.dispatch('loadCategories')
+  loadCategories()
   cardNewCategory.value.name = ''
 }
 

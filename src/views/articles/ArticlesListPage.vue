@@ -1,6 +1,6 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import store from '../../store/index'
+import { computed, onMounted } from 'vue'
+import { loadCategories } from '../../store/index'
 import { categoriesRef, categoryIdRef } from '../../store/refactor'
 
 import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
@@ -13,7 +13,7 @@ const selectedCategory = computed(() => {
 })
 
 onMounted(() => {
-  store.dispatch('loadCategories')
+  loadCategories()
 })
 </script>
 
