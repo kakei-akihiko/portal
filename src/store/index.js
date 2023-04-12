@@ -47,21 +47,22 @@ const _setCategorySettings = ({ categoryId, articlesViewMode, tagPosition, tagSe
     })
 }
 
+export const loadArticles = async categoryId => {
+  const articles = await articleService.get({ categoryId })
+  articlesRef.value = articleCardFactory.fromArticles(articles)
+  setCategoryId(categoryId)
+}
+
 export const loadCategories = async () => {
   const categories = await categoryRepository.getAll()
   setCategories(categories)
   if (categoryIdRef.value != null) {
-    await dispatch('loadArticles', categoryIdRef.value)
+    await loadArticles(categoryIdRef.value)
   }
 }
 
 export default new Vuex.Store({
   actions: {
-    async loadArticles (context, categoryId) {
-      const articles = await articleService.get({ categoryId })
-      articlesRef.value = articleCardFactory.fromArticles(articles)
-      setCategoryId(categoryId)
-    },
     setArticleExpanded (context, { id, expanded }) {
       setArticleExpand({ id, expanded })
       articleService.setExpanding(id, expanded)

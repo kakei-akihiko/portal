@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import store from '../../store/index'
+import { loadArticles } from '../../store/index'
 import { categoriesRef, categoryIdRef, setCategoryId } from '../../store/refactor'
 
 const categories = computed(() => {
@@ -18,7 +18,7 @@ const categories = computed(() => {
 const categorySelect = async category => {
   if (category != null) {
     setCategoryId(category.id)
-    await store.dispatch('loadArticles', category.id)
+    await loadArticles(category.id)
   }
 }
 </script>
