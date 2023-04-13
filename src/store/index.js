@@ -61,12 +61,13 @@ export const loadCategories = async () => {
   }
 }
 
+export const setArticleExpanded = ({ id, expanded }) => {
+  setArticleExpand({ id, expanded })
+  articleService.setExpanding(id, expanded)
+}
+
 export default new Vuex.Store({
   actions: {
-    setArticleExpanded (context, { id, expanded }) {
-      setArticleExpand({ id, expanded })
-      articleService.setExpanding(id, expanded)
-    },
     async setArticlesViewModeToCategory (context, { categoryId, articlesViewMode }) {
       _setCategorySettings({ categoryId, articlesViewMode })
       await categoryService.setSettings(categoryId, { articlesViewMode })

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, defineProps } from 'vue'
-import store from '../../store/index'
+import store, { setArticleExpanded } from '../../store/index'
 import { articlesRef } from '../../store/refactor'
 import { selectedTagTextsRef } from '../../store/refactor'
 import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
@@ -57,7 +57,7 @@ const alertNoArticle = computed(() => {
 
 const articleExpand = (article, expanded) => {
   const { id } = article
-  store.dispatch('setArticleExpanded', { id, expanded })
+  setArticleExpanded({ id, expanded })
 }
 
 const navViewModeChange = (articlesViewMode) => {
