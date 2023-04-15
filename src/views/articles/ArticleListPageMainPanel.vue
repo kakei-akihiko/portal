@@ -1,6 +1,6 @@
 <script setup>
 import { computed, defineProps } from 'vue'
-import store, { setArticleExpanded } from '../../store/index'
+import store, { setArticleExpanded, setArticlesViewModeToCategory } from '../../store/index'
 import { articlesRef } from '../../store/refactor'
 import { selectedTagTextsRef } from '../../store/refactor'
 import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
@@ -62,7 +62,7 @@ const articleExpand = (article, expanded) => {
 
 const navViewModeChange = (articlesViewMode) => {
   const categoryId = props.category.id
-  store.dispatch('setArticlesViewModeToCategory', {
+  setArticlesViewModeToCategory({
     categoryId,
     articlesViewMode
   })
