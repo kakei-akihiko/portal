@@ -71,11 +71,7 @@ export const setArticlesViewModeToCategory = async ({ categoryId, articlesViewMo
   await categoryService.setSettings(categoryId, { articlesViewMode })
 }
 
-export default new Vuex.Store({
-  actions: {
-    async setCategorySettings (context, { categoryId, tagPosition, tagSelectionMode }) {
-      _setCategorySettings({ categoryId, tagPosition, tagSelectionMode })
-      await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
-    }
-  }
-})
+export const setCategorySettings = async ({ categoryId, tagPosition, tagSelectionMode }) => {
+  _setCategorySettings({ categoryId, tagPosition, tagSelectionMode })
+  await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
+}
