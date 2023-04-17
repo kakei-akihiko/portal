@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import store from '../store/index'
 import { loadSidebarSetting, setSidebarArticleId, sidebarArticleRef } from '../store/ref'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 

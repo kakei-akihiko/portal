@@ -1,6 +1,3 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
 import ArticleCardFactory from '@/infrastructure/ArticleCardFactory.js'
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
@@ -19,8 +16,6 @@ export const articleRepository = new ArticleRepository(articlesDatabase)
 export const articleService = new ArticleService(articleRepository, categoryRepository)
 const settingRepository = new SettingRepository(articlesDatabase)
 export const settingService = new SettingService(settingRepository)
-
-Vue.use(Vuex)
 
 const setArticleExpand = ({ id, expanded }) => {
   articlesRef.value
