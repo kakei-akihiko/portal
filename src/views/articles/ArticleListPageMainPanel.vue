@@ -1,6 +1,8 @@
 <script setup>
 import { computed, defineProps } from 'vue'
-import store from '../../store/index'
+import { setArticleExpanded, setArticlesViewModeToCategory } from '../../store/index'
+import { articlesRef } from '../../store/refactor'
+import { selectedTagTextsRef } from '../../store/refactor'
 import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
 import ButtonArticleCreatePage from '@/components/buttons/ButtonArticleCreatePage.vue'
 import ButtonCategorySettingPage from '@/components/buttons/ButtonCategorySettingPage.vue'
@@ -30,16 +32,15 @@ const modeDetailActive = computed(() => {
 })
 
 const articles = computed(() => {
-  const { articles, selectedTagTexts } = store.state
-  return articles
+  return articlesRef.value
     .filter(article => {
-      return compactTableFactory.isTargetArticle(article, selectedTagTexts)
+      return compactTableFactory.isTargetArticle(article, selectedTagTextsRef.value)
     })
 })
 
 const table = computed(() => {
-  const { articles, selectedTagTexts } = store.state
-  return compactTableFactory.create(articles, selectedTagTexts)
+  const _articles = articlesRef.value
+  return compactTableFactory.create(_articles, selectedTagTextsRef.value)
 })
 
 const alertCompactOnlyVisible = computed(() => {
@@ -56,12 +57,12 @@ const alertNoArticle = computed(() => {
 
 const articleExpand = (article, expanded) => {
   const { id } = article
-  store.dispatch('setArticleExpanded', { id, expanded })
+  setArticleExpanded({ id, expanded })
 }
 
 const navViewModeChange = (articlesViewMode) => {
   const categoryId = props.category.id
-  store.dispatch('setArticlesViewModeToCategory', {
+  setArticlesViewModeToCategory({
     categoryId,
     articlesViewMode
   })

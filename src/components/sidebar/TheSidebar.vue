@@ -1,13 +1,12 @@
 <script setup>
-import { computed, onMounted } from 'vue'
-import store from '../../store/index'
+import { onMounted } from 'vue'
+import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
 import router from '../../router/index'
 
-const sidebarArticle = computed(() => store.state.sidebar.article)
-
 onMounted(async () => {
-  if (store.state.sidebar.articleId == null) {
-    await store.dispatch('sidebar/loadSetting')
+  // まだ読み込んでいない場合だけ読み込む
+  if (sidebarArticleRef.value == null) {
+    await loadSidebarSetting()
   }
 })
 
@@ -32,8 +31,8 @@ const settingButtonClick = () => {
     </h1>
     <slot/>
     <div class="mt-auto"></div>
-    <div v-if="sidebarArticle != null">
-      <div v-html="sidebarArticle.html" />
+    <div v-if="sidebarArticleRef != null">
+      <div v-html="sidebarArticleRef.html" />
     </div>
     <fieldset class="form-group" v-if="$route.name != 'ArticlesListPage'">
       <button

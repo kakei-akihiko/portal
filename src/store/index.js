@@ -1,143 +1,72 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
 import ArticleCardFactory from '@/infrastructure/ArticleCardFactory.js'
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import ArticleService from '@/usecases/ArticleService.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 import CategoryService from '@/usecases/CategoryService.js'
-import sidebar from './modules/sidebar.js'
+import SettingRepository from '@/infrastructure/SettingRepository.js'
+import SettingService from '@/usecases/SettingService.js'
+import { articlesRef, categoriesRef, categoryIdRef, setCategoryId } from './refactor'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()
-const articleRepository = new ArticleRepository(articlesDatabase)
 const categoryRepository = new CategoryRepository(articlesDatabase)
 const categoryService = new CategoryService(categoryRepository)
-const articleService = new ArticleService(articleRepository, categoryRepository)
+export const articleRepository = new ArticleRepository(articlesDatabase)
+export const articleService = new ArticleService(articleRepository, categoryRepository)
+const settingRepository = new SettingRepository(articlesDatabase)
+export const settingService = new SettingService(settingRepository)
 
-export const dependances = {
-  articlesDatabase,
-  articleRepository,
-  articleService,
-  settingService: null
+const setArticleExpand = ({ id, expanded }) => {
+  articlesRef.value
+    .filter(article => article.id === id)
+    .forEach(article => {
+      article.expanded = expanded
+    })
 }
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-    articles: [],
-    categoryId: null,
-    categories: [],
-    selectedTagTexts: []
-  },
-  getters: {
-    allTags (state) {
-      const tagTexts = state.articles
-        .map(article => article.tags ?? [])
-        .reduce((results, tags) => {
-          tags.filter(tag => results.includes(tag) === false)
-            .forEach(tag => results.push(tag))
-          return results
-        }, [])
-      return tagTexts.map(tagText => {
-        const selected = state.selectedTagTexts.includes(tagText)
-        return { selected, text: tagText, value: tagText }
-      })
-    },
-    getDependances () {
-      return () => ({ ...dependances })
-    }
-  },
-  mutations: {
-    selectTagText (state, { text, selected }) {
-      const selectedCategories = state.categories
-        .filter(category => category.id === state.categoryId)
-      const tagSelectionMode = selectedCategories[0]?.tagSelectionMode ?? 'single'
-
-      const alreadySelected = state.selectedTagTexts.includes(text)
-
-      if (tagSelectionMode === 'single') {
-        if (alreadySelected) {
-          state.selectedTagTexts = []
-        } else {
-          state.selectedTagTexts = [text]
-        }
-        return
-      }
-
-      if (alreadySelected) {
-        if (selected === false) {
-          state.selectedTagTexts = state.selectedTagTexts
-            .filter(_text => _text !== text)
-        }
-      } else if (selected) {
-        state.selectedTagTexts.push(text)
-      }
-    },
-    setArticleExpand (state, { id, expanded }) {
-      state.articles
-        .filter(article => article.id === id)
-        .forEach(article => {
-          article.expanded = expanded
-        })
-    },
-    setArticles (state, articles) {
-      state.articles = articles
-    },
-    setCategories (state, { autoSelect, categories }) {
-      state.categories = categories
-      if (categories.length > 0 && state.categoryId == null) {
-        state.categoryId = categories[0].id
-      }
-    },
-    setCategoryId (state, categoryId) {
-      state.categoryId = categoryId
-      state.selectedTagTexts = []
-    },
-    setCategorySettings (state, { categoryId, articlesViewMode, tagPosition, tagSelectionMode }) {
-      state.categories
-        .filter(category => category.id === categoryId)
-        .forEach(category => {
-          category.articlesViewMode = articlesViewMode ?? category.articlesViewMode
-          category.tagPosition = tagPosition ?? category.tagPosition
-          category.tagSelectionMode = tagSelectionMode ?? category.tagSelectionMode
-        })
-    }
-  },
-  actions: {
-    async exportArticles (context, { categoryId }) {
-      const articles = await articleService.get({ categoryId })
-      articleRepository.export(articles)
-    },
-    async loadArticles (context, categoryId) {
-      const articles = await articleService.get({ categoryId })
-      const articleCards = articleCardFactory.fromArticles(articles)
-      context.commit('setArticles', articleCards)
-      context.commit('setCategoryId', categoryId)
-    },
-    async loadCategories ({ commit, dispatch, state }) {
-      const categories = await categoryRepository.getAll()
-      commit('setCategories', { autoSelect: true, categories })
-      if (state.categoryId != null) {
-        await dispatch('loadArticles', state.categoryId)
-      }
-    },
-    setArticleExpanded (context, { id, expanded }) {
-      context.commit('setArticleExpand', { id, expanded })
-      articleService.setExpanding(id, expanded)
-    },
-    async setArticlesViewModeToCategory (context, { categoryId, articlesViewMode }) {
-      context.commit('setCategorySettings', { categoryId, articlesViewMode })
-      await categoryService.setSettings(categoryId, { articlesViewMode })
-    },
-    async setCategorySettings (context, { categoryId, tagPosition, tagSelectionMode }) {
-      context.commit('setCategorySettings', { categoryId, tagPosition, tagSelectionMode })
-      await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
-    }
-  },
-  modules: {
-    sidebar
+const setCategories = categories => {
+  categoriesRef.value = categories
+  if (categories.length > 0 && categoryIdRef.value == null) {
+    categoryIdRef.value = categories[0].id
   }
-})
+}
+
+const _setCategorySettings = ({ categoryId, articlesViewMode, tagPosition, tagSelectionMode }) => {
+  categoriesRef.value
+    .filter(category => category.id === categoryId)
+    .forEach(category => {
+      category.articlesViewMode = articlesViewMode ?? category.articlesViewMode
+      category.tagPosition = tagPosition ?? category.tagPosition
+      category.tagSelectionMode = tagSelectionMode ?? category.tagSelectionMode
+    })
+}
+
+export const loadArticles = async categoryId => {
+  const articles = await articleService.get({ categoryId })
+  articlesRef.value = articleCardFactory.fromArticles(articles)
+  setCategoryId(categoryId)
+}
+
+export const loadCategories = async () => {
+  const categories = await categoryRepository.getAll()
+  setCategories(categories)
+  if (categoryIdRef.value != null) {
+    await loadArticles(categoryIdRef.value)
+  }
+}
+
+export const setArticleExpanded = ({ id, expanded }) => {
+  setArticleExpand({ id, expanded })
+  articleService.setExpanding(id, expanded)
+}
+
+export const setArticlesViewModeToCategory = async ({ categoryId, articlesViewMode }) => {
+  _setCategorySettings({ categoryId, articlesViewMode })
+  await categoryService.setSettings(categoryId, { articlesViewMode })
+}
+
+export const setCategorySettings = async ({ categoryId, tagPosition, tagSelectionMode }) => {
+  _setCategorySettings({ categoryId, tagPosition, tagSelectionMode })
+  await categoryService.setSettings(categoryId, { tagPosition, tagSelectionMode })
+}

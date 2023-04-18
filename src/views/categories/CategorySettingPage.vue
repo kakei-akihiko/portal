@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-import store from '../../store/index'
+import { setCategorySettings } from '../../store/index'
 
 const articlesDatabase = new ArticlesDatabase()
 const categoryRepository = new CategoryRepository(articlesDatabase)
@@ -21,13 +21,10 @@ const tagPositionSelected = computed({
     return category.value?.tagPosition ?? 'right'
   },
   async set (tagPosition) {
-    await store.dispatch(
-      'setCategorySettings',
-      {
-        categoryId: categoryId.value,
-        tagPosition
-      }
-    )
+    await setCategorySettings({
+      categoryId: categoryId.value,
+      tagPosition
+    })
     await loadCategory()
   }
 })
@@ -38,13 +35,10 @@ const tagSelectionSelected = computed({
   },
   async set (tagSelectionMode) {
     console.log('tagSelectionSelected set', tagSelectionMode)
-    await store.dispatch(
-      'setCategorySettings',
-      {
-        categoryId: categoryId.value,
-        tagSelectionMode
-      }
-    )
+    await setCategorySettings({
+      categoryId: categoryId.value,
+      tagSelectionMode
+    })
     await loadCategory()
   }
 })
