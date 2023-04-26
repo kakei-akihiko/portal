@@ -1,8 +1,7 @@
 <script setup>
 import { computed, defineProps } from 'vue'
 import { setArticleExpanded, setArticlesViewModeToCategory } from '../../store/index'
-import { articlesRef } from '../../store/refactor'
-import { selectedTagTextsRef } from '../../store/refactor'
+import { articlesRef, selectedTagTextsRef } from '../../store'
 import ArticlePanel from '@/components/panels/articles/ArticlePanel.vue'
 import ButtonArticleCreatePage from '@/components/buttons/ButtonArticleCreatePage.vue'
 import ButtonCategorySettingPage from '@/components/buttons/ButtonCategorySettingPage.vue'

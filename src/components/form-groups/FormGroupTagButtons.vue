@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { allTagsRef } from '../../store/ref'
-import { selectTagText } from '../../store/refactor'
+import { selectTagText } from '../../store/index'
 
 const tagButtons = computed(() => {
   return allTagsRef.value.map(tag => {

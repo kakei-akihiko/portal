@@ -1,8 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { loadCategories } from '../../store/index'
+import { categoriesRef, loadCategories } from '../../store/index'
 import { exportArticles } from '../../store/ref.js'
-import { categoriesRef } from '../../store/refactor.js'
 import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
 import CategoryRepository from '@/infrastructure/CategoryRepository.js'
 
