@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { loadCategories } from '../../store/index'
-import { categoriesRef, categoryIdRef } from '../../store/refactor'
+import { categoriesRef, categoryIdRef } from '../../store'
 
 import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
 import NavCategories from '@/components/navs/NavCategories.vue'

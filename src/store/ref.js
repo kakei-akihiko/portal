@@ -1,6 +1,5 @@
 import { computed, ref } from 'vue'
-import { articlesRef, selectedTagTextsRef } from './refactor'
-import { articleService, articleRepository, settingService } from './index.js'
+import { articlesRef, selectedTagTextsRef, articleService, articleRepository, settingService } from './index.js'
 import { marked } from '../infrastructure/markdown.js'
 
 export const allTagsRef = computed(() => {
