@@ -63,7 +63,12 @@ const exportButtonClick = category => {
                 <legend tabindex="-1" class="col-form-label pt-0">
                   名称
                 </legend>
-                <input class="form-control" type="text" v-model="cardNewCategoryName">
+                <input
+                  class="form-control"
+                  name="categoryName"
+                  type="text"
+                  v-model="cardNewCategoryName"
+                >
               </fieldset>
 
               <fieldset class="form-group mb-0">
