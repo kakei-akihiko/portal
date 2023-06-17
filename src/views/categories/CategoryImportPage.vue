@@ -86,7 +86,7 @@ watch(() => route.params.id, async newId => {
 
           <fieldset class="form-group">
             <div class="custom-file b-form-file">
-              <input 
+              <input
                 type="file" accept="application/json"
                 @change="fileSelect"
               >

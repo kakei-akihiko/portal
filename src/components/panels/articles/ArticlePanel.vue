@@ -32,14 +32,14 @@ const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
 const articleEditButtonClick = () => {
   router.push({
     name: 'ArticleEditPage',
-    params: {id: props.article.id}
+    params: { id: props.article.id }
   })
 }
 
 const articleReadButtonClick = () => {
   router.push({
     name: 'ArticleReadPage',
-    params: {id: props.article.id}
+    params: { id: props.article.id }
   })
 }
 
