@@ -65,7 +65,7 @@ onMounted(() => {
 
 watch(() => route.params.id, async newId => {
   categoryId.value = parseInt(newId)
-  loadArticle()
+  loadCategory()
 })
 </script>
 
