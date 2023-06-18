@@ -1,11 +1,9 @@
 <script setup>
 import { computed, defineEmits, defineProps } from 'vue'
-import { useRoute } from 'vue-router'
 import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
-const route = useRoute()
 const emit = defineEmits(['expand'])
 
 const props = defineProps({

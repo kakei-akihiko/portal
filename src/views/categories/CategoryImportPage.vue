@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import router from '../../router/index'
 import ArticleJsonParser from '@/infrastructure/ArticleJsonParser.js'
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticleService from '@/usecases/ArticleService.js'

@@ -37,10 +37,6 @@ const text = computed({
   }
 })
 
-const formDisabled = computed(() => {
-  return article.value == null
-})
-
 const loadArticle = async () => {
   loading.value = true
   article.value = null
