@@ -11,15 +11,15 @@ onMounted(async () => {
 })
 
 const articleListButtonClick = () => {
-  router.push({name: 'ArticlesListPage'})
+  router.push({ name: 'ArticlesListPage' })
 }
 
 const categoryButtonClick = () => {
-  router.push({name: 'CategoryPage'})
+  router.push({ name: 'CategoryPage' })
 }
 
 const settingButtonClick = () => {
-  router.push({name: 'SettingPage'})
+  router.push({ name: 'SettingPage' })
 }
 </script>
 

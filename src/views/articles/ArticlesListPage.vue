@@ -8,7 +8,7 @@ import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vu
 
 const selectedCategory = computed(() => {
   return categoriesRef.value
-        .filter(category => category.id === categoryIdRef.value)[0]
+    .filter(category => category.id === categoryIdRef.value)[0]
 })
 
 const categoryAlert = computed(() => {
@@ -24,7 +24,7 @@ const categoryAlert = computed(() => {
       message: 'カテゴリーを選択してください。'
     }
   }
-  return {visible: false}
+  return { visible: false }
 })
 
 onMounted(() => {

@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { loadArticles } from '../../store/index'
-import { categoriesRef, categoryIdRef, setCategoryId } from '../../store'
+import { loadArticles, categoriesRef, categoryIdRef, setCategoryId } from '../../store/index'
 
 const categories = computed(() => {
   return categoriesRef.value.map(category => {

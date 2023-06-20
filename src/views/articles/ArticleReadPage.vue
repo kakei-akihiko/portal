@@ -52,11 +52,11 @@ const loadArticle = async () => {
 
 const articleEditButtonClick = () => {
   const id = articleId.value
-  router.push({name: 'ArticleEditPage', params: {id}})
+  router.push({ name: 'ArticleEditPage', params: { id } })
 }
 
 const articleListButtonClick = () => {
-  router.push({name: 'ArticlesListPage'})
+  router.push({ name: 'ArticlesListPage' })
 }
 
 onMounted(() => {

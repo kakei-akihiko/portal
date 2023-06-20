@@ -37,10 +37,6 @@ const text = computed({
   }
 })
 
-const formDisabled = computed(() => {
-  return article.value == null
-})
-
 const loadArticle = async () => {
   loading.value = true
   article.value = null
@@ -73,7 +69,7 @@ const saveButtonClick = async function () {
 }
 
 const cancelButtonClick = () => {
-  router.push({name: 'ArticlesListPage'})
+  router.push({ name: 'ArticlesListPage' })
 }
 
 onMounted(() => {

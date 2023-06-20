@@ -71,7 +71,7 @@ const saveButtonClick = async () => {
 }
 
 const cancelButtonClick = () => {
-  router.push({name: 'ArticlesListPage'})
+  router.push({ name: 'ArticlesListPage' })
 }
 </script>
 

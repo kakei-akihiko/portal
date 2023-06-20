@@ -1,11 +1,9 @@
 <script setup>
 import { computed, defineEmits, defineProps } from 'vue'
-import { useRoute } from 'vue-router'
 import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
-const route = useRoute()
 const emit = defineEmits(['expand'])
 
 const props = defineProps({
@@ -32,14 +30,14 @@ const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
 const articleEditButtonClick = () => {
   router.push({
     name: 'ArticleEditPage',
-    params: {id: props.article.id}
+    params: { id: props.article.id }
   })
 }
 
 const articleReadButtonClick = () => {
   router.push({
     name: 'ArticleReadPage',
-    params: {id: props.article.id}
+    params: { id: props.article.id }
   })
 }
 

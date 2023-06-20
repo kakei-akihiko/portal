@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import router from '../../router/index'
 import ArticleJsonParser from '@/infrastructure/ArticleJsonParser.js'
 import ArticleRepository from '@/infrastructure/ArticleRepository.js'
 import ArticleService from '@/usecases/ArticleService.js'
@@ -65,7 +64,7 @@ onMounted(() => {
 
 watch(() => route.params.id, async newId => {
   categoryId.value = parseInt(newId)
-  loadArticle()
+  loadCategory()
 })
 </script>
 
@@ -86,7 +85,7 @@ watch(() => route.params.id, async newId => {
 
           <fieldset class="form-group">
             <div class="custom-file b-form-file">
-              <input 
+              <input
                 type="file" accept="application/json"
                 @change="fileSelect"
               >
