@@ -1,7 +1,9 @@
 name: Publish GitHub Pages
 
 on:
-  push
+  push:
+    branches: [ "feature/actions" ]
+  workflow_dispatch:
 
 jobs:
   build:
