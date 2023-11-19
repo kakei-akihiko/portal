@@ -26,7 +26,7 @@ jobs:
       run: yarn build
 
     - name: Copy to doc directory
-      run: cp -r public/* doc/
+      run: cp -r public/* docs/
 
     - name: Commit changes
       run: |
