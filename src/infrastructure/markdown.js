@@ -5,7 +5,7 @@ const renderer = new marked.Renderer()
 const linkRenderer = renderer.link
 
 renderer.link = (href, title, text) => {
-  const localLink = href.startsWith(`${location.protocol}//${location.hostname}`)
+  const localLink = new URL(href).origin === location.origin
 
   const html = linkRenderer.call(renderer, href, title, text)
 
