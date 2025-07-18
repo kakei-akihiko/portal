@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vue/compat": "^3.2.47",
-    "bootstrap": "4.6.1",
+    "bootstrap": "5.0.0",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.6",
     "dexie": "^3.0.3",
