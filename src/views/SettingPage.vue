@@ -20,7 +20,7 @@ const sidebarArticleButtonClick = async () => {
 
 onMounted(async () => {
   await loadSidebarSetting()
-  sidebarArticleId.value = sidebarArticleRef.value.id
+  sidebarArticleId.value = sidebarArticleRef.value?.id
 })
 </script>
 
