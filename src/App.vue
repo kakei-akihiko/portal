@@ -1,39 +1,30 @@
+<script setup>
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    <a href="https://vite.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
   </div>
+  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style>
-.h-interval > * {
-  margin-right: 0.5rem
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-
-.h-interval > *:last-child {
-  margin-right: 0rem
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
-
-.v-interval > * {
-  margin-top: 0.5rem
-}
-
-.v-interval > *:first-child {
-  margin-top: 0rem
-}
-
-html, body, #app {
-  height: 100%;
-}
-
-.h-100 {
-  height: 100%;
-}
-
-.nav-category .active {
-  font-weight: bold
-}
-
-.article-body-view {
-  line-height: 1.8rem;
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
