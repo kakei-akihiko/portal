@@ -6,6 +6,16 @@ const routes = [
     path: '/',
     name: 'ArticlesListPage',
     component: ArticlesListPage
+  },
+  {
+    path: '/categories',
+    name: 'CategoryPage',
+    component: () => import(/* webpackChunkName: "settings" */ '../views/articles/ArticlesListPage.vue')
+  },  
+  {
+    path: '/settings',
+    name: 'SettingPage',
+    component: () => import(/* webpackChunkName: "settings" */ '../views/articles/ArticlesListPage.vue')
   }
 ]
 
