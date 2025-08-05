@@ -18,9 +18,9 @@ const articleListButtonClick = () => {
 <template>
   <section class="sidebar sidebar-scoped">
     <header>
-      <h1 class="h2">
-        <span>🏠</span>
-        <span class="site-title-animals">🐕🦘🐬🐓🕊🦢</span>
+      <h1 class="site-title">
+        <span class="house">🏠</span>
+        <span class="animals">🐕🦘🐬🐓🕊🦢</span>
       </h1>
     </header>
     <slot/>
@@ -60,10 +60,6 @@ const articleListButtonClick = () => {
 </template>
 
 <style scoped>
-.site-title-animals {
-  font-size: 40%
-}
-
 .sidebar-scoped {
   background: #E0F0FF;
   overflow-y: auto;
@@ -71,9 +67,26 @@ const articleListButtonClick = () => {
   flex-direction: column;
 }
 
+.sidebar-scoped header {
+  padding: 0 .5rem;
+}
+
 .sidebar-scoped footer {
   margin-top: auto;
   padding: 0 .5rem;
+}
+
+.site-title {
+  margin: .5rem 0 0;
+  font-size: 2.5rem;
+}
+
+.site-title .house {
+  width: 50px;
+}
+
+.site-title .animals {
+  font-size: 40%
 }
 
 .sidebar-scoped .sidebar-item {
