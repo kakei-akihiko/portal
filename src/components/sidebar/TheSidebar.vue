@@ -65,31 +65,31 @@ const articleListButtonClick = () => {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-}
 
-.sidebar-scoped header {
-  padding: 0 .5rem;
-}
+  & header {
+    padding: 0 .5rem;
+  }
 
-.sidebar-scoped footer {
-  margin-top: auto;
-  padding: 0 .5rem;
+  & footer {
+    margin-top: auto;
+    padding: 0 .5rem;
+  }
 }
 
 .site-title {
   margin: .5rem 0 0;
   font-size: 2.5rem;
+
+  & .house {
+    width: 50px;
+  }
+
+  & .animals {
+    font-size: 40%
+  }
 }
 
-.site-title .house {
-  width: 50px;
-}
-
-.site-title .animals {
-  font-size: 40%
-}
-
-.sidebar-scoped .sidebar-item {
+.sidebar-item {
   display: grid;
   grid-template-columns: auto 1fr;
   height: 50px;
@@ -97,12 +97,12 @@ const articleListButtonClick = () => {
   color: #505050;
 }
 
-.sidebar-scoped .sidebar-item:hover {
+.sidebar-item:hover {
   background-color: #FFFFFF80;
   border-radius: .2rem;
 }
 
-.sidebar-scoped .sidebar-item i {
+.sidebar-item i {
   width: 50px;
   text-align: center;
 }
