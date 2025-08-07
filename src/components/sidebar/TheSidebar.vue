@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
-import router from '../../router/index'
 
 onMounted(async () => {
   // まだ読み込んでいない場合だけ読み込む
@@ -9,10 +8,6 @@ onMounted(async () => {
     await loadSidebarSetting()
   }
 })
-
-const articleListButtonClick = () => {
-  router.push({ name: 'ArticlesListPage' })
-}
 </script>
 
 <template>
@@ -28,15 +23,15 @@ const articleListButtonClick = () => {
       <div v-if="sidebarArticleRef != null">
         <div v-html="sidebarArticleRef.html" />
       </div>
-      <fieldset class="form-group" v-if="$route.name != 'ArticlesListPage'">
-        <button
-          class="btn btn-link"
-          @click="articleListButtonClick"
+      <div v-if="$route.name != 'ArticlesListPage'">
+        <router-link
+          :to="{ name: 'ArticlesListPage' }"
+          class="sidebar-item"
         >
           <i class="far fa-newspaper"></i>
-          <span class="ml-2">記事</span>
-        </button>
-      </fieldset>
+          <span>記事</span>
+        </router-link>
+      </div>
       <div v-if="$route.name != 'CategoryPage'">
         <router-link
           :to="{ name: 'CategoryPage' }"
