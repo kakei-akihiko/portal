@@ -60,6 +60,7 @@ onMounted(async () => {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 15px;
 
   & header {
     padding: 0 .5rem;

@@ -2,8 +2,7 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  noSidebar: Boolean,
-  mainPanelScroll: Boolean
+  noSidebar: Boolean
 })
 
 const entireClass = computed(() => {
@@ -23,6 +22,7 @@ const entireClass = computed(() => {
 
 <style>
 .entire {
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 300px 1fr;
