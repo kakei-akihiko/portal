@@ -69,7 +69,7 @@ const navViewModeChange = (articlesViewMode) => {
 </script>
 
 <template>
-  <div class="h-100">
+  <div>
     <div class="d-flex">
       <h2>{{ category.title }}</h2>
       <div class="ml-auto">

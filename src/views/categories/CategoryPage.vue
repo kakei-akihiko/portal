@@ -53,70 +53,64 @@ const exportButtonClick = category => {
     </template>
 
     <template v-slot:panel-main>
-      <div class="panel-main">
-        <h2>カテゴリー</h2>
-        <section>
-          <h3>新規作成</h3>
+      <h2>カテゴリー</h2>
+      <section>
+        <h3>新規作成</h3>
 
-          <fieldset class="form-group" label="名称">
-            <legend tabindex="-1">
-              名称
-            </legend>
-            <input
-              class="form-control"
-              name="categoryName"
-              type="text"
-              v-model="cardNewCategoryName"
-            >
-          </fieldset>
-
-          <fieldset class="form-group">
-            <button
-              :disabled="cardNewCategoryCreateButtonDisabled"
-              class="primary-button"
-              @click="createCategoryButtonClick"
-            >
-              作成
-            </button>
-          </fieldset>
-        </section>
-        <section class="section-list">
-          <h3>一覧</h3>
-          <div class="card"
-            v-for="category in categoriesRef"
-            :key="category.id"
+        <fieldset class="form-group" label="名称">
+          <legend tabindex="-1">
+            名称
+          </legend>
+          <input
+            class="form-control"
+            name="categoryName"
+            type="text"
+            v-model="cardNewCategoryName"
           >
-            <div class="card-body d-flex">
-              <div>
-                {{ category.title }}
-              </div>
-              <div class="ml-auto h-interval">
-                <router-link
-                  :to="{name: 'CategoryImportPage', params: {id: category.id}}"
-                >
-                  インポート
-                </router-link>
-                <button
-                  class="btn btn-info"
-                  @click="exportButtonClick(category)"
-                >
-                  <i class="fas fa-download"/>
-                  エクスポート
-                </button>
-              </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <button
+            :disabled="cardNewCategoryCreateButtonDisabled"
+            class="primary-button"
+            @click="createCategoryButtonClick"
+          >
+            作成
+          </button>
+        </fieldset>
+      </section>
+      <section class="section-list">
+        <h3>一覧</h3>
+        <div class="card"
+          v-for="category in categoriesRef"
+          :key="category.id"
+        >
+          <div class="card-body d-flex">
+            <div>
+              {{ category.title }}
+            </div>
+            <div class="ml-auto h-interval">
+              <router-link
+                :to="{name: 'CategoryImportPage', params: {id: category.id}}"
+              >
+                インポート
+              </router-link>
+              <button
+                class="btn btn-info"
+                @click="exportButtonClick(category)"
+              >
+                <i class="fas fa-download"/>
+                エクスポート
+              </button>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </template>
   </TheMainLayout>
 </template>
 
 <style scoped>
-.panel-main {
-  padding: 0 2rem;
-}
-
 .form-group {
   border-width: 0;
   padding: 0;

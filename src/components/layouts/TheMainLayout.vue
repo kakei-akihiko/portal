@@ -16,7 +16,9 @@ const entireClass = computed(() => {
 <template>
   <div :class="entireClass">
     <slot name="sidebar"/>
-    <slot name="panel-main"/>
+    <div class="panel-main">
+      <slot name="panel-main"/>
+    </div>
   </div>
 </template>
 
@@ -30,5 +32,9 @@ const entireClass = computed(() => {
 
 .no-sidebar .sidebar {
   display: none;
+}
+
+.panel-main {
+  padding: 0 2rem;
 }
 </style>

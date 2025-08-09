@@ -48,18 +48,16 @@ onMounted(() => {
     </template>
 
     <template v-slot:panel-main>
-      <div class="h-100">
-        <div
-          v-if="categoryAlert.visible"
-          class="alert alert-warning"
-        >
-          {{ categoryAlert.message }}
-        </div>
-        <ArticleListPageMainPanel
-          v-if="selectedCategory != null"
-          :category="selectedCategory"
-        />
+      <div
+        v-if="categoryAlert.visible"
+        class="alert alert-warning"
+      >
+        {{ categoryAlert.message }}
       </div>
+      <ArticleListPageMainPanel
+        v-if="selectedCategory != null"
+        :category="selectedCategory"
+      />
     </template>
   </TheMainLayout>
 </template>
