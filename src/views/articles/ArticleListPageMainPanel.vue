@@ -70,14 +70,12 @@ const navViewModeChange = (articlesViewMode) => {
 
 <template>
   <div>
-    <div class="d-flex">
+    <div class="title-bar">
       <h2>{{ category.title }}</h2>
-      <div class="ml-auto">
-        <fieldset class="form-group">
-          <ButtonCategorySettingPage :category-id="category.id"/>
-          <ButtonArticleCreatePage :category-id="category.id"/>
-        </fieldset>
-      </div>
+      <fieldset class="title-bar-buttons">
+        <ButtonCategorySettingPage :category-id="category.id"/>
+        <ButtonArticleCreatePage :category-id="category.id"/>
+      </fieldset>
     </div>
     <div class="command-bar d-flex justify-content-end">
       <NavArticleViewMode
@@ -128,3 +126,18 @@ const navViewModeChange = (articlesViewMode) => {
 
   </div>
 </template>
+
+<style>
+.title-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.title-bar-buttons {
+  border-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+</style>
