@@ -42,8 +42,8 @@ onMounted(() => {
   <TheMainLayout main-panel-scroll>
     <template v-slot:sidebar>
       <TheSidebar>
-        <NavCategories class="mt-3"/>
-        <FormGroupTagButtons class="mt-3"/>
+        <NavCategories class="categories"/>
+        <FormGroupTagButtons class="tag-buttons"/>
       </TheSidebar>
     </template>
 
@@ -61,3 +61,13 @@ onMounted(() => {
     </template>
   </TheMainLayout>
 </template>
+
+<style scoped>
+.categories {
+  margin-top: .5rem;
+}
+
+.tag-buttons {
+  margin-top: .5rem;
+}
+</style>

@@ -21,7 +21,7 @@ const tagButtonClick = tagButton => {
 </script>
 
 <template>
-  <fieldset class="form-group">
+  <fieldset class="form-group" v-if="tagButtons.length > 0">
     <button
       v-for="tagButton in tagButtons"
       :key="tagButton.text"

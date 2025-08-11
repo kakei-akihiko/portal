@@ -85,7 +85,7 @@ onMounted(async () => {
   }
 }
 
-.sidebar-item {
+.sidebar-item:has(i) {
   display: grid;
   grid-template-columns: auto 1fr;
   height: 50px;
