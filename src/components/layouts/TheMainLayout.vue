@@ -26,15 +26,18 @@ const entireClass = computed(() => {
 .entire {
   width: 100%;
   height: 100%;
+  .panel-main {
+    height: 100%;
+  }
+}
+
+.entire:has(.sidebar) {
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 300px 1fr;
-}
-
-.no-sidebar .sidebar {
-  display: none;
-}
-
-.panel-main {
-  padding: 0 2rem;
+  & .panel-main {
+    padding: 0 2rem;
+  }
 }
 </style>

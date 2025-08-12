@@ -1,24 +1,20 @@
 <script setup>
-import router from '../../router/index'
+import { computed } from 'vue'
 
 const props = defineProps({
   categoryId: Number
 })
 
-const buttonClick = () => {
-  const { categoryId } = props
-  router.push({
-    name: 'ArticleCreatePage',
-    params: { categoryId }
-  })
-}
+const linkTo = computed(() => ({
+  name: 'ArticleCreatePage',
+  params: {
+     categoryId: props.categoryId
+  }
+}))
 </script>
 
 <template>
-  <button
-    class="btn btn-link"
-    @click="buttonClick"
-  >
+  <router-link :to="linkTo">
     <i class="fas fa-plus"></i>
-  </button>
+  </router-link>
 </template>
