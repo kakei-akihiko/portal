@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue'
 import router from '../../router/index'
 
 const props = defineProps({
