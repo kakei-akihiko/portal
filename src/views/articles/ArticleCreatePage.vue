@@ -7,6 +7,7 @@ import ArticleRepository from '../../infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
 import CategoryRepository from '../../infrastructure/CategoryRepository.js'
+import ArticleTitleInput from './write/ArticleTitleInput.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -80,13 +81,7 @@ const cancelButtonClick = () => {
     <template v-slot:panel-main>
       <section class="panel-main edit-section" v-if="categoryFound">
         <header>
-          <input
-            class="title-input"
-            type="text"
-            name="title"
-            placeholder="タイトル"
-            v-model="form.title"
-          />
+          <ArticleTitleInput v-model="form.title" />
         </header>
         <main>
           <textarea
@@ -94,8 +89,6 @@ const cancelButtonClick = () => {
             placeholder="本文"
             class="body-input"
             v-model="text"
-            wrap="soft"
-            rows="2"
           ></textarea>
           <div v-html="form.preview" class="preview"/>
         </main>
@@ -176,13 +169,6 @@ const cancelButtonClick = () => {
 .body-input {
   resize: none;
   font-size: 1rem;
-  padding: .5rem;
-}
-
-.title-input {
-  font-size: 1.2rem;
-  width: 100%;
-  height: 2.5rem;
   padding: .5rem;
 }
 
