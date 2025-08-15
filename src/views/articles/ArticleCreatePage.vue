@@ -8,6 +8,7 @@ import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
 import CategoryRepository from '../../infrastructure/CategoryRepository.js'
 import ArticleTitleInput from './write/ArticleTitleInput.vue'
+import ArticleBodyTextarea from './write/ArticleBodyTextarea.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -84,12 +85,7 @@ const cancelButtonClick = () => {
           <ArticleTitleInput v-model="form.title" />
         </header>
         <main>
-          <textarea
-            name="text"
-            placeholder="本文"
-            class="body-input"
-            v-model="text"
-          ></textarea>
+          <ArticleBodyTextarea v-model="text" />
           <div v-html="form.preview" class="preview"/>
         </main>
         <footer>
@@ -163,12 +159,6 @@ const cancelButtonClick = () => {
 }
 
 .preview {
-  padding: .5rem;
-}
-
-.body-input {
-  resize: none;
-  font-size: 1rem;
   padding: .5rem;
 }
 
