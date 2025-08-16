@@ -9,6 +9,7 @@ import ArticleService from '../../usecases/ArticleService.js'
 import CategoryRepository from '../../infrastructure/CategoryRepository.js'
 import ArticleTitleInput from './write/ArticleTitleInput.vue'
 import ArticleBodyTextarea from './write/ArticleBodyTextarea.vue'
+import ArticleTagsInput from './write/ArticleTagsInput.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -89,12 +90,7 @@ const cancelButtonClick = () => {
           <div v-html="form.preview" class="preview"/>
         </main>
         <footer>
-          <input
-            name="tags"
-            class="tags-input"
-            placeholder="タグ1 タグ2 ..."
-            v-model="form.tagsString"
-          />
+          <ArticleTagsInput v-model="form.tagsString"/>
           <button
             class="btn btn-primary button-save"
             type="button"
@@ -159,11 +155,6 @@ const cancelButtonClick = () => {
 }
 
 .preview {
-  padding: .5rem;
-}
-
-.tags-input {
-  height: 100%;
   padding: .5rem;
 }
 </style>
