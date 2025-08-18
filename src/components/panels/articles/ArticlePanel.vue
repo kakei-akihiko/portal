@@ -1,51 +1,3 @@
-<script setup>
-import { computed  } from 'vue'
-import router from '../../../router/index'
-import { marked } from '../../../infrastructure/markdown.js'
-import ButtonExpand from '../../buttons/ButtonExpand.vue'
-
-const emit = defineEmits(['expand'])
-
-const props = defineProps({
-  article: {
-    type: Object,
-    required: true
-  },
-  tagPosition: {
-    default: 'right',
-    type: String
-  }
-})
-
-const bodyHtml = computed(() => marked.parse(props.article.text))
-
-const expandButtonVisible = computed(() => {
-  return props.article.text != null && props.article.text.length > 0
-})
-
-const expanded = computed(() => props.article.expanded === true)
-
-const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
-
-const articleEditButtonClick = () => {
-  router.push({
-    name: 'ArticleEditPage',
-    params: { id: props.article.id }
-  })
-}
-
-const articleReadButtonClick = () => {
-  router.push({
-    name: 'ArticleReadPage',
-    params: { id: props.article.id }
-  })
-}
-
-const expandButtonClick = () => {
-  emit('expand', !expanded.value)
-}
-</script>
-
 <template>
   <div class="card" body-class="py-2">
     <div class="card-body py-2">
@@ -112,3 +64,51 @@ const expandButtonClick = () => {
     </div>
   </div>
 </template>
+
+<script setup>
+import { computed  } from 'vue'
+import router from '../../../router/index'
+import { marked } from '../../../infrastructure/markdown.js'
+import ButtonExpand from '../../buttons/ButtonExpand.vue'
+
+const emit = defineEmits(['expand'])
+
+const props = defineProps({
+  article: {
+    type: Object,
+    required: true
+  },
+  tagPosition: {
+    default: 'right',
+    type: String
+  }
+})
+
+const bodyHtml = computed(() => marked.parse(props.article.text))
+
+const expandButtonVisible = computed(() => {
+  return props.article.text != null && props.article.text.length > 0
+})
+
+const expanded = computed(() => props.article.expanded === true)
+
+const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
+
+const articleEditButtonClick = () => {
+  router.push({
+    name: 'ArticleEditPage',
+    params: { id: props.article.id }
+  })
+}
+
+const articleReadButtonClick = () => {
+  router.push({
+    name: 'ArticleReadPage',
+    params: { id: props.article.id }
+  })
+}
+
+const expandButtonClick = () => {
+  emit('expand', !expanded.value)
+}
+</script>

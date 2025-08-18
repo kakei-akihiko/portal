@@ -1,3 +1,16 @@
+<template>
+  <fieldset class="form-group" v-if="tagButtons.length > 0">
+    <button
+      v-for="tagButton in tagButtons"
+      :key="tagButton.text"
+      :class="tagButton.className"
+      @click="tagButtonClick(tagButton)"
+    >
+      {{ tagButton.text }}
+    </button>
+  </fieldset>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 import { allTagsRef } from '../../store/ref'
@@ -19,16 +32,3 @@ const tagButtonClick = tagButton => {
   })
 }
 </script>
-
-<template>
-  <fieldset class="form-group" v-if="tagButtons.length > 0">
-    <button
-      v-for="tagButton in tagButtons"
-      :key="tagButton.text"
-      :class="tagButton.className"
-      @click="tagButtonClick(tagButton)"
-    >
-      {{ tagButton.text }}
-    </button>
-  </fieldset>
-</template>

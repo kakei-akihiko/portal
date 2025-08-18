@@ -1,9 +1,3 @@
-<script setup>
-const props = defineProps({
-  table: Array
-})
-</script>
-
 <template>
   <div>
     <div
@@ -24,3 +18,9 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+  table: Array
+})
+</script>

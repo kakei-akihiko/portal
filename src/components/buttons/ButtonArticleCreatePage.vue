@@ -1,3 +1,9 @@
+<template>
+  <router-link :to="linkTo">
+    <i class="fas fa-plus"></i>
+  </router-link>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 
@@ -12,9 +18,3 @@ const linkTo = computed(() => ({
   }
 }))
 </script>
-
-<template>
-  <router-link :to="linkTo">
-    <i class="fas fa-plus"></i>
-  </router-link>
-</template>

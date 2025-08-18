@@ -1,51 +1,3 @@
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { categoriesRef, loadCategories } from '../../store/index'
-import { exportArticles } from '../../store/ref.js'
-import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
-import CategoryRepository from '../../infrastructure/CategoryRepository.js'
-
-const articlesDatabase = new ArticlesDatabase()
-const categoryRepository = new CategoryRepository(articlesDatabase)
-
-const cardNewCategory = ref({
-  created: false,
-  name: ''
-})
-
-const cardNewCategoryCreateButtonDisabled = computed(() => {
-  const { created, name } = cardNewCategory.value
-  return created || name == null || name.length <= 0
-})
-
-const cardNewCategoryName = computed({
-  get () {
-    return cardNewCategory.value.name
-  },
-  set (value) {
-    cardNewCategory.value.name = value
-    cardNewCategory.value.created = false
-  }
-})
-
-onMounted(() => {
-  loadCategories()
-})
-
-const createCategoryButtonClick = async () => {
-  cardNewCategory.value.created = true
-  const title = cardNewCategory.value.name
-  const tagSelectionMode = 'single'
-  await categoryRepository.put({ title, tagSelectionMode })
-  loadCategories()
-  cardNewCategory.value.name = ''
-}
-
-const exportButtonClick = category => {
-  exportArticles(category.id)
-}
-</script>
-
 <template>
   <TheMainLayout>
     <template v-slot:sidebar>
@@ -109,6 +61,54 @@ const exportButtonClick = category => {
     </template>
   </TheMainLayout>
 </template>
+
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { categoriesRef, loadCategories } from '../../store/index'
+import { exportArticles } from '../../store/ref.js'
+import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
+import CategoryRepository from '../../infrastructure/CategoryRepository.js'
+
+const articlesDatabase = new ArticlesDatabase()
+const categoryRepository = new CategoryRepository(articlesDatabase)
+
+const cardNewCategory = ref({
+  created: false,
+  name: ''
+})
+
+const cardNewCategoryCreateButtonDisabled = computed(() => {
+  const { created, name } = cardNewCategory.value
+  return created || name == null || name.length <= 0
+})
+
+const cardNewCategoryName = computed({
+  get () {
+    return cardNewCategory.value.name
+  },
+  set (value) {
+    cardNewCategory.value.name = value
+    cardNewCategory.value.created = false
+  }
+})
+
+onMounted(() => {
+  loadCategories()
+})
+
+const createCategoryButtonClick = async () => {
+  cardNewCategory.value.created = true
+  const title = cardNewCategory.value.name
+  const tagSelectionMode = 'single'
+  await categoryRepository.put({ title, tagSelectionMode })
+  loadCategories()
+  cardNewCategory.value.name = ''
+}
+
+const exportButtonClick = category => {
+  exportArticles(category.id)
+}
+</script>
 
 <style scoped>
 .form-group {

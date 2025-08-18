@@ -1,3 +1,17 @@
+<template>
+  <div class="categories">
+    <div class="nav-item"
+      v-for="category in categories"
+      :key="category.id"
+      @click="categorySelect(category)"
+    >
+      <a :class="category.anchorClass" href="#" target="_self">
+        {{ category.title }}
+      </a>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 import { loadArticles, categoriesRef, categoryIdRef, setCategoryId } from '../../store/index'
@@ -22,20 +36,6 @@ const categorySelect = async category => {
   }
 }
 </script>
-
-<template>
-  <div class="categories">
-    <div class="nav-item"
-      v-for="category in categories"
-      :key="category.id"
-      @click="categorySelect(category)"
-    >
-      <a :class="category.anchorClass" href="#" target="_self">
-        {{ category.title }}
-      </a>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .categories {

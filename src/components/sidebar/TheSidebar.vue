@@ -1,15 +1,3 @@
-<script setup>
-import { onMounted } from 'vue'
-import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
-
-onMounted(async () => {
-  // まだ読み込んでいない場合だけ読み込む
-  if (sidebarArticleRef.value == null) {
-    await loadSidebarSetting()
-  }
-})
-</script>
-
 <template>
   <section class="sidebar sidebar-scoped">
     <header>
@@ -103,3 +91,15 @@ onMounted(async () => {
   text-align: center;
 }
 </style>
+
+<script setup>
+import { onMounted } from 'vue'
+import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
+
+onMounted(async () => {
+  // まだ読み込んでいない場合だけ読み込む
+  if (sidebarArticleRef.value == null) {
+    await loadSidebarSetting()
+  }
+})
+</script>

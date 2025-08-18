@@ -1,3 +1,32 @@
+<template>
+  <TheMainLayout>
+    <template v-slot:panel-main>
+      <section class="panel-main edit-section" v-if="categoryFound">
+        <header>
+          <ArticleTitleInput v-model="form.title" />
+        </header>
+        <main>
+          <ArticleBodyTextarea v-model="text" />
+          <div v-html="form.preview" class="preview"/>
+        </main>
+        <footer>
+          <ArticleTagsInput v-model="form.tagsString"/>
+          <ArticleSaveButton
+            :disabled="formDisabled"
+            @click="saveButtonClick"
+          />
+          <button @click="cancelButtonClick" class="button-cancel">
+            キャンセル
+          </button>
+        </footer>
+      </section>
+      <section class="panel-main" v-else>
+        <NotFoundAlert/>
+      </section>
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -78,35 +107,6 @@ const cancelButtonClick = () => {
   router.push({ name: 'ArticlesListPage' })
 }
 </script>
-
-<template>
-  <TheMainLayout>
-    <template v-slot:panel-main>
-      <section class="panel-main edit-section" v-if="categoryFound">
-        <header>
-          <ArticleTitleInput v-model="form.title" />
-        </header>
-        <main>
-          <ArticleBodyTextarea v-model="text" />
-          <div v-html="form.preview" class="preview"/>
-        </main>
-        <footer>
-          <ArticleTagsInput v-model="form.tagsString"/>
-          <ArticleSaveButton
-            :disabled="formDisabled"
-            @click="saveButtonClick"
-          />
-          <button @click="cancelButtonClick" class="button-cancel">
-            キャンセル
-          </button>
-        </footer>
-      </section>
-      <section class="panel-main" v-else>
-        <NotFoundAlert/>
-      </section>
-    </template>
-  </TheMainLayout>
-</template>
 
 <style scoped>
 .button-cancel {

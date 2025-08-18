@@ -1,3 +1,12 @@
+<template>
+  <button
+    class="btn btn-link"
+    @click="buttonClick"
+  >
+    <i class="fas fa-cog"></i>
+  </button>
+</template>
+
 <script setup>
 import router from '../../router/index'
 
@@ -13,12 +22,3 @@ const buttonClick = () => {
   })
 }
 </script>
-
-<template>
-  <button
-    class="btn btn-link"
-    @click="buttonClick"
-  >
-    <i class="fas fa-cog"></i>
-  </button>
-</template>

@@ -1,3 +1,27 @@
+<template>
+  <TheMainLayout main-panel-scroll>
+    <template v-slot:sidebar>
+      <TheSidebar>
+        <NavCategories class="categories"/>
+        <FormGroupTagButtons class="tag-buttons"/>
+      </TheSidebar>
+    </template>
+
+    <template v-slot:panel-main>
+      <div
+        v-if="categoryAlert.visible"
+        class="alert alert-warning"
+      >
+        {{ categoryAlert.message }}
+      </div>
+      <ArticleListPageMainPanel
+        v-if="selectedCategory != null"
+        :category="selectedCategory"
+      />
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted } from 'vue'
 import { categoryIdRef, categoriesRef, loadCategories } from '../../store/index'
@@ -37,30 +61,6 @@ onMounted(() => {
   text-align: right;
 }
 </style>
-
-<template>
-  <TheMainLayout main-panel-scroll>
-    <template v-slot:sidebar>
-      <TheSidebar>
-        <NavCategories class="categories"/>
-        <FormGroupTagButtons class="tag-buttons"/>
-      </TheSidebar>
-    </template>
-
-    <template v-slot:panel-main>
-      <div
-        v-if="categoryAlert.visible"
-        class="alert alert-warning"
-      >
-        {{ categoryAlert.message }}
-      </div>
-      <ArticleListPageMainPanel
-        v-if="selectedCategory != null"
-        :category="selectedCategory"
-      />
-    </template>
-  </TheMainLayout>
-</template>
 
 <style scoped>
 .categories {

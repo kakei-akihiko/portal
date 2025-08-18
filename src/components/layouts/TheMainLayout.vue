@@ -1,3 +1,12 @@
+<template>
+  <div :class="entireClass">
+    <slot name="sidebar"/>
+    <div class="panel-main">
+      <slot name="panel-main"/>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 
@@ -12,15 +21,6 @@ const entireClass = computed(() => {
   }
 })
 </script>
-
-<template>
-  <div :class="entireClass">
-    <slot name="sidebar"/>
-    <div class="panel-main">
-      <slot name="panel-main"/>
-    </div>
-  </div>
-</template>
 
 <style>
 .entire {
