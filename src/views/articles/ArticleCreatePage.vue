@@ -7,9 +7,10 @@ import ArticleRepository from '../../infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
 import CategoryRepository from '../../infrastructure/CategoryRepository.js'
-import ArticleTitleInput from './write/ArticleTitleInput.vue'
 import ArticleBodyTextarea from './write/ArticleBodyTextarea.vue'
+import ArticleSaveButton from './write/ArticleSaveButton.vue'
 import ArticleTagsInput from './write/ArticleTagsInput.vue'
+import ArticleTitleInput from './write/ArticleTitleInput.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -91,14 +92,10 @@ const cancelButtonClick = () => {
         </main>
         <footer>
           <ArticleTagsInput v-model="form.tagsString"/>
-          <button
-            class="btn btn-primary button-save"
-            type="button"
+          <ArticleSaveButton
             :disabled="formDisabled"
             @click="saveButtonClick"
-          >
-            保存
-          </button>
+          />
           <button @click="cancelButtonClick" class="button-cancel">
             キャンセル
           </button>
@@ -112,10 +109,6 @@ const cancelButtonClick = () => {
 </template>
 
 <style scoped>
-.button-save {
-  white-space: nowrap
-}
-
 .button-cancel {
   white-space: nowrap;
 }
