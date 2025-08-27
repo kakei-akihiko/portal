@@ -24,37 +24,36 @@
         <fieldset class="form-group">
           <button
             :disabled="cardNewCategoryCreateButtonDisabled"
-            class="primary-button"
+            class="create-button primary-button"
             @click="createCategoryButtonClick"
           >
             作成
           </button>
         </fieldset>
       </section>
-      <section class="section-list">
+      <section class="categories">
         <h3>一覧</h3>
-        <div class="card"
-          v-for="category in categoriesRef"
-          :key="category.id"
-        >
-          <div class="card-body d-flex">
-            <div>
+        <div class="categories-list">
+          <div class="category-div"
+            v-for="category in categoriesRef"
+            :key="category.id"
+          >
+            <h4>
               {{ category.title }}
-            </div>
-            <div class="ml-auto h-interval">
-              <router-link
-                :to="{name: 'CategoryImportPage', params: {id: category.id}}"
-              >
-                インポート
-              </router-link>
-              <button
-                class="btn btn-info"
-                @click="exportButtonClick(category)"
-              >
-                <i class="fas fa-download"/>
-                エクスポート
-              </button>
-            </div>
+            </h4>
+            <router-link
+              :to="{name: 'CategoryImportPage', params: {id: category.id}}"
+            >
+              インポート
+            </router-link>
+            <button
+              class="button-export"
+              type="button"
+              @click="exportButtonClick(category)"
+            >
+              <i class="fas fa-download"/>
+              エクスポート
+            </button>
           </div>
         </div>
       </section>
@@ -111,9 +110,39 @@ const exportButtonClick = category => {
 </script>
 
 <style scoped>
+.categories {
+  margin-top: 20px;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-div {
+  width: 300px;
+  border: solid 1px #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.button-export {
+  margin-left: 10px;
+}
+
+.category-div h4 {
+  font-size: 1.3rem;
+  border: 0;
+  padding: 0;
+}
+
 .form-group {
   border-width: 0;
   padding: 0;
+}
+
+.create-button {
+  margin-top: 10px;
 }
 
 .form-control {
