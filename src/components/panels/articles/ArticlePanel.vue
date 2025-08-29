@@ -24,13 +24,13 @@
         @click="expandButtonClick"
       />
       <button
-        class="btn btn-link"
+        class="article-read-button"
         @click="articleReadButtonClick"
       >
         <i class="far fa-newspaper"></i>
       </button>
       <button
-        class="btn btn-link"
+        class="article-edit-button"
         @click="articleEditButtonClick"
       >
         <i class="fas fa-edit"></i>
@@ -135,5 +135,21 @@ const expandButtonClick = () => {
 
 .article-body-view {
   grid-area: area-body;
+}
+
+.article-edit-button {
+  border-width: 0;
+}
+
+.article-edit-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+.article-read-button {
+  border-width: 0;
+}
+
+.article-read-button:hover {
+  background-color: var(--button-hover-background);
 }
 </style>

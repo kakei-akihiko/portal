@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn btn-link p-0"
+    class="expand-button"
     @click="buttonClick"
   >
     <i v-if="props.expanded" class="fas fa-arrow-circle-down"></i>
@@ -19,3 +19,13 @@ const buttonClick = () => {
   emit('click')
 }
 </script>
+
+<style scoped>
+.expand-button {
+  border-width: 0;
+}
+
+.expand-button:hover {
+  background-color: var(--button-hover-background);
+}
+</style>
