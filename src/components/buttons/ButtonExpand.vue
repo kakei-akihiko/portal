@@ -23,6 +23,7 @@ const buttonClick = () => {
 <style scoped>
 .expand-button {
   border-width: 0;
+  background-color: var(--button-background);
 }
 
 .expand-button:hover {

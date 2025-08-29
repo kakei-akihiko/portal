@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   --button-hover-background: #E0F0FF;
+  --button-background: #F0F0F0;
 }
 
 a {

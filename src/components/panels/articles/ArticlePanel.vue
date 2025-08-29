@@ -104,6 +104,10 @@ const expandButtonClick = () => {
 </script>
 
 <style scoped>
+.panel-article {
+  border-top: solid 1px #ccc;
+}
+
 .panel-article.side-tags {
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -137,8 +141,15 @@ const expandButtonClick = () => {
   grid-area: area-body;
 }
 
+.panel-side {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
 .article-edit-button {
   border-width: 0;
+  background-color: var(--button-background);
 }
 
 .article-edit-button:hover {
@@ -147,6 +158,7 @@ const expandButtonClick = () => {
 
 .article-read-button {
   border-width: 0;
+  background-color: var(--button-background);
 }
 
 .article-read-button:hover {
