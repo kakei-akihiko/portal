@@ -17,7 +17,7 @@
         </span>
       </div>
     </div>
-    <div class="panel-side">
+    <div class="panel-side-buttons">
       <ButtonExpand
         v-if="expandButtonVisible"
         :expanded="expanded"
@@ -133,7 +133,7 @@ const expandButtonClick = () => {
   grid-area: area-tags;
 }
 
-.panel-side {
+.panel-side-buttons {
   grid-area: area-side;
 }
 
@@ -141,7 +141,7 @@ const expandButtonClick = () => {
   grid-area: area-body;
 }
 
-.panel-side {
+.panel-side-buttons {
   display: flex;
   gap: 5px;
   align-items: center;
