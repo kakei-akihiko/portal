@@ -103,6 +103,7 @@ const expandButtonClick = () => {
   grid-template-areas:
     "area-abstract area-tags area-side"
     "area-body area-body area-body";
+  gap: 5px;
 }
 
 .panel-article.bottom-tags {
@@ -112,6 +113,7 @@ const expandButtonClick = () => {
     "area-abstract area-side"
     "area-tags area-tags"
     "area-body area-body";
+  gap: 5px;
 }
 
 .panel-abstract {
