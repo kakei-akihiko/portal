@@ -5,17 +5,6 @@
         <span v-if="article.url == null">{{ article.title }}</span>
         <a v-else :href="article.url" target="_blank">{{ article.title }}</a>
       </h3>
-      <div
-        v-if="bottomTagsVisible"
-        class="tags"
-      >
-        <span
-          v-for="tag in article.tags"
-          :key="tag"
-        >
-          {{ tag }}
-        </span>
-      </div>
     </div>
     <div class="panel-side-buttons">
       <ButtonExpand
