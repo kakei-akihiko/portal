@@ -61,6 +61,14 @@ button:focus-visible {
   padding: 2em;
 }
 
+.tag {
+  background-color: #60A0FF;
+  border-radius: 100px;
+  padding: 0 .5rem;
+  color: white;
+  user-select: none;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

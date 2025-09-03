@@ -127,13 +127,6 @@ const expandButtonClick = () => {
   align-items: center;
 }
 
-.tag {
-  background-color: #60A0FF;
-  border-radius: 100px;
-  padding: 0 .5rem;
-  color: white;
-}
-
 .panel-side-buttons {
   grid-area: area-side;
 }
