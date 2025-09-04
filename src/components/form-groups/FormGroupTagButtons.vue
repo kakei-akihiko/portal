@@ -19,7 +19,7 @@ import { selectTagText } from '../../store/index'
 const tagButtons = computed(() => {
   return allTagsRef.value.map(tag => {
     const { selected, text } = tag
-    const className = selected ? 'btn btn-sm btn-info' : 'btn btn-sm btn-outline-info'
+    const className = selected ? 'tag-selected' : 'tag-no-selected'
     return { selected, text, className }
   })
 })
@@ -32,3 +32,31 @@ const tagButtonClick = tagButton => {
   })
 }
 </script>
+
+<style scoped>
+.tag-selected,
+.tag-no-selected:hover {
+  background-color: #60A0FF;
+  border-radius: 100px;
+  padding: 0 .5rem;
+  color: #E0F0FF;
+  border: solid 1px #60A0FF;
+  user-select: none;
+}
+
+.tag-selected:hover,
+.tag-no-selected {
+  background-color: #E0F0FF;
+  border-radius: 100px;
+  padding: 0 .5rem;
+  color: #60A0FF;
+  border: solid 1px #60A0FF;
+  user-select: none;
+}
+
+.form-group {
+  border-width: 0;
+  display: flex;
+  gap: 5px;
+}
+</style>
