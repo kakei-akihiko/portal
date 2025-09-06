@@ -12,16 +12,10 @@
         :expanded="expanded"
         @click="expandButtonClick"
       />
-      <button
-        class="article-read-button"
-        @click="articleReadButtonClick"
-      >
+      <button @click="articleReadButtonClick">
         <i class="far fa-newspaper"></i>
       </button>
-      <button
-        class="article-edit-button"
-        @click="articleEditButtonClick"
-      >
+      <button @click="articleEditButtonClick">
         <i class="fas fa-edit"></i>
       </button>
     </div>
@@ -139,23 +133,5 @@ const expandButtonClick = () => {
   display: flex;
   gap: 5px;
   align-items: center;
-}
-
-.article-edit-button {
-  border-width: 0;
-  background-color: var(--button-background);
-}
-
-.article-edit-button:hover {
-  background-color: var(--button-hover-background);
-}
-
-.article-read-button {
-  border-width: 0;
-  background-color: var(--button-background);
-}
-
-.article-read-button:hover {
-  background-color: var(--button-hover-background);
 }
 </style>

@@ -24,7 +24,7 @@
         <fieldset class="form-group">
           <button
             :disabled="cardNewCategoryCreateButtonDisabled"
-            class="create-button primary-button"
+            class="create-button"
             @click="createCategoryButtonClick"
           >
             作成
@@ -149,23 +149,5 @@ const exportButtonClick = category => {
   width: 100%;
   height: 2rem;
   max-width: 20rem;
-}
-
-.primary-button {
-  background-color: hsl(209 100% 85% / 1);
-  color: hsl(209 100% 20% / 1);
-  border-color: hsl(209 100% 85% / 1);
-}
-
-.primary-button:disabled {
-  background-color: hsl(209 100% 95% / 1);
-  color: hsl(209 100% 60% / 1);
-  border-color: hsl(209 100% 95% / 1);
-}
-
-.primary-button:hover:not([disabled]) {
-  background-color: hsl(209 100% 75% / 1);
-  color: hsl(209 100% 20% / 1);
-  border-color: hsl(209 100% 75% / 1);
 }
 </style>
