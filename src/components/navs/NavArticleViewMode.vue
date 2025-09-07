@@ -1,26 +1,20 @@
 <template>
-  <ul class="nav nav-pills small">
-    <li class="nav-item">
-      <a
-        :class="compactNavLinkClass"
-        href="#"
-        target="_self"
-        @click="modeCompactNavClick"
-      >
-        コンパクト
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        :class="detailNavLinkClass"
-        href="#"
-        target="_self"
-        @click="modeDetailNavClick"
-      >
-        詳細
-      </a>
-    </li>
-  </ul>
+  <div>
+    <button
+      type="button"
+      :disabled="compactButtonDisabled"
+      @click="modeCompactNavClick"
+    >
+      コンパクト
+    </button>
+    <button
+      type="button"
+      :disabled="detailButtonDisabled"
+      @click="modeDetailNavClick"
+    >
+      詳細
+    </button>
+  </div>
 </template>
 
 <script setup>
@@ -32,19 +26,9 @@ const props = defineProps({
   mode: String
 })
 
-const compactNavLinkClass = computed(() => {
-  return {
-    active: props.mode === 'compact',
-    'nav-link': true
-  }
-})
+const compactButtonDisabled = computed(() => props.mode === 'compact')
 
-const detailNavLinkClass = computed(() => {
-  return {
-    active: props.mode === 'detail',
-    'nav-link': true
-  }
-})
+const detailButtonDisabled = computed(() => props.mode === 'detail')
 
 const modeCompactNavClick = () => {
   emit('change', 'compact')
@@ -55,3 +39,6 @@ const modeDetailNavClick = () => {
 }
 </script>
 
+<style scoped>
+
+</style>

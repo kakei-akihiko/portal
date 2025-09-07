@@ -7,7 +7,7 @@
         <ButtonArticleCreatePage :category-id="category.id"/>
       </fieldset>
     </div>
-    <div class="command-bar d-flex justify-content-end">
+    <div class="command-bar">
       <NavArticleViewMode
         :mode="mode"
         @change="navViewModeChange"
@@ -37,7 +37,7 @@
 
     <div
       v-if="modeDetailActive"
-      class="pt-3"
+      class="article-panel-area"
     >
       <ArticlePanel
         v-for="article in articles"
@@ -139,5 +139,9 @@ const navViewModeChange = (articlesViewMode) => {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.article-panel-area {
+  margin-top: 20px;
 }
 </style>
