@@ -1,25 +1,20 @@
+<template>
+  <router-link :to="linkTo">
+    <i class="fas fa-cog"></i>
+  </router-link>
+</template>
+
 <script setup>
-import { defineProps } from 'vue'
-import router from '../../router/index'
+import { computed } from 'vue'
 
 const props = defineProps({
   categoryId: Number
 })
 
-const buttonClick = () => {
-  const { categoryId } = props
-  router.push({
-    name: 'CategorySettingPage',
-    params: { categoryId }
-  })
-}
+const linkTo = computed(() => ({
+  name: 'CategorySettingPage',
+  params: {
+     categoryId: props.categoryId
+  }
+}))
 </script>
-
-<template>
-  <button
-    class="btn btn-link"
-    @click="buttonClick"
-  >
-    <i class="fas fa-cog"></i>
-  </button>
-</template>

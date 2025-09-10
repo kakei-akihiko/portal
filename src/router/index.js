@@ -25,17 +25,17 @@ const routes = [
   {
     path: '/categories',
     name: 'CategoryPage',
-    component: () => import(/* webpackChunkName: "categories" */ '../views/categories/CategoryPage.vue')
-  },
-  {
-    path: '/categories/:id/import',
-    name: 'CategoryImportPage',
-    component: () => import(/* webpackChunkName: "categories" */ '../views/categories/CategoryImportPage.vue')
+    component: () => import(/* webpackChunkName: "settings" */ '../views/categories/CategoryPage.vue')
   },
   {
     path: '/categories/:categoryId/setting',
     name: 'CategorySettingPage',
     component: () => import(/* webpackChunkName: "categories" */ '../views/categories/CategorySettingPage.vue')
+  },
+  {
+    path: '/categories/:id/import',
+    name: 'CategoryImportPage',
+    component: () => import(/* webpackChunkName: "categories" */ '../views/categories/CategoryImportPage.vue')
   },
   {
     path: '/settings',

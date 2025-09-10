@@ -1,13 +1,58 @@
+<template>
+  <TheMainLayout>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <div class="spinner-border text-primary" role="status" v-if="loading">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <NotFoundAlert v-else-if="article == null"/>
+        <section v-else class="h-100 main">
+          <div class="title-div">
+            <h2>{{ form.title }}</h2>
+            <div>
+              <button
+                class="btn btn-link"
+                @click="articleEditButtonClick"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-link button-cancel"
+                @click="articleListButtonClick"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div v-html="form.preview" class="preview article-body-view"/>
+          <div class="h-interval">
+            <span class="badge badge-info"
+              v-for="tag in form.tags"
+              :key="tag"
+            >
+              {{ tag }}
+            </span>
+          </div>
+        </section>
+      </div>
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from '../../infrastructure/markdown.js'
 import router from '../../router/index'
 
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+import ArticleRepository from '../../infrastructure/ArticleRepository.js'
+import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
+import ArticleService from '../../usecases/ArticleService.js'
+import CategoryRepository from '../../infrastructure/CategoryRepository.js'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)
@@ -69,51 +114,6 @@ watch(() => route.params.id, async newId => {
   loadArticle()
 })
 </script>
-
-<template>
-  <TheMainLayout>
-    <template v-slot:sidebar>
-      <TheSidebar/>
-    </template>
-
-    <template v-slot:panel-main>
-      <div class="h-100">
-        <div class="spinner-border text-primary" role="status" v-if="loading">
-          <span class="sr-only">Loading...</span>
-        </div>
-        <NotFoundAlert v-else-if="article == null"/>
-        <section v-else class="h-100 main">
-          <div class="title-div">
-            <h2>{{ form.title }}</h2>
-            <div>
-              <button
-                class="btn btn-link"
-                @click="articleEditButtonClick"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="btn btn-link button-cancel"
-                @click="articleListButtonClick"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div v-html="form.preview" class="preview article-body-view"/>
-          <div class="h-interval">
-            <span class="badge badge-info"
-              v-for="tag in form.tags"
-              :key="tag"
-            >
-              {{ tag }}
-            </span>
-          </div>
-        </section>
-      </div>
-    </template>
-  </TheMainLayout>
-</template>
 
 <style scoped>
 .button-cancel {

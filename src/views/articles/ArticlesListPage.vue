@@ -1,10 +1,34 @@
+<template>
+  <TheMainLayout main-panel-scroll>
+    <template v-slot:sidebar>
+      <TheSidebar>
+        <NavCategories class="categories"/>
+        <FormGroupTagButtons class="tag-buttons"/>
+      </TheSidebar>
+    </template>
+
+    <template v-slot:panel-main>
+      <div
+        v-if="categoryAlert.visible"
+        class="alert alert-warning"
+      >
+        {{ categoryAlert.message }}
+      </div>
+      <ArticleListPageMainPanel
+        v-if="selectedCategory != null"
+        :category="selectedCategory"
+      />
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted } from 'vue'
 import { categoryIdRef, categoriesRef, loadCategories } from '../../store/index'
 
-import ArticleListPageMainPanel from '@/views/articles/ArticleListPageMainPanel.vue'
-import NavCategories from '@/components/navs/NavCategories.vue'
-import FormGroupTagButtons from '@/components/form-groups/FormGroupTagButtons.vue'
+import ArticleListPageMainPanel from './ArticleListPageMainPanel.vue'
+import NavCategories from '../../components/navs/NavCategories.vue'
+import FormGroupTagButtons from '../../components/form-groups/FormGroupTagButtons.vue'
 
 const selectedCategory = computed(() => {
   return categoriesRef.value
@@ -38,28 +62,12 @@ onMounted(() => {
 }
 </style>
 
-<template>
-  <TheMainLayout main-panel-scroll>
-    <template v-slot:sidebar>
-      <TheSidebar>
-        <NavCategories class="mt-3"/>
-        <FormGroupTagButtons class="mt-3"/>
-      </TheSidebar>
-    </template>
+<style scoped>
+.categories {
+  margin-top: .5rem;
+}
 
-    <template v-slot:panel-main>
-      <div class="h-100">
-        <div
-          v-if="categoryAlert.visible"
-          class="alert alert-warning"
-        >
-          {{ categoryAlert.message }}
-        </div>
-        <ArticleListPageMainPanel
-          v-if="selectedCategory != null"
-          :category="selectedCategory"
-        />
-      </div>
-    </template>
-  </TheMainLayout>
-</template>
+.tag-buttons {
+  margin-top: .5rem;
+}
+</style>

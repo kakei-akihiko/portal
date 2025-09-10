@@ -1,11 +1,66 @@
+<template>
+  <TheMainLayout main-panel-scroll>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
+      <div class="h-100">
+        <NotFoundAlert v-if="category == null"/>
+        <div
+          v-else
+          class="h-100"
+        >
+          <h2>記事を{{ category.title }}にインポート</h2>
+
+          <fieldset class="form-group">
+            <div class="custom-file b-form-file">
+              <input
+                type="file" accept="application/json"
+                @change="fileSelect"
+              >
+            </div>
+          </fieldset>
+          <div class="d-flex">
+            <fieldset class="form-group ml-auto">
+              <button
+                :disabled="importButton.disabled"
+                v-show="importButton.visible"
+                class="btn btn-primary"
+                @click="importButtonClick"
+              >
+                選択をインポート
+              </button>
+            </fieldset>
+          </div>
+          <div class="list-group">
+            <div class="list-group-item d-flex"
+              v-for="article in articles"
+              :key="article.id"
+            >
+              <div>{{ article.title }}</div>
+              <span
+                v-if="article.completed"
+                class="badge bdge-info ml-auto"
+              >
+                済
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import ArticleJsonParser from '@/infrastructure/ArticleJsonParser.js'
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+import ArticleJsonParser from '../../infrastructure/ArticleJsonParser.js'
+import ArticleRepository from '../../infrastructure/ArticleRepository.js'
+import ArticleService from '../../usecases/ArticleService.js'
+import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
+import CategoryRepository from '../../infrastructure/CategoryRepository.js'
 
 const articlesDatabase = new ArticlesDatabase()
 const categoryRepository = new CategoryRepository(articlesDatabase)
@@ -67,58 +122,3 @@ watch(() => route.params.id, async newId => {
   loadCategory()
 })
 </script>
-
-<template>
-  <TheMainLayout main-panel-scroll>
-    <template v-slot:sidebar>
-      <TheSidebar/>
-    </template>
-
-    <template v-slot:panel-main>
-      <div class="h-100">
-        <NotFoundAlert v-if="category == null"/>
-        <div
-          v-else
-          class="h-100"
-        >
-          <h2>記事を{{ category.title }}にインポート</h2>
-
-          <fieldset class="form-group">
-            <div class="custom-file b-form-file">
-              <input
-                type="file" accept="application/json"
-                @change="fileSelect"
-              >
-            </div>
-          </fieldset>
-          <div class="d-flex">
-            <fieldset class="form-group ml-auto">
-              <button
-                :disabled="importButton.disabled"
-                v-show="importButton.visible"
-                class="btn btn-primary"
-                @click="importButtonClick"
-              >
-                選択をインポート
-              </button>
-            </fieldset>
-          </div>
-          <div class="list-group">
-            <div class="list-group-item d-flex"
-              v-for="article in articles"
-              :key="article.id"
-            >
-              <div>{{ article.title }}</div>
-              <span
-                v-if="article.completed"
-                class="badge bdge-info ml-auto"
-              >
-                済
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-  </TheMainLayout>
-</template>

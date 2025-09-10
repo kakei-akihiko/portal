@@ -1,5 +1,39 @@
+<template>
+  <div :class="entireClassName">
+    <div class="panel-abstract">
+      <h3>
+        <span v-if="article.url == null">{{ article.title }}</span>
+        <a v-else :href="article.url" target="_blank">{{ article.title }}</a>
+      </h3>
+    </div>
+    <div class="panel-side-buttons">
+      <ButtonExpand
+        v-if="expandButtonVisible"
+        :expanded="expanded"
+        @click="expandButtonClick"
+      />
+      <button @click="articleReadButtonClick">
+        <i class="far fa-newspaper"></i>
+      </button>
+      <button @click="articleEditButtonClick">
+        <i class="fas fa-edit"></i>
+      </button>
+    </div>
+    <div class="panel-tags">
+      <span
+        v-for="tag in tags"
+        :key="tag"
+        class="tag"
+      >
+        {{ tag }}
+      </span>
+    </div>
+    <div v-show="expanded" v-html="bodyHtml" class="article-body-view"/>
+  </div>
+</template>
+
 <script setup>
-import { computed, defineEmits, defineProps } from 'vue'
+import { computed  } from 'vue'
 import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
@@ -25,7 +59,13 @@ const expandButtonVisible = computed(() => {
 
 const expanded = computed(() => props.article.expanded === true)
 
-const bottomTagsVisible = computed(() => props.tagPosition === 'bottom')
+const entireClassName = computed(() => ({
+  "panel-article": true,
+  "side-tags": props.tagPosition !== 'bottom',
+  "bottom-tags": props.tagPosition === 'bottom'
+}))
+
+const tags = computed(() => props.article.tags ?? [])
 
 const articleEditButtonClick = () => {
   router.push({
@@ -46,69 +86,52 @@ const expandButtonClick = () => {
 }
 </script>
 
-<template>
-  <div class="card" body-class="py-2">
-    <div class="card-body py-2">
-      <div class="d-flex align-items-center">
-        <div class="mr-auto d-flex flex-column">
-          <div class="title">
-            <span v-if="article.url == null">{{ article.title }}</span>
-            <a v-else :href="article.url" target="_blank">{{ article.title }}</a>
-          </div>
+<style scoped>
+.panel-article {
+  border-top: solid 1px #ccc;
+}
 
-          <div
-            v-if="bottomTagsVisible"
-            class="tags"
-          >
-            <div
-              v-if="article.tags != null"
-              class="tags pr-2 h-interval"
-            >
-              <span
-                v-for="tag in article.tags"
-                :key="tag"
-                class="badge badge-info"
-              >
-                {{ tag }}
-              </span>
-            </div>
-          </div>
-        </div>
+.panel-article.side-tags {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-areas:
+    "area-abstract area-tags area-side"
+    "area-body area-body area-body";
+  gap: 5px;
+}
 
-        <div class="right-side">
-          <div
-            v-if="!bottomTagsVisible && article.tags != null"
-            class="pr-2 d-inline-block h-interval"
-          >
-            <span
-              v-for="tag in article.tags"
-              :key="tag"
-              class="badge badge-info"
-            >
-              {{ tag }}
-            </span>
-          </div>
+.panel-article.bottom-tags {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "area-abstract area-side"
+    "area-tags area-tags"
+    "area-body area-body";
+  gap: 5px;
+}
 
-          <ButtonExpand
-            v-if="expandButtonVisible"
-            :expanded="expanded"
-            @click="expandButtonClick"
-          />
-          <button
-            class="btn btn-link"
-            @click="articleReadButtonClick"
-          >
-            <i class="far fa-newspaper"></i>
-          </button>
-          <button
-            class="btn btn-link"
-            @click="articleEditButtonClick"
-          >
-            <i class="fas fa-edit"></i>
-          </button>
-        </div>
-      </div>
-      <div v-show="expanded" v-html="bodyHtml" class="article-body-view"/>
-    </div>
-  </div>
-</template>
+.panel-abstract {
+  grid-area: area-abstract;
+}
+
+.panel-tags {
+  grid-area: area-tags;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.panel-side-buttons {
+  grid-area: area-side;
+}
+
+.article-body-view {
+  grid-area: area-body;
+}
+
+.panel-side-buttons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+</style>

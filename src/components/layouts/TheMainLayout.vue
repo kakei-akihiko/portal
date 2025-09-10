@@ -1,60 +1,43 @@
-<script setup>
-import { computed, defineProps } from 'vue'
-
-const props = defineProps({
-  noSidebar: Boolean,
-  mainPanelScroll: Boolean
-})
-
-const mainPanelClass = computed(() => {
-  return {
-    'col-sm-8': !props.noSidebar,
-    'col-sm-12': props.noSidebar,
-    'col-md-9': !props.noSidebar,
-    'col-md-12': props.noSidebar,
-    'h-100-sm': true,
-    'panel-main': true,
-    'overflow-auto': props.mainPanelScroll
-  }
-})
-</script>
-
 <template>
-  <div class="container-fluid h-100 container-main">
-    <div class="row h-100">
-      <div
-        v-if="!noSidebar"
-        class="col-sm-4 col-md-3 col-12 h-100-sm sidebar pr-0"
-      >
-        <!-- .pr-3はスクロールバーの位置調整用 -->
-        <div class="h-100 pr-3">
-          <slot name="sidebar"/>
-        </div>
-      </div>
-
-      <div
-        cols="12"
-        :class="mainPanelClass"
-      >
-        <slot name="panel-main"/>
-      </div>
+  <div :class="entireClass">
+    <slot name="sidebar"/>
+    <div class="panel-main">
+      <slot name="panel-main"/>
     </div>
   </div>
 </template>
 
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  noSidebar: Boolean
+})
+
+const entireClass = computed(() => {
+  return {
+    'no-sidebar': props.noSidebar,
+    'entire': true
+  }
+})
+</script>
+
 <style>
-.sidebar {
-  background: #E0F0FF;
-  overflow-y: auto;
+.entire {
+  width: 100%;
+  height: 100%;
+  .panel-main {
+    height: 100%;
+  }
 }
 
-.panel-main {
-  padding-top: .5rem;
-}
-
-@media (min-width: 768px) {
-  .h-100-sm {
-    height: 100%
+.entire:has(.sidebar) {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  & .panel-main {
+    padding: 0 2rem;
   }
 }
 </style>

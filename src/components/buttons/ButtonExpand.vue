@@ -1,6 +1,14 @@
-<script setup>
-import { defineEmits, defineProps } from 'vue'
+<template>
+  <button
+    class="expand-button"
+    @click="buttonClick"
+  >
+    <i v-if="props.expanded" class="fas fa-arrow-circle-down"></i>
+    <i v-else class="fas fa-arrow-circle-up"></i>
+  </button>
+</template>
 
+<script setup>
 const emit = defineEmits(['click'])
 
 const props = defineProps({
@@ -12,12 +20,13 @@ const buttonClick = () => {
 }
 </script>
 
-<template>
-  <button
-    class="btn btn-link p-0"
-    @click="buttonClick"
-  >
-    <i v-if="props.expanded" class="fas fa-arrow-circle-down"></i>
-    <i v-else class="fas fa-arrow-circle-up"></i>
-  </button>
-</template>
+<style scoped>
+.expand-button {
+  border-width: 0;
+  background-color: var(--button-background);
+}
+
+.expand-button:hover {
+  background-color: var(--button-hover-background);
+}
+</style>

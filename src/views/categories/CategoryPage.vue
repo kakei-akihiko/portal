@@ -1,9 +1,72 @@
+<template>
+  <TheMainLayout>
+    <template v-slot:sidebar>
+      <TheSidebar/>
+    </template>
+
+    <template v-slot:panel-main>
+      <h2>カテゴリー</h2>
+      <section>
+        <h3>新規作成</h3>
+
+        <fieldset class="form-group" label="名称">
+          <legend tabindex="-1">
+            名称
+          </legend>
+          <input
+            class="form-control"
+            name="categoryName"
+            type="text"
+            v-model="cardNewCategoryName"
+          >
+        </fieldset>
+
+        <fieldset class="form-group">
+          <button
+            :disabled="cardNewCategoryCreateButtonDisabled"
+            class="create-button"
+            @click="createCategoryButtonClick"
+          >
+            作成
+          </button>
+        </fieldset>
+      </section>
+      <section class="categories">
+        <h3>一覧</h3>
+        <div class="categories-list">
+          <div class="category-div"
+            v-for="category in categoriesRef"
+            :key="category.id"
+          >
+            <h4>
+              {{ category.title }}
+            </h4>
+            <router-link
+              :to="{name: 'CategoryImportPage', params: {id: category.id}}"
+            >
+              インポート
+            </router-link>
+            <button
+              class="button-export"
+              type="button"
+              @click="exportButtonClick(category)"
+            >
+              <i class="fas fa-download"/>
+              エクスポート
+            </button>
+          </div>
+        </div>
+      </section>
+    </template>
+  </TheMainLayout>
+</template>
+
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { categoriesRef, loadCategories } from '../../store/index'
 import { exportArticles } from '../../store/ref.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
+import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
+import CategoryRepository from '../../infrastructure/CategoryRepository.js'
 
 const articlesDatabase = new ArticlesDatabase()
 const categoryRepository = new CategoryRepository(articlesDatabase)
@@ -46,71 +109,45 @@ const exportButtonClick = category => {
 }
 </script>
 
-<template>
-  <TheMainLayout main-panel-scroll>
-    <template v-slot:sidebar>
-      <TheSidebar/>
-    </template>
+<style scoped>
+.categories {
+  margin-top: 20px;
+}
 
-    <template v-slot:panel-main>
-      <div class="h-100">
-        <h2>カテゴリー</h2>
-        <section class="section-new-card">
-          <h3>新規作成</h3>
-          <div class="card card-new-category">
-            <div class="card-body">
-              <fieldset class="form-group" label="名称">
-                <legend tabindex="-1" class="col-form-label pt-0">
-                  名称
-                </legend>
-                <input
-                  class="form-control"
-                  name="categoryName"
-                  type="text"
-                  v-model="cardNewCategoryName"
-                >
-              </fieldset>
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-              <fieldset class="form-group mb-0">
-                <button
-                  :disabled="cardNewCategoryCreateButtonDisabled"
-                  class="btn btn-primary"
-                  @click="createCategoryButtonClick"
-                >
-                  作成
-                </button>
-              </fieldset>
-            </div>
-          </div>
-        </section>
-        <section class="section-list">
-          <h3>一覧</h3>
-          <div class="card"
-            v-for="category in categoriesRef"
-            :key="category.id"
-          >
-            <div class="card-body d-flex">
-              <div>
-                {{ category.title }}
-              </div>
-              <div class="ml-auto h-interval">
-                <router-link
-                  :to="{name: 'CategoryImportPage', params: {id: category.id}}"
-                >
-                  インポート
-                </router-link>
-                <button
-                  class="btn btn-info"
-                  @click="exportButtonClick(category)"
-                >
-                  <i class="fas fa-download"/>
-                  エクスポート
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </template>
-  </TheMainLayout>
-</template>
+.category-div {
+  width: 300px;
+  border: solid 1px #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.button-export {
+  margin-left: 10px;
+}
+
+.category-div h4 {
+  font-size: 1.3rem;
+  border: 0;
+  padding: 0;
+}
+
+.form-group {
+  border-width: 0;
+  padding: 0;
+}
+
+.create-button {
+  margin-top: 10px;
+}
+
+.form-control {
+  width: 100%;
+  height: 2rem;
+  max-width: 20rem;
+}
+</style>

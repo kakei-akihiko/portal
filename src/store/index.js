@@ -1,12 +1,12 @@
 import { ref } from 'vue'
-import ArticleCardFactory from '@/infrastructure/ArticleCardFactory.js'
-import ArticleRepository from '@/infrastructure/ArticleRepository.js'
-import ArticlesDatabase from '@/infrastructure/ArticlesDatabase.js'
-import ArticleService from '@/usecases/ArticleService.js'
-import CategoryRepository from '@/infrastructure/CategoryRepository.js'
-import CategoryService from '@/usecases/CategoryService.js'
-import SettingRepository from '@/infrastructure/SettingRepository.js'
-import SettingService from '@/usecases/SettingService.js'
+import ArticleCardFactory from '../infrastructure/ArticleCardFactory.js'
+import ArticleRepository from '../infrastructure/ArticleRepository.js'
+import ArticlesDatabase from '../infrastructure/ArticlesDatabase.js'
+import ArticleService from '../usecases/ArticleService.js'
+import CategoryRepository from '../infrastructure/CategoryRepository.js'
+import CategoryService from '../usecases/CategoryService.js'
+import SettingRepository from '../infrastructure/SettingRepository.js'
+import SettingService from '../usecases/SettingService.js'
 
 const articleCardFactory = new ArticleCardFactory()
 const articlesDatabase = new ArticlesDatabase()

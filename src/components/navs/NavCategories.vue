@@ -1,3 +1,17 @@
+<template>
+  <div class="categories">
+    <div class="nav-item"
+      v-for="category in categories"
+      :key="category.id"
+      @click="categorySelect(category)"
+    >
+      <a :class="category.anchorClass" href="#" target="_self">
+        {{ category.title }}
+      </a>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 import { loadArticles, categoriesRef, categoryIdRef, setCategoryId } from '../../store/index'
@@ -8,7 +22,8 @@ const categories = computed(() => {
     const active = id === categoryIdRef.value
     const anchorClass = {
       active,
-      'nav-link': true
+      'nav-link': true,
+      'sidebar-item': true
     }
     return { anchorClass, id, title }
   })
@@ -22,16 +37,21 @@ const categorySelect = async category => {
 }
 </script>
 
-<template>
-  <ul class="nav flex-column nav-category mt-3">
-    <li class="nav-item"
-      v-for="category in categories"
-      :key="category.id"
-      @click="categorySelect(category)"
-    >
-      <a :class="category.anchorClass" href="#" target="_self">
-        {{ category.title }}
-      </a>
-    </li>
-  </ul>
-</template>
+<style scoped>
+.categories {
+  padding: 0 .5rem;
+}
+
+.sidebar-item {
+  display: grid;
+  height: 50px;
+  align-items: center;
+  color: #505050;
+  padding-left: 10px;
+}
+
+.sidebar-item:hover {
+  background-color: #FFFFFF80;
+  border-radius: .2rem;
+}
+</style>

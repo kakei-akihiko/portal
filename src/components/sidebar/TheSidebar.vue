@@ -1,7 +1,100 @@
+<template>
+  <section class="sidebar sidebar-scoped">
+    <header>
+      <h1 class="site-title">
+        <span class="house">🏠</span>
+        <span class="animals">🐕🦘🐬🐓🕊🦢</span>
+      </h1>
+    </header>
+    <slot/>
+    <footer>
+      <div v-if="sidebarArticleRef != null">
+        <div v-html="sidebarArticleRef.html" />
+      </div>
+      <div v-if="$route.name != 'ArticlesListPage'">
+        <router-link
+          :to="{ name: 'ArticlesListPage' }"
+          class="sidebar-item"
+        >
+          <i class="far fa-newspaper"></i>
+          <span>記事</span>
+        </router-link>
+      </div>
+      <div v-if="$route.name != 'CategoryPage'">
+        <router-link
+          :to="{ name: 'CategoryPage' }"
+          class="sidebar-item"
+        >
+          <i class="far fa-folder-open"></i>
+          <span>カテゴリー</span>
+        </router-link>
+      </div>
+      <div v-if="$route.name != 'SettingPage'">
+        <router-link
+          :to="{ name: 'SettingPage' }"
+          class="sidebar-item"
+        >
+          <i class="fas fa-cog"></i>
+          <span>設定</span>
+        </router-link>
+      </div>
+    </footer>
+  </section>
+</template>
+
+<style scoped>
+.sidebar-scoped {
+  background: #E0F0FF;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+
+  & header {
+    padding: 0 .5rem;
+  }
+
+  & footer {
+    margin-top: auto;
+    padding: 0 .5rem;
+  }
+}
+
+.site-title {
+  margin: .5rem 0 0;
+  font-size: 2.5rem;
+
+  & .house {
+    width: 50px;
+  }
+
+  & .animals {
+    font-size: 40%
+  }
+}
+
+.sidebar-item:has(i) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 50px;
+  align-items: center;
+  color: #505050;
+}
+
+.sidebar-item:hover {
+  background-color: #FFFFFF80;
+  border-radius: .2rem;
+}
+
+.sidebar-item i {
+  width: 50px;
+  text-align: center;
+}
+</style>
+
 <script setup>
 import { onMounted } from 'vue'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
-import router from '../../router/index'
 
 onMounted(async () => {
   // まだ読み込んでいない場合だけ読み込む
@@ -9,63 +102,4 @@ onMounted(async () => {
     await loadSidebarSetting()
   }
 })
-
-const articleListButtonClick = () => {
-  router.push({ name: 'ArticlesListPage' })
-}
-
-const categoryButtonClick = () => {
-  router.push({ name: 'CategoryPage' })
-}
-
-const settingButtonClick = () => {
-  router.push({ name: 'SettingPage' })
-}
 </script>
-
-<template>
-  <div class="d-flex flex-column h-100">
-    <h1 class="h2">
-      <span>🏠</span>
-      <span class="site-title-animals">🐕🦘🐬🐓🕊🦢</span>
-    </h1>
-    <slot/>
-    <div class="mt-auto"></div>
-    <div v-if="sidebarArticleRef != null">
-      <div v-html="sidebarArticleRef.html" />
-    </div>
-    <fieldset class="form-group" v-if="$route.name != 'ArticlesListPage'">
-      <button
-        class="btn btn-link"
-        @click="articleListButtonClick"
-      >
-        <i class="far fa-newspaper"></i>
-        <span class="ml-2">記事</span>
-      </button>
-    </fieldset>
-    <fieldset class="form-group" v-if="$route.name != 'CategoryPage'">
-      <button
-        class="btn btn-link"
-        @click="categoryButtonClick"
-      >
-        <i class="far fa-folder-open"></i>
-        <span class="ml-2">カテゴリー</span>
-      </button>
-    </fieldset>
-    <fieldset class="form-group" v-if="$route.name != 'SettingPage'">
-      <button
-        class="btn btn-link"
-        @click="settingButtonClick"
-      >
-        <i class="fas fa-cog"></i>
-        <span class="ml-2">設定</span>
-      </button>
-    </fieldset>
-  </div>
-</template>
-
-<style scoped>
-.site-title-animals {
-  font-size: 40%
-}
-</style>
