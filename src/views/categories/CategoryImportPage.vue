@@ -21,18 +21,16 @@
               >
             </div>
           </fieldset>
-          <div class="d-flex">
-            <fieldset class="form-group ml-auto">
-              <button
-                :disabled="importButton.disabled"
-                v-show="importButton.visible"
-                class="btn btn-primary"
-                @click="importButtonClick"
-              >
-                選択をインポート
-              </button>
-            </fieldset>
-          </div>
+          <fieldset class="form-group ml-auto">
+            <button
+              :disabled="importButton.disabled"
+              v-show="importButton.visible"
+              class="btn btn-primary"
+              @click="importButtonClick"
+            >
+              選択をインポート
+            </button>
+          </fieldset>
           <div class="list-group">
             <div class="list-group-item d-flex"
               v-for="article in articles"
@@ -122,3 +120,9 @@ watch(() => route.params.id, async newId => {
   loadCategory()
 })
 </script>
+
+<style scoped>
+.form-group {
+  border-width: 0;
+}
+</style>
