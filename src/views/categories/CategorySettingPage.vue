@@ -126,9 +126,3 @@ onMounted(() => {
   loadCategory()
 })
 </script>
-
-<style scoped>
-.form-group {
-  border-width: 0;
-}
-</style>

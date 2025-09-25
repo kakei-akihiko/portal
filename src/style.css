@@ -71,6 +71,10 @@ button:has(i) {
   border-width: 0;
 }
 
+.form-group {
+  border-width: 0;
+}
+
 .card {
   padding: 2em;
 }

@@ -115,10 +115,6 @@ watch(() => route.params.id, async newId => {
 </script>
 
 <style scoped>
-.form-group {
-  border-width: 0;
-}
-
 .article {
   display: grid;
   grid-template-columns: 2rem 1fr;
