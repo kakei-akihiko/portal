@@ -71,10 +71,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.form-group {
-  border-width: 0;
-}
-
 .sidebar-article fieldset label {
   margin-right: 10px;
 }

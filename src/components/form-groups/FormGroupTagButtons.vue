@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="form-group" v-if="tagButtons.length > 0">
+  <fieldset class="form-group self" v-if="tagButtons.length > 0">
     <button
       v-for="tagButton in tagButtons"
       :key="tagButton.text"
@@ -54,8 +54,7 @@ const tagButtonClick = tagButton => {
   user-select: none;
 }
 
-.form-group {
-  border-width: 0;
+.self {
   display: flex;
   gap: 5px;
 }

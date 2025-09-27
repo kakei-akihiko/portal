@@ -6,7 +6,7 @@
 
     <template v-slot:panel-main>
       <h2>カテゴリー</h2>
-      <section>
+      <section class="new-category">
         <h3>新規作成</h3>
 
         <fieldset class="form-group" label="名称">
@@ -136,8 +136,7 @@ const exportButtonClick = category => {
   padding: 0;
 }
 
-.form-group {
-  border-width: 0;
+.new-category .form-group {
   padding: 0;
 }
 

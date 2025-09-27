@@ -5,47 +5,38 @@
     </template>
 
     <template v-slot:panel-main>
-      <div class="h-100">
-        <NotFoundAlert v-if="category == null"/>
-        <div
-          v-else
-          class="h-100"
-        >
-          <h2>記事を{{ category.title }}にインポート</h2>
+      <NotFoundAlert v-if="category == null"/>
+      <div v-else>
+        <h2>記事を{{ category.title }}にインポート</h2>
 
-          <fieldset class="form-group">
-            <div class="custom-file b-form-file">
-              <input
-                type="file" accept="application/json"
-                @change="fileSelect"
-              >
-            </div>
-          </fieldset>
-          <div class="d-flex">
-            <fieldset class="form-group ml-auto">
-              <button
-                :disabled="importButton.disabled"
-                v-show="importButton.visible"
-                class="btn btn-primary"
-                @click="importButtonClick"
-              >
-                選択をインポート
-              </button>
-            </fieldset>
-          </div>
-          <div class="list-group">
-            <div class="list-group-item d-flex"
-              v-for="article in articles"
-              :key="article.id"
-            >
-              <div>{{ article.title }}</div>
-              <span
-                v-if="article.completed"
-                class="badge bdge-info ml-auto"
-              >
-                済
-              </span>
-            </div>
+        <fieldset class="form-group">
+          <input
+            type="file"
+            accept="application/json"
+            @change="fileSelect"
+          />
+        </fieldset>
+        <fieldset class="form-group">
+          <button
+            :disabled="importButton.disabled"
+            v-show="importButton.visible"
+            @click="importButtonClick"
+          >
+            選択をインポート
+          </button>
+        </fieldset>
+        <div class="articles-list">
+          <div class="article"
+            v-for="article in articles"
+            :key="article.id"
+          >
+            <span v-if="article.completed">
+              済
+            </span>
+            <span v-else>
+              －
+            </span>
+            <div>{{ article.title }}</div>
           </div>
         </div>
       </div>
@@ -122,3 +113,10 @@ watch(() => route.params.id, async newId => {
   loadCategory()
 })
 </script>
+
+<style scoped>
+.article {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+}
+</style>
