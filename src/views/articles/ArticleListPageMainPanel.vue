@@ -9,7 +9,7 @@
     </div>
     <div class="command-bar">
       <NavArticleViewMode
-        :mode="mode"
+        :mode="viewMode.name"
         @change="navViewModeChange"
       />
     </div>
@@ -77,6 +77,13 @@ const props = defineProps({
   }
 })
 
+const viewMode = computed(() => {
+  const name = props.category.articlesViewMode === 'detail' ? 'detail' : 'compact'
+  const isDetail = name === 'detail'
+  const isCompact = name !== 'detail'
+  return { name, isDetail, isCompact}
+})
+
 const mode = computed(() => {
   return props.category.articlesViewMode === 'detail' ? 'detail' : 'compact'
 })
@@ -102,11 +109,11 @@ const table = computed(() => {
 })
 
 const alertCompactOnlyVisible = computed(() => {
-  return modeDetailActive.value && articles.value.length <= 0 && table.value.length > 0
+  return viewMode.isDetail && articles.value.length <= 0 && table.value.length > 0
 })
 
 const alertDetailOnlyVisible = computed(() => {
-  return modeCompactActive.value && articles.value.length > 0 && table.value.length <= 0
+  return viewMode.isCompact && articles.value.length > 0 && table.value.length <= 0
 })
 
 const alertNoArticle = computed(() => {
