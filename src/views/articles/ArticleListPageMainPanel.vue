@@ -36,7 +36,7 @@
     </div>
 
     <div
-      v-if="modeDetailActive"
+      v-if="viewMode.isDetail"
       class="article-panel-area"
     >
       <ArticlePanel
@@ -49,7 +49,7 @@
     </div>
 
     <CampactLinksPanel
-      v-if="modeCompactActive"
+      v-if="viewMode.isCompact"
       :table="table"
       class="pt-3"
     />
@@ -82,18 +82,6 @@ const viewMode = computed(() => {
   const isDetail = name === 'detail'
   const isCompact = name !== 'detail'
   return { name, isDetail, isCompact}
-})
-
-const mode = computed(() => {
-  return props.category.articlesViewMode === 'detail' ? 'detail' : 'compact'
-})
-
-const modeCompactActive = computed(() => {
-  return mode.value === 'compact'
-})
-
-const modeDetailActive = computed(() => {
-  return mode.value === 'detail'
 })
 
 const articles = computed(() => {
