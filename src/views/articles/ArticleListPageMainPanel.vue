@@ -139,4 +139,13 @@ const navViewModeChange = (articlesViewMode) => {
 .article-panel-area {
   margin-top: 20px;
 }
+
+.alert-warning {
+  margin-top: 20px;
+
+  background-color: rgb(240, 240, 240);
+  border: solid 1px rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 1rem;
+}
 </style>
