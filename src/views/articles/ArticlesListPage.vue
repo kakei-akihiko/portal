@@ -31,6 +31,9 @@ import NavCategories from '../../components/navs/NavCategories.vue'
 import FormGroupTagButtons from '../../components/form-groups/FormGroupTagButtons.vue'
 
 const selectedCategory = computed(() => {
+  if (categoryIdRef.value == null) {
+    return null
+  }
   return categoriesRef.value
     .filter(category => category.id === categoryIdRef.value)[0]
 })
