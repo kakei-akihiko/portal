@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h2>{{ category.title }} cid: {{ categoryIdRef }}</h2>
+      <h2>{{ category.title }}</h2>
       <fieldset class="title-bar-buttons">
         <ButtonCategorySettingPage :category-id="category.id"/>
         <ButtonArticleCreatePage :category-id="category.id"/>
