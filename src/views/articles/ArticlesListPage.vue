@@ -23,12 +23,18 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+
+import { computed, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { categoryIdRef, categoriesRef, loadCategories } from '../../store/index'
+
 
 import ArticleListPageMainPanel from './ArticleListPageMainPanel.vue'
 import NavCategories from '../../components/navs/NavCategories.vue'
 import FormGroupTagButtons from '../../components/form-groups/FormGroupTagButtons.vue'
+
+
+const route = useRoute()
 
 const selectedCategory = computed(() => {
   if (categoryIdRef.value == null) {
@@ -37,6 +43,7 @@ const selectedCategory = computed(() => {
   return categoriesRef.value
     .filter(category => category.id === categoryIdRef.value)[0]
 })
+
 
 const categoryAlert = computed(() => {
   if (categoriesRef.value == null || categoriesRef.value.length <= 0) {
@@ -54,8 +61,23 @@ const categoryAlert = computed(() => {
   return { visible: false }
 })
 
+
+function setCategoryIdFromQuery() {
+  const id = route.query.categoryId
+  if (typeof id === 'string' && /^\d+$/.test(id) && Number(id) >= 0) {
+    categoryIdRef.value = Number(id)
+  }
+}
+
 onMounted(() => {
   loadCategories()
+  setCategoryIdFromQuery()
+})
+
+watch(() => route.query.categoryId, (newId) => {
+  if (typeof newId === 'string' && /^\d+$/.test(newId) && Number(newId) >= 0) {
+    categoryIdRef.value = Number(newId)
+  }
 })
 </script>
 
