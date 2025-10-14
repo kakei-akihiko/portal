@@ -25,9 +25,8 @@
 <script setup>
 
 import { computed, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { categoryIdRef, categoriesRef, loadCategories } from '../../store/index'
-
+import { useRoute } from 'vue-router'
+import { categoryIdRef, categoriesRef, loadArticles, loadCategories } from '../../store/index'
 
 import ArticleListPageMainPanel from './ArticleListPageMainPanel.vue'
 import NavCategories from '../../components/navs/NavCategories.vue'
@@ -72,11 +71,17 @@ function setCategoryIdFromQuery() {
 onMounted(() => {
   loadCategories()
   setCategoryIdFromQuery()
+  if (categoryIdRef.value != null) {
+    loadArticles(categoryIdRef.value)
+  }
 })
 
 watch(() => route.query.categoryId, (newId) => {
   if (typeof newId === 'string' && /^\d+$/.test(newId) && Number(newId) >= 0) {
     categoryIdRef.value = Number(newId)
+    if (categoryIdRef.value != null) {
+      loadArticles(categoryIdRef.value)
+    }
   }
 })
 </script>
