@@ -14,7 +14,10 @@
 
 <script setup>
 import { computed } from 'vue'
-import { loadArticles, categoriesRef, categoryIdRef, setCategoryId } from '../../store/index'
+import { useRouter } from 'vue-router'
+import { categoriesRef, categoryIdRef } from '../../store/index'
+
+const router = useRouter()
 
 const categories = computed(() => {
   return categoriesRef.value.map(category => {
@@ -31,8 +34,11 @@ const categories = computed(() => {
 
 const categorySelect = async category => {
   if (category != null) {
-    setCategoryId(category.id)
-    await loadArticles(category.id)
+    const categoryId = category.id
+    router.push({
+      name: 'ArticlesListPage',
+      query: { categoryId }
+    })
   }
 }
 </script>
