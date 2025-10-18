@@ -62,7 +62,7 @@ const categoryAlert = computed(() => {
 
 
 function setCategoryIdFromQuery() {
-  const id = route.query.categoryId
+  const id = route.params.categoryId
   if (typeof id === 'string' && /^\d+$/.test(id) && Number(id) >= 0) {
     categoryIdRef.value = Number(id)
   }
@@ -76,7 +76,7 @@ onMounted(() => {
   }
 })
 
-watch(() => route.query.categoryId, (newId) => {
+watch(() => route.params.categoryId, (newId) => {
   if (typeof newId === 'string' && /^\d+$/.test(newId) && Number(newId) >= 0) {
     categoryIdRef.value = Number(newId)
     if (categoryIdRef.value != null) {

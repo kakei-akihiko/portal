@@ -35,9 +35,13 @@ const categories = computed(() => {
 const categorySelect = async category => {
   if (category != null) {
     const categoryId = category.id
+    console.log({
+      name: 'ArticlesListPage',
+      params: { categoryId }
+    })
     router.push({
       name: 'ArticlesListPage',
-      query: { categoryId }
+      params: { categoryId }
     })
   }
 }

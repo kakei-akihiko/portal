@@ -95,7 +95,11 @@ const saveButtonClick = async function () {
 }
 
 const cancelButtonClick = () => {
-  router.push({ name: 'ArticlesListPage' })
+  const { categoryId } = article.value
+  router.push({
+    name: 'ArticlesListPage',
+    params: { categoryId }
+  })
 }
 
 onMounted(() => {

@@ -101,7 +101,11 @@ const articleEditButtonClick = () => {
 }
 
 const articleListButtonClick = () => {
-  router.push({ name: 'ArticlesListPage' })
+  const { categoryId } = article.value
+  router.push({
+    name: 'ArticlesListPage',
+    params: { categoryId }
+  })
 }
 
 onMounted(() => {

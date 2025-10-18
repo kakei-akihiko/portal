@@ -11,9 +11,9 @@
       <div v-if="sidebarArticleRef != null">
         <div v-html="sidebarArticleRef.html" />
       </div>
-      <div v-if="$route.name != 'ArticlesListPage'">
+      <div v-if="$route.name != 'ArticlesListPage' && $route.name != 'ArticlesListPageNoSelected'">
         <router-link
-          :to="{ name: 'ArticlesListPage' }"
+          :to="{ name: 'ArticlesListPageNoSelected' }"
           class="sidebar-item"
         >
           <i class="far fa-newspaper"></i>
