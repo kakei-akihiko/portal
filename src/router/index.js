@@ -4,6 +4,11 @@ import ArticlesListPage from '../views/articles/ArticlesListPage.vue'
 const routes = [
   {
     path: '/',
+    name: 'ArticlesListPageNoSelected',
+    component: ArticlesListPage
+  },
+  {
+    path: '/categories/:categoryId/articles',
     name: 'ArticlesListPage',
     component: ArticlesListPage
   },

@@ -59,7 +59,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { setArticleExpanded, setArticlesViewModeToCategory, articlesRef, selectedTagTextsRef } from '../../store/index'
+import { setArticleExpanded, setArticlesViewModeToCategory, categoryIdRef, articlesRef, selectedTagTextsRef } from '../../store/index'
 
 import ArticlePanel from '../../components/panels/articles/ArticlePanel.vue'
 import ButtonArticleCreatePage from '../../components/buttons/ButtonArticleCreatePage.vue'
@@ -138,5 +138,14 @@ const navViewModeChange = (articlesViewMode) => {
 
 .article-panel-area {
   margin-top: 20px;
+}
+
+.alert-warning {
+  margin-top: 20px;
+
+  background-color: rgb(240, 240, 240);
+  border: solid 1px rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 1rem;
 }
 </style>

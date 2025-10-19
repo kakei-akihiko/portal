@@ -38,13 +38,6 @@ const setArticleExpand = ({ id, expanded }) => {
     })
 }
 
-const setCategories = categories => {
-  categoriesRef.value = categories
-  if (categories.length > 0 && categoryIdRef.value == null) {
-    categoryIdRef.value = categories[0].id
-  }
-}
-
 const _setCategorySettings = ({ categoryId, articlesViewMode, tagPosition, tagSelectionMode }) => {
   categoriesRef.value
     .filter(category => category.id === categoryId)
@@ -58,15 +51,11 @@ const _setCategorySettings = ({ categoryId, articlesViewMode, tagPosition, tagSe
 export const loadArticles = async categoryId => {
   const articles = await articleService.get({ categoryId })
   articlesRef.value = articleCardFactory.fromArticles(articles)
-  setCategoryId(categoryId)
 }
 
 export const loadCategories = async () => {
   const categories = await categoryRepository.getAll()
-  setCategories(categories)
-  if (categoryIdRef.value != null) {
-    await loadArticles(categoryIdRef.value)
-  }
+  categoriesRef.value = categories
 }
 
 export const setArticleExpanded = ({ id, expanded }) => {

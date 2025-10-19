@@ -100,11 +100,17 @@ const saveButtonClick = async () => {
 
   await articleService.set({ categoryId: categoryId.value, title, text, tags })
 
-  router.push({ name: 'ArticlesListPage' })
+  router.push({
+    name: 'ArticlesListPage',
+    params: { categoryId: categoryId.value }
+  })
 }
 
 const cancelButtonClick = () => {
-  router.push({ name: 'ArticlesListPage' })
+  router.push({
+    name: 'ArticlesListPage',
+    params: { categoryId: categoryId.value }
+  })
 }
 </script>
 
