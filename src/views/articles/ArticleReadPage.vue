@@ -14,12 +14,7 @@
           <div class="title-div">
             <h2>{{ form.title }}</h2>
             <div>
-              <button
-                class="btn btn-link"
-                @click="articleEditButtonClick"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
+              <ButtonArticleEditPage :id="articleId"/>
               <button
                 class="btn btn-link button-cancel"
                 @click="articleListButtonClick"
@@ -49,6 +44,7 @@ import { useRoute } from 'vue-router'
 import { marked } from '../../infrastructure/markdown.js'
 import router from '../../router/index'
 
+import ButtonArticleEditPage from '../../components/buttons/ButtonArticleEditPage.vue'
 import ArticleRepository from '../../infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
@@ -93,11 +89,6 @@ const loadArticle = async () => {
     text.value = article.value.text
   }
   loading.value = false
-}
-
-const articleEditButtonClick = () => {
-  const id = articleId.value
-  router.push({ name: 'ArticleEditPage', params: { id } })
 }
 
 const articleListButtonClick = () => {
