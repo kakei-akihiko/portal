@@ -15,12 +15,7 @@
             <h2>{{ form.title }}</h2>
             <div>
               <ButtonArticleEditPage :id="articleId"/>
-              <button
-                class="btn btn-link button-cancel"
-                @click="articleListButtonClick"
-              >
-                <i class="fas fa-times"></i>
-              </button>
+              <ButtonArticleListPage :categoryId="article.categoryId"/>
             </div>
           </div>
           <div v-html="form.preview" class="preview article-body-view"/>
@@ -42,9 +37,9 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from '../../infrastructure/markdown.js'
-import router from '../../router/index'
 
 import ButtonArticleEditPage from '../../components/buttons/ButtonArticleEditPage.vue'
+import ButtonArticleListPage from '../../components/buttons/ButtonArticleListPage.vue'
 import ArticleRepository from '../../infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
@@ -89,14 +84,6 @@ const loadArticle = async () => {
     text.value = article.value.text
   }
   loading.value = false
-}
-
-const articleListButtonClick = () => {
-  const { categoryId } = article.value
-  router.push({
-    name: 'ArticlesListPage',
-    params: { categoryId }
-  })
 }
 
 onMounted(() => {
