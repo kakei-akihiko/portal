@@ -20,12 +20,11 @@
           </div>
           <div v-html="form.preview" class="preview article-body-view"/>
           <div class="h-interval">
-            <span class="badge badge-info"
+            <TagBadge
               v-for="tag in form.tags"
               :key="tag"
-            >
-              {{ tag }}
-            </span>
+              :title="tag"
+            />
           </div>
         </section>
       </div>
@@ -44,6 +43,7 @@ import ArticleRepository from '../../infrastructure/ArticleRepository.js'
 import ArticlesDatabase from '../../infrastructure/ArticlesDatabase.js'
 import ArticleService from '../../usecases/ArticleService.js'
 import CategoryRepository from '../../infrastructure/CategoryRepository.js'
+import TagBadge from '../../components/badge/TagBadge.vue'
 
 const articlesDatabase = new ArticlesDatabase()
 const articleRepository = new ArticleRepository(articlesDatabase)

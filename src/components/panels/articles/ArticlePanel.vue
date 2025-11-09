@@ -20,13 +20,11 @@
       </button>
     </div>
     <div class="panel-tags">
-      <span
+      <TagBadge
         v-for="tag in tags"
         :key="tag"
-        class="tag"
-      >
-        {{ tag }}
-      </span>
+        :title="tag"
+      />
     </div>
     <div v-show="expanded" v-html="bodyHtml" class="article-body-view"/>
   </div>
@@ -36,6 +34,7 @@
 import { computed  } from 'vue'
 import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
+import TagBadge from '../../badge/TagBadge.vue'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
 const emit = defineEmits(['expand'])
