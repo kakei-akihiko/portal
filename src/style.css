@@ -87,6 +87,24 @@ button:has(i) {
   user-select: none;
 }
 
+.sidebar-item:has(i) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 50px;
+  align-items: center;
+  color: #505050;
+}
+
+.sidebar-item:hover {
+  background-color: #FFFFFF80;
+  border-radius: .2rem;
+}
+
+.sidebar-item i {
+  width: 50px;
+  text-align: center;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
