@@ -30,7 +30,7 @@
         </router-link>
       </div>
       <div v-if="$route.name != 'SettingPage'">
-        <ButtonSettingPage class="sidebar-item"/>
+        <SidebarSettingItem/>
       </div>
     </footer>
   </section>
@@ -40,7 +40,7 @@
 import { onMounted } from 'vue'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
 
-import ButtonSettingPage from '../buttons/ButtonSettingPage.vue'
+import SidebarSettingItem from './SidebarSettingItem.vue'
 
 onMounted(async () => {
   // まだ読み込んでいない場合だけ読み込む
