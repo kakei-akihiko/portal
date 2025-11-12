@@ -21,13 +21,7 @@
         </router-link>
       </div>
       <div v-if="$route.name != 'CategoryPage'">
-        <router-link
-          :to="{ name: 'CategoryPage' }"
-          class="sidebar-item"
-        >
-          <i class="far fa-folder-open"></i>
-          <span>カテゴリー</span>
-        </router-link>
+        <SidebarCategoryItem/>
       </div>
       <div v-if="$route.name != 'SettingPage'">
         <SidebarSettingItem/>
@@ -40,6 +34,7 @@
 import { onMounted } from 'vue'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
 
+import SidebarCategoryItem from './SidebarCategoryItem.vue'
 import SidebarSettingItem from './SidebarSettingItem.vue'
 
 onMounted(async () => {
