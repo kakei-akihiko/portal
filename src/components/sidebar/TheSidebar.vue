@@ -12,13 +12,7 @@
         <div v-html="sidebarArticleRef.html" />
       </div>
       <div v-if="$route.name != 'ArticlesListPage' && $route.name != 'ArticlesListPageNoSelected'">
-        <router-link
-          :to="{ name: 'ArticlesListPageNoSelected' }"
-          class="sidebar-item"
-        >
-          <i class="far fa-newspaper"></i>
-          <span>記事</span>
-        </router-link>
+        <SidebarArticleItem/>
       </div>
       <div v-if="$route.name != 'CategoryPage'">
         <SidebarCategoryItem/>
@@ -34,6 +28,7 @@
 import { onMounted } from 'vue'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
 
+import SidebarArticleItem from './SidebarArticleItem.vue'
 import SidebarCategoryItem from './SidebarCategoryItem.vue'
 import SidebarSettingItem from './SidebarSettingItem.vue'
 
