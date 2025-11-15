@@ -11,26 +11,35 @@
       <div v-if="sidebarArticleRef != null">
         <div v-html="sidebarArticleRef.html" />
       </div>
-      <div v-if="$route.name != 'ArticlesListPage' && $route.name != 'ArticlesListPageNoSelected'">
-        <SidebarArticleItem/>
-      </div>
-      <div v-if="$route.name != 'CategoryPage'">
-        <SidebarCategoryItem/>
-      </div>
-      <div v-if="$route.name != 'SettingPage'">
-        <SidebarSettingItem/>
-      </div>
+      <SidebarArticleItem v-if="articleItemVisible"/>
+      <SidebarCategoryItem v-if="categoryItemVisible"/>
+      <SidebarSettingItem v-if="settingItemVisible"/>
     </footer>
   </section>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { loadSidebarSetting, sidebarArticleRef } from '../../store/ref'
 
 import SidebarArticleItem from './SidebarArticleItem.vue'
 import SidebarCategoryItem from './SidebarCategoryItem.vue'
 import SidebarSettingItem from './SidebarSettingItem.vue'
+
+const route = useRoute()
+
+const articleItemVisible = computed(() =>
+  route.name != 'ArticlesListPage' && route.name != 'ArticlesListPageNoSelected'
+)
+
+const categoryItemVisible = computed(() =>
+  route.name != 'CategoryPage'
+)
+
+const settingItemVisible = computed(() =>
+  route.name != 'SettingPage'
+)
 
 onMounted(async () => {
   // まだ読み込んでいない場合だけ読み込む
