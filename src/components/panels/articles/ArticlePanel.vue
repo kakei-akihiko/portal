@@ -15,9 +15,7 @@
       <button @click="articleReadButtonClick">
         <i class="far fa-newspaper"></i>
       </button>
-      <button @click="articleEditButtonClick">
-        <i class="fas fa-edit"></i>
-      </button>
+      <ButtonArticleEditPage :id="props.article.id"/>
     </div>
     <div class="panel-tags">
       <TagBadge
@@ -35,6 +33,7 @@ import { computed  } from 'vue'
 import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
 import TagBadge from '../../badge/TagBadge.vue'
+import ButtonArticleEditPage from '../../buttons/ButtonArticleEditPage.vue'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
 const emit = defineEmits(['expand'])
@@ -65,13 +64,6 @@ const entireClassName = computed(() => ({
 }))
 
 const tags = computed(() => props.article.tags ?? [])
-
-const articleEditButtonClick = () => {
-  router.push({
-    name: 'ArticleEditPage',
-    params: { id: props.article.id }
-  })
-}
 
 const articleReadButtonClick = () => {
   router.push({
