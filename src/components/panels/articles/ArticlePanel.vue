@@ -12,9 +12,7 @@
         :expanded="expanded"
         @click="expandButtonClick"
       />
-      <button @click="articleReadButtonClick">
-        <i class="far fa-newspaper"></i>
-      </button>
+      <ButtonArticleReadPage :id="props.article.id"/>
       <ButtonArticleEditPage :id="props.article.id"/>
     </div>
     <div class="panel-tags">
@@ -34,6 +32,7 @@ import router from '../../../router/index'
 import { marked } from '../../../infrastructure/markdown.js'
 import TagBadge from '../../badge/TagBadge.vue'
 import ButtonArticleEditPage from '../../buttons/ButtonArticleEditPage.vue'
+import ButtonArticleReadPage from '../../buttons/ButtonArticleReadPage.vue'
 import ButtonExpand from '../../buttons/ButtonExpand.vue'
 
 const emit = defineEmits(['expand'])
