@@ -51,7 +51,7 @@ onMounted(async () => {
 
 <style scoped>
 .sidebar-scoped {
-  background: #E0F0FF;
+  background: var(--sidebar-background);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
