@@ -11,9 +11,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  --button-hover-background: #E0F0FF;
-  --button-background: #F0F0F0;
 }
 
 a {
@@ -58,7 +55,7 @@ button:hover {
 
 button:disabled,
 button:disabled:hover {
-  background-color: #E0E0E0;
+  background-color: var(--button-diabled-background);
   cursor: auto;
 }
 
@@ -112,6 +109,10 @@ button:has(i) {
     --sidebar-text-color: #505050;
     --sidebar-background: #E0F0FF;
     --sidebar-item-hover-background: #FFFFFF80;
+
+    --button-hover-background: #E0F0FF;
+    --button-background: #F0F0F0;
+    --button-diabled-background: #E0E0E0;
   }
 }
 
@@ -122,5 +123,9 @@ button:has(i) {
     --sidebar-text-color: rgb(200, 200, 200);
     --sidebar-background: #3b3b3b;
     --sidebar-item-hover-background: #484848;
+
+    --button-hover-background: rgb(150, 150, 150);
+    --button-background: rgb(100, 100, 100);
+    --button-diabled-background: rgb(180, 180, 180)
   }
 }
