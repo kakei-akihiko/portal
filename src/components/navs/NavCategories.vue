@@ -56,12 +56,12 @@ const categorySelect = async category => {
   display: grid;
   height: 50px;
   align-items: center;
-  color: #505050;
+  color: var(--sidebar-text-color);
   padding-left: 10px;
 }
 
 .sidebar-item:hover {
-  background-color: #FFFFFF80;
+  background-color: var(--sidebar-item-hover-background);
   border-radius: .2rem;
 }
 </style>
