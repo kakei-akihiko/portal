@@ -126,6 +126,6 @@ button:has(i) {
 
     --button-hover-background: rgb(150, 150, 150);
     --button-background: rgb(100, 100, 100);
-    --button-diabled-background: rgb(180, 180, 180)
+    --button-diabled-background: rgb(60, 60, 60)
   }
 }
