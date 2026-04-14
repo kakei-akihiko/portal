@@ -143,9 +143,23 @@ const navViewModeChange = (articlesViewMode) => {
 .alert-warning {
   margin-top: 20px;
 
-  background-color: rgb(240, 240, 240);
-  border: solid 1px rgb(240, 240, 240);
+  border-style: solid;
+  border-width: 1px;
   border-radius: 5px;
   padding: 1rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .alert-warning {
+    background-color: rgb(240, 240, 240);
+    border-color: rgb(240, 240, 240);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .alert-warning {
+    background-color: oklch(.35 0 0);
+    border-color: oklch(.35 0 0);
+  }
 }
 </style>
